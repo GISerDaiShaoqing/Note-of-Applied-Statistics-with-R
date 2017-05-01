@@ -23,7 +23,7 @@ The Note includes 14 Chapters.
 笔记包括了14章的内容。
 
 #### Chapter 1 简介
-#### Chapter 2 数据搜集
+#### Chapter 2 数据收集
 #### Chapter 3 描述性统计
 #### Chapter 4 抽样方法与抽样分布
 #### Chapter 5 参数估计
