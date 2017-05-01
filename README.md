@@ -1,6 +1,6 @@
 # Note-of-Applied-Statistics-with-R
 This is some note of Applied Statistics with R which comes from my course "Applied Statistics" at this term.
-The Note includes 14 Chapters
+The Note includes 14 Chapters.
 
 #### Chapter 1 Introduction
 #### Chapter 2 Data Collection
@@ -20,7 +20,7 @@ The Note includes 14 Chapters
 
 # 应用统计学与R语言实现学习笔记
 这是一些应用统计学与R语言实现的学习笔记，来自于我这学期的课程《应用统计学》。
-笔记包括了14章的内容
+笔记包括了14章的内容。
 
 #### Chapter 1 简介
 #### Chapter 2 数据搜集
