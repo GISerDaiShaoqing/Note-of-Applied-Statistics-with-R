@@ -128,9 +128,9 @@ p值法步骤（以大样本均值为例）
 总体均值的检验(大样本： n≥30)
 使用z检验统计量：
 $\sigma^2已知$：
-$$ z=\frac{\bar x-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1) $$。
+$$ z=\frac{\bar x-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1)。 $$
 $\sigma^2未知$：
-$$ z=\frac{\bar x-\mu_0}{s/\sqrt{n}}\sim N(0,1) $$。
+$$ z=\frac{\bar x-\mu_0}{s/\sqrt{n}}\sim N(0,1)。 $$
 
 总体均值的检验(正态总体小样本)
 检验统计量：
