@@ -29,6 +29,8 @@
 > * 之前通常用两个或两个以上特征来对样本观测值分类。
 > * 也被称为交叉表。
 
+![这里写图片描述](http://img.blog.csdn.net/20170514170656815?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
 一般在R中，使用Table函数即可生成两个特征（分类变量）的联立表，xtabs则是根据公式创立联立表，prop.table则可以直接计算出比例。
 联立表如何做独立性检验呢？首先提出假设（这里不详述，相信大家应该懂怎么建立了），接着计算期望的联立表每个单元格的期望频次。
 $$ e_{ij}=\frac{(i^{th} Rowtotal)(j^{th} Columtotal)}{Total SampleSize}。 $$
@@ -79,7 +81,7 @@ dev.off()
 $$ \chi^2=\sum_{i=1}^k\frac{(f_i-ei-)^2}{e_i}。 $$
 R语言中可以用chisp.test函数进行正态分布测验。
 
-此外对于非正态数据可以通过数学变换转变为正态分布数据。
+此外对于有某种特定分布的非正态数据可以通过数学变换转变为正态分布数据。
 常用的一般包括：
 > * 对数变换。
 > * 开方变换。
