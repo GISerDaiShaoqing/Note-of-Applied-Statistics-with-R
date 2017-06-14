@@ -333,9 +333,9 @@ $$ F=\frac{SSR/p}{SSE/(n--p-1)}=\frac{MSR}{MSE}\sim F(p,n-p-1) $$
 > （1）提出假设
 $$H_0:\beta_i=0(自变量x_i与因变量y没有线性关系)$$
 $$H_1:\beta_i\neq 0(自变量x_i与因变量y有线性关系)$$
-> * 计算检验的统计量
+> （2）计算检验的统计量
 $$ t=\frac{b_i}{s_{b_i}}\sim t(n-p-1)，s_{b_i}=\frac{s}{\sqrt{\sum(x_i-\bar x)^2}}$$
-> * 确定显著性水平$\alpha$，并进行决策：
+> （3）确定显著性水平$\alpha$，并进行决策：
 $$ \left|t\right|\gt t_{\alpha/2}，拒绝H_0；\left|t\right|\lt t_{\alpha/2}，不拒绝H_0 $$
 
 **回归系数的推断(置信区间)**
