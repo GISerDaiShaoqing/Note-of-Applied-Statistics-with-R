@@ -294,6 +294,8 @@ $$E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_px_p+\varepsilon$$
 > * $\beta_1,\beta_2,\cdots,\beta_p$称为偏回归系数。
 > * $\beta_i$表示假定其他变量不变，当$x_i$每变动一个单位时，y的平均变动值。
 
+二元回归方程的几何表达——回归面。
+
 ![](http://f.hiphotos.baidu.com/image/pic/item/c995d143ad4bd11366254c6c50afa40f4afb0587.jpg)
 
 **估计的多元回归的方程(estimated multiple regression equation)**
