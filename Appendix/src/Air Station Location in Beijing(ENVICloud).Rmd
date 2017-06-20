@@ -1,0 +1,38 @@
+---
+title: "Air Station Location in Beijing(ENVICloud)"
+output: html_notebook
+---
+
+# 1 Author Information
+Name: Note of Applied Statistics with R(Chapter 10 demo code) Cluster Analysis
+
+Purpose: Cluster Analysis
+
+Author:      Dai shaoqing
+
+Created:     06/20/2017
+
+Copyright:   (c) Dai shaoqing <dsq1993qingge@163.com> 2017
+
+------------------------------------------------------------
+
+
+load packages
+```{r}
+library(sp)
+library(maptools)
+library(leaflet)
+```
+
+
+
+```{r,echo=FALSE}
+airclres<-data.frame(stationname=airnew[,1],cluster1=result,cluster2=kres$cluster)
+stationlocation<-read.table(".../station.txt",header=T,sep=",")
+airsta<-stationlocation
+airsta<-merge(airsta,airclres,by="stationname")
+coordinates(airsta)=~lng+lat
+leaflet(airsta)%>%addTiles()%>%addProviderTiles("OpenStreetMap.Mapnik")%>%addMarkers(airsta,lng=airsta$lng,lat=airsta$lat,label=airsta$stationname)
+```
+
+
