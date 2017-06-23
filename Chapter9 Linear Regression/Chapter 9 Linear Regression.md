@@ -10,7 +10,7 @@
 
 相关关系包括了线性相关（正相关、负相关）、非线性相关、完全相关（正相关、负相关）、不相关。
 
-![](http://e.hiphotos.baidu.com/image/pic/item/6159252dd42a28344880ce5551b5c9ea15cebf4e.jpg)
+![](http://c.hiphotos.baidu.com/image/pic/item/adaf2edda3cc7cd9ef270c6b3301213fb80e917d.jpg)
 
 除了如上的图，可以看下面的链接——关于相同统计量不同数据的一篇外文。
 > https://www.autodeskresearch.com/publications/samestats
