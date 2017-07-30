@@ -1,4 +1,4 @@
-﻿# Chapter 6 Hypothesis Test
+# Chapter 6 Hypothesis Test
 本篇是第6章，内容是假设检验。
 
 [TOC]
@@ -203,7 +203,7 @@ $$t=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2
 假定条件：
 > * 两个总体都是正态分布。
 > * $\sigma_1^2，\sigma_2^2未知且不相等，即\sigma_1^2\ne\sigma_2^2。$
-> * 样本容量相等，$n_1\ne n_2$。
+> * 样本容量不相等，$n_1\ne n_2$。
 
 检验统计量：
 $$t=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}，自由度：最接近v的整数——v=\frac{(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2})^2}{\frac{(s_1^2/n_1)^2}{n_1-1}+\frac{(s_2^2/n_2)^2}{n_2-1}}。 $$
