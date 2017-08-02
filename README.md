@@ -1,6 +1,10 @@
-﻿# Note-of-Applied-Statistics-with-R
+# Note-of-Applied-Statistics-with-R
 ### Author: Dai Shaoqing
-### E-mails: dsq1993qingge@163.com. giser1993dsq@gmail.com. sqdai@iue.ac.cn. daishaoqing16@mails.ucas.ac.cn.
+### E-mails: dsq1993qingge@163.com. 
+### Other E-mails:
+>* giser1993dsq@gmail.com. 
+>* sqdai@iue.ac.cn. 
+>* daishaoqing16@mails.ucas.ac.cn.
 
 This is some note of Applied Statistics with R which comes from my course "Applied Statistics" at this term.
 The Note includes 14 Chapters. The note is in Chinese.
@@ -23,7 +27,11 @@ The Note includes 14 Chapters. The note is in Chinese.
 
 # 应用统计学与R语言实现学习笔记
 ### 作者: 戴劭勍
-### 邮箱: dsq1993qingge@163.com. giser1993dsq@gmail.com. sqdai@iue.ac.cn. daishaoqing16@mails.ucas.ac.cn.
+### 邮箱：dsq1993qingge@163.com. 
+### 其他邮箱:
+>* giser1993dsq@gmail.com. 
+>* sqdai@iue.ac.cn. 
+>* daishaoqing16@mails.ucas.ac.cn.
 这是应用统计学与R语言实现的学习笔记，来自于我这学期的课程《应用统计学》。
 笔记包括了14章的内容,中文版。
 
