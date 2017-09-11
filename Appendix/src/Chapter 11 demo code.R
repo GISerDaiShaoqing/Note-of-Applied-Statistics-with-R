@@ -13,7 +13,7 @@ library(maptools)
 library(klaR)
 
 #Generate false color image
-aplot<-brick("D:/Documents/GitHub/Note-of-Applied-Statistics-with-R/Appendix/Data/GF1test.tif")
+aplot<-brick(".../GF1test.tif")
 jpeg("rawImage.jpeg",width=6,height=7.2,units="in",res=300)
 plotRGB(aplot,r=4,g=3,b=2)
 dev.off()
@@ -24,7 +24,7 @@ spplot(aplot)
 dev.off()
 
 #Plot train data
-traindatasp<-readShapePoints("D:/Documents/GitHub/Note-of-Applied-Statistics-with-R/Appendix/Data/trainGF.shp")
+traindatasp<-readShapePoints(".../trainGF.shp")
 jpeg("traindata.jpeg",width=6,height=7.2,units="in",res=300)
 par(new=T)
 layout(matrix(seq(1,4,1),nrow=2,byrow=T))
@@ -33,7 +33,7 @@ plot(traindatasp,col=traindatasp$type,pch=16,add=TRUE)
 dev.off()
 
 #Plot validation data
-validationsp<-readShapePoints("D:/Documents/GitHub/Note-of-Applied-Statistics-with-R/Appendix/Data/validation.shp")
+validationsp<-readShapePoints(".../validation.shp")
 jpeg("validation.jpeg",width=6,height=7.2,units="in",res=300)
 plotRGB(aplot,r=4,g=3,b=2)
 plot(validationsp,col=validationsp$type,pch=16,add=TRUE)
@@ -101,7 +101,7 @@ writeRaster(craster,'Fisher.tif',format="GTiff")
 writeRaster(braster,'Bayes.tif',format="GTiff")
 
 #Accuracy
-accuracysp<-readShapePoints("D:/Documents/GitHub/Note-of-Applied-Statistics-with-R/Appendix/Data/validationnew.shp")
+accuracysp<-readShapePoints(".../validationnew.shp")
 accuracy<-as.data.frame(accuracysp)
 table(accuracy$type,accuracy$Bayes)
 table(accuracy$type,accuracy$Fisher)
