@@ -2,7 +2,7 @@
 # Purpose: Priciple Component Analysis
 # Author:      Dai shaoqing
 #
-# Created:     09/21/2017
+# Created:     09/22/2017
 # Copyright:   (c) Dai shaoqing <dsq1993qingge@163.com> 2017
 #------------------------------------------------------------
 #Load packages
