@@ -15,8 +15,6 @@ aclean<-na.omit(a)
 #Function1 of Factor Analysis
 factanal(aclean[,-c(1:2,9)],3,data=aclean[,-c(1:2,9)])
 afa<-factanal(aclean[,-c(1:2,9)],1,data=aclean[,-c(1:2,9)])
-jpeg("1.jpeg",width=6,height=6,units="in",res=300)
-dev.off()
 
 #Function2 of Factor Analysis
 factor.analysis=function(x,m){
@@ -50,5 +48,11 @@ factor.analysis(R,3)
 afa<-fa(aclean[,-c(1:2,9)],2)
 fa(aclean[,-c(1:2,9)],3,fm="mle")
 afa<-fa(aclean[,-c(1:2,9)],3,fm="mle")
+
+jpeg("1.jpeg",width=6,height=6,units="in",res=300)
 fa.diagram(afa)
+dev.off()
+
+jpeg("2.jpeg",width=6,height=6,units="in",res=300)
 biplot(afa)
+dev.off()
