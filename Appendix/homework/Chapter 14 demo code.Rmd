@@ -1,0 +1,362 @@
+---
+title: "Chapter 14 Case and practice"
+author: "Dai Shaoqing"
+date: "2017.10.8"
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+    keep_tex: yes
+    latex_engine: xelatex
+  html_notebook:
+    toc: yes
+  html_document:
+    toc: yes
+---
+
+> * **Name**: Note of Applied Statistics with R(Chapter 14 demo code) Case and Practice
+> * **Purpose**: Case and practice
+> * **Author**:      Dai shaoqing
+> * **Created**:     10/08/2017
+> * **Copyright**:   (c) Dai shaoqing <dsq1993qingge@163.com> 2017
+
+
+```{r,message=FALSE}
+#load library
+library(openxlsx)
+library(ggplot2)
+library(psych)
+library(gridExtra)
+
+#Set fonts and theme
+windowsFonts(RT=windowsFont("Times New Roman"))
+old_theme <- theme_update(axis.title=element_text(family="RT", size=11, colour="black"),axis.text=element_text(family="RT", size=11, colour="black"))
+```
+### 1 描述性统计与抽样分布
+1.
+
+（1）
+频数分布表
+```{r}
+#Input data
+a<-read.xlsx("F:/R/applicationstatics/data/exercise1.xlsx",sheet = 1,colNames = F)
+table(a)
+```
+（2）
+频数分布图
+```{r}
+hist(a$X1,col="lightblue",xlab="重量/g",main="随机抽取100袋食品重量频数分布图",family="RT")
+```
+
+```{r}
+ahist<-ggplot(a)+geom_histogram(mapping = aes(a$X1),fill=rgb(red = 0, green = 107, blue = 200, max = 255),binwidth=0.5,stat = "bin",position = "identity")+labs(x="重量/g",y="Frequency")
+ahist
+```
+
+（3）
+数据整体呈一个“双峰”分布。而且刚好50 g的食品非常少。大部分集中在47和53附近。
+
+2.
+
+（1）
+```{r,message=FALSE,warning=FALSE}
+#Input data and clean data
+b<-read.xlsx("F:/R/applicationstatics/data/exercise1.xlsx",sheet = 2)
+b<-b[,-c(1:9)]
+b<-data.frame(gl=b[,1],p=b[,2],c=b[,3])
+```
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+#bar plot
+gglabel<-c("不及格","及格","中","良","优")
+bbar<-ggplot(b)+geom_bar(mapping =aes(x=gl,y=p,fill=c),data=b,width = 0.5,stat="identity",position = "dodge")+labs(x="成绩等级",y="人数/人",fill="班级")+scale_x_discrete(limit=gglabel)
+```
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+#ring plot
+bring<-ggplot(b,aes(x=c,y=p,fill=gl))+geom_bar(stat = "identity",position = "fill",width = 0.8,colour="white")+coord_polar(theta = "y")+labs(x="班级",y="人数/人",fill="成绩等级")+scale_fill_discrete(limit=gglabel)
+```
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+b1<-subset(b,b$c=="甲班")
+```
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+b2<-subset(b,b$c=="乙班")
+```
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+#b1 plot
+b1pie<-ggplot(b1,aes(x=factor(1),y=p,fill=gl))+geom_bar(stat = "identity",position = "fill",width = 0.8,colour="white")+coord_polar(theta = "y")+labs(title="甲班",x="百分比",y="人数/人",fill="成绩等级")+scale_fill_discrete(limit=gglabel)
+
+```
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+#b2 plot
+b2pie<-ggplot(b2,aes(x=factor(1),y=p,fill=gl))+geom_bar(stat = "identity",position = "fill",width = 0.8,colour="white")+coord_polar(theta = "y")+labs(title="乙班",x="百分比",y="人数/人",fill="成绩等级")+scale_fill_discrete(limit=gglabel)
+```
+
+```{r}
+#merge all the plot
+mergeplot<-grid.arrange(bbar,bring,b1pie,b2pie,nrow=2)
+mergeplot
+```
+
+(2)
+甲班中等成绩的人最多，而优良成绩的人比不及格和及格的人少。乙班成绩为良的最多，而且不及格人数与及格人数均比甲班少。仅有中等成绩的人比甲班少，其他均多于甲班。
+
+(3)
+```{r}
+bradar<-ggplot(b,aes(x=gl,y=p))+geom_bar(mapping = aes(fill=c),stat = "identity",position = "dodge")+labs(x="成绩等级",y="人数/人",fill="班级")+scale_x_discrete(limit=gglabel)+coord_polar()+facet_wrap(~c,nrow = 1)
+bradar
+```
+甲乙两个班成绩分布差异较大。甲班中等成绩人居多，而且相比较而言，中等成绩人数量十分突出。而乙班则较为均衡，良成绩的人较少些。
+
+3.
+```{r,warning=FALSE,message=FALSE}
+c<-read.xlsx("F:/R/applicationstatics/data/exercise1.xlsx",sheet = 3)
+describe(c)
+table(c)
+```
+（1）众数：19和23、中位数：23
+
+（2）四分位数：19（上四分位数）、27（下四分位数）
+
+（3）平均数：24、标准差：6.65
+
+（4）偏态系数：0.95、峰态系数：0.13
+
+（5）网民整体分布呈现一个右偏的尖峰分布，但是平均数与中位数较为接近。整体分布还是较为平稳。
+
+4.
+```{r}
+d<-read.xlsx("F:/R/applicationstatics/data/exercise1.xlsx",sheet = 4)
+stem(d[,1])
+summary(d)
+describe(d)
+```
+
+（1）
+茎叶图
+5 | 5
+6 | 
+6 | 678
+7 | 134
+7 | 88
+
+（2）平均数：7.0，标准差0.71。
+
+（3）第一种方式标准差要远大于第二种方式，所以第一种方式离散程度较大。
+
+（4）我会选择第二种，首先，第二种平均等待时间小于第一种，同时标准差则远小于第一种。也就是说明平均的等待时间小于第一种，同时等待时间也不会偏离7分钟太多。
+
+5.
+
+$$ \sigma_{\bar x}^2=\frac{\sigma^2}{n} （重复抽样）$$ 
+
+
+（a）首先认为n=100的情况下属于大样本，可以认为近似正态分布，所以重复抽样的样本均值的抽样分布也遵循正态分布，所以样本均值抽样分布的期望值为200，方差为25
+
+$$ \sigma_{\bar x}^2=\frac{\sigma^2}{n}\frac{N-n}{N-1} （样本总体有限，且n\ge 5\%N不重复抽样）$$
+
+（b）不重复抽样的样本均值的抽样分布同样遵循近似正态分布，总体样本为10000和1000时，简单随机样本的样本量n=100，5%N=500和50，所以当总体样本为10000时样本均值抽样分布的期望为为200，方差为24.75。而当总体样本仅为1000时，不满足n≥5%N的条件，可以按重复抽样计算样本均值的抽样分布：也就是期望值为200，方差为25。
+
+### 2 参数估计与假设检验
+
+1.
+样本数n=36>30，可以认为大样本数据非正态分布，且总体的均值未知，因此，采用z分布计算置信区间，样本均值为3.317，标准差为1.609，置信区间计算公式为：
+$$ \bar x\pm z_{\alpha/2}\frac{s}{\sqrt{n}} $$
+分别带入计算可得。90%置信概率的置信区间为[2.863,3.770]，95%置信概率的置信区间为[2.772,3.861]，99%置信概率的置信区间为[2.586,4.047]。
+
+2.
+总体均值之差估计（且n1=n2，总体标准差已知）所需样本容量的公式为：
+$$ n=\frac{(z_{\alpha/2})^2\cdot(\sigma_1^2+\sigma_2^2)}{E^2}，其中E=z_{\alpha/2}\sqrt{\frac{(\sigma_1^2+\sigma_2^2)}{n}} $$
+误差范围不超过5，即将E=5带入，即可得到n的最小值，即n=56.700，即n=57。
+
+3.
+假设$H_0$: μ=0.618，备择假设$H_1$: μ≠0.618。
+该问题为总体方差未知的正态小样本均值检验。故选用t分布检验统计量。
+$$ t=\frac{\bar x-\mu_0}{s/\sqrt{n}}\sim t(n-1)$$
+可以得到t=1.932318，而显著性水平α=0.05的t分布临界值为2.093024。
+因为t＜2.093024，所以拒绝H0，无法认为该工厂生产的工艺品框架宽与长度的平均比例为0.618。
+
+4.
+
+（1）第一类错误是弃真错误，也就是原假设为真，却拒绝了原假设。
+
+（2）第二类错误是取伪错误，也就是原假设为假，但未拒绝原假设。
+
+（3）连锁店的顾客们会将取伪错误看得较为严重，因为顾客肯定希望能获得更多的利益，也就是说希望土豆片比60克多，如果商家检验结果是取伪错误——就是事实上，土豆片不到60克，但是检验结果却是大于60克。而供应商则会将弃真错误看得较为严重，因为对供应商来说，土豆片少一点，相当于材料费少了些，对于他们收益是好的，所以他们希望的是土豆片比60克少或者刚好60克，如果商家检验结果是弃真错误——就是事实上，土豆片是大于60克的，但是检验结果却是小于60克。
+
+相关代码及自编假设检验函数。
+```{r}
+a<-read.xlsx("F:/R/applicationstatics/data/exercise2.xlsx",sheet=1)
+mean(a[,1])
+sd(a[,1])
+```
+```{r}
+#方差已知的区间估计
+conf.int=function(x,sigma,alpha) {
+  mean=mean(x)
+  n=length(x)
+  z=qnorm(1-alpha/2,mean=0,sd=1,lower.tail = T)
+  c(mean-sigma*z/sqrt(n),mean+sigma*z/sqrt(n))
+}
+```
+```{r}
+#方差未知的区间估计
+t.test(a,alternative = "two.sided",conf.level = 0.9)
+t.test(a,alternative = "two.sided",conf.level = 0.95)
+t.test(a,alternative = "two.sided",conf.level = 0.99)
+```
+```{r}
+#样本容量
+#sample number function
+samplemin.int=function(sigma1,sigma2,error,alpha) {
+  z=qnorm(1-alpha/2,mean=0,sd=1,lower.tail = T)
+  n=z^2*(sigma1^2+sigma2^2)/error^2
+  cat("The number of Sample is more than", n)
+}
+
+#function calculated
+samplemin.int(12,15,5,0.05)
+```
+```{r}
+b<-read.xlsx("F:/R/applicationstatics/data/exercise2.xlsx",sheet=2)
+
+#function meantest
+meantest.int=function(x,meanpop,sigmapop,alpha,pop=TRUE) {
+  mean=mean(x)
+  sd=sd(x)
+  n=length(x)
+  t0=qt(1-alpha/2,df=n-1,lower.tail = T)
+  z0=qnorm(1-alpha/2,mean=0,sd=1,lower.tail = T)
+  if (pop) {
+    p=(mean-meanpop)/(sigmapop/sqrt(n))
+    status=p-z0
+  } else {
+    sigmapop=sd
+    p=(mean-meanpop)/(sigmapop/sqrt(n))
+    status=p-t0
+  }
+  cat("Hypothesis Test:",status>0)
+}
+
+#function calculated
+meantest.int(b$比值,0.618,1,0.05,pop = F)
+```
+
+### 3 方差分析与回归分析
+```{r}
+#load library
+library(MASS)
+library(openxlsx)
+library(psych)
+library(corrplot)
+```
+1.
+```{r}
+#question1
+a<-read.xlsx("F:/R/applicationstatics/Data/exercise3.xlsx",sheet=4)
+
+#variance analysis
+a.aov<-aov(battery~company,data=a)
+summary(a.aov)
+```
+根据方差分析结果，三个企业生产的电池的平均寿命之间有显著差异。
+根据LSD方法进行检验。
+LSD检验统计量公式如下：
+$$ LSD=t_{\alpha/2}\sqrt{MSE(\frac{1}{n_i}+\frac{1}{n_j})} $$
+带入计算可得，LSD=5.760。
+然后可以计算可得：
+|μA-μB|=14.4>5.760，|μA-μC|=1.8<5.760，|μB-μC|=12.6>5.760。
+所以A企业和B企业，B企业和C企业之间是有差异的。
+
+2.
+本问题为双因素的问题，所以采用双因子方差分析结果（分别选用的无交互作用和有交互作用的）如下：
+```{r}
+#Input data
+b<-read.xlsx("F:/R/applicationstatics/Data/exercise3.xlsx",sheet=6)
+
+#no interaction
+b.aov<-aov(value~location+competition,data=b)
+summary(b.aov)
+```
+```{r}
+#interaction
+bi.aov<-aov(value~location*competition,data=b)
+summary(bi.aov)
+```
+（1）从双因素方差分析的结果来看，F统计值通过了0.001大于设定的显著性水平的显著性检验，可以认为竞争者的数量对销售额有显著影响。
+
+（2）从双因素方差分析的结果来看，F统计值通过了0.001大于设定的显著性水平的显著性检验，可以认为超市的位置对销售额有显著影响。
+
+（3）从双因素方差分析的结果来看，F统计值通过了0.05小于设定的显著性水平的显著性检验，可以认为竞争者的数量和超市的位置对销售额无交互影响。
+
+3.
+
+（1）$r_{y,x1}$=0.309，$r_{y,x2}$=0.01。并绘制了散点图，从相关系数来看，y与$x_1$有线性关系，y与$x_2$无线性关系。几何散点图来看，二者的线性关系也不是非常显著。
+
+```{r}
+c<-read.xlsx("F:/R/applicationstatics/Data/exercise3.xlsx",sheet=3)
+layout((matrix(c(1,2),nrow = 1,byrow = T)))
+```
+```{r}
+cor(c$销售价格y,c$购进价格x1)
+```
+```{r}
+cor(c$销售价格y,c$销售费用x2)
+```
+```{r}
+plot(c$销售价格y,c$购进价格x1)
+```
+```{r}
+plot(c$销售价格y,c$销售费用x2)
+```
+
+（2）用购进价格来预测销售价格可能更有用，销售费用对销售价格影响较小。
+
+```{r}
+c.lm<-lm(formula = c$销售价格y~c$购进价格x1+c$销售费用x2)
+summary(c.lm)
+```
+
+（3）从F检验统计值来看，P值通过了0.1的显著性水平检验，与题目所要求的0.05不符合。所以模型的线性关系不显著。
+
+（4）判定系数$R^2$为0.352，说明销售价格变动的35%是由购进价格和销售费用决定的。线性关系较弱。
+
+```{r}
+cor(c$购进价格x1,c$销售费用x2)
+```
+（5）$r_{x1,x2}$=-0.853，说明购进价格与销售费用呈现负相关的关系。
+（6）模型存在多重共线性，建议使用逐步回归方法去除变量进行回归分析。
+
+4.
+首先对变量进行相关分析。
+
+```{r}
+d<-read.xlsx("F:/R/applicationstatics/Data/exercise3.xlsx",sheet=5)
+dcor<-corr.test(d[,c(3:13)])
+dcorp<-dcor$p
+dcorp[upper.tri(dcorp)]=0
+corrplot.mixed(dcor$r,lower = "number",upper = "circle",diag = "u",
+               tl.pos = "lt",tl.cex=0.8,number.cex=0.8,p.mat=dcorp,sig.level=0.05,insig=c("blank"))
+```
+
+可以发现Rating跟Comp、Comp%，Yds，Yds/Att，TD，TD%和Int%有显著的相关关系，且相关系数均在0.48以上。
+接下来绘制Rating跟其余10个指标的散点图。
+
+```{r}
+layout((matrix(c(1,2,3,4,5,6,7,8,9,10),nrow=2,byrow=T)))
+for (i in 3:12) {
+  plot(d[,c(i)],d[,c(13)],col="red",pch=16)
+}
+```
+
+可以看到与其他10个指标的散点图，线性关系也较为显著。根据相关系数矩阵结果和散点图，选定7个自变量进行逐步回归。结果如下：
+
+```{r}
+d.lm<-lm(formula=d$Rating~d$Comp+d$`Comp%`+d$Yds+d$`Yds/Att`+d$TD+d$`TD%`+d$`Int%`)
+summary(d.lm)
+```
+```{r}
+d.lms<-step(d.lm)
+summary(d.lms)
+```
+
+可以看到逐步回归结果只保留了4个自变量（Comp%，Yds/Att，TD%，Int%），模型的$R^2$达到了1.000。说明美式足球员的Ranting变化的100%能够被如上的四个变量进行解释。标准残差为0.205。说明预测精度非常高，残差较小，而F统计值通过了0.01的显著性检验。说明该预测方程可信度较高。
