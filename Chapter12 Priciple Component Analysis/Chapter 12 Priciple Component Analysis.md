@@ -69,7 +69,7 @@ $$ F_2=u_{12}X_1+\cdots+u_{p2}X_p $$
 $$ cov(F_1,F_2)=cov(u_1'x,u_2'x)=u_2'\Sigma u_1=\lambda_1 u_2'u_1=0 $$
 $$ Var(F_2)=U_2'\Sigma_x U_2=\lambda_2 $$
 类推
-$$ F_1=u_{11}X_1+u_{21}X_2+\cdots+u_{p1}X_p \\ F_1=u_{12}X_1+u_{22}X_2+\cdots+u_{p2}X_p \\ \cdots \\ F_1=u_{1p}X_1+u_{2p}X_2+\cdots+u_{pp}X_p$$
+$$ F_1=u_{11}X_1+u_{21}X_2+\cdots+u_{p1}X_p \\ F_2=u_{12}X_1+u_{22}X_2+\cdots+u_{p2}X_p \\ \cdots \\ F_p=u_{1p}X_1+u_{2p}X_2+\cdots+u_{pp}X_p$$
 写成矩阵形式：
 $$ F=U'X $$
 $$  U=(u_1,\cdots,u_p)=\begin {bmatrix} u_{11} & u_{12} & \cdots & u_{1p} \\ u_{21} & u_{22} & \cdots & u_{2p} \\ \vdots & \vdots & & \vdots \\ u_{p1} & u_{p2} & \cdots & u_{pp} \end {bmatrix}  $$
@@ -126,7 +126,7 @@ $$ \hat \Sigma_x=(\frac{1}{n-1}\sum_{l=1}^n(x_{ij}-\bar x_i)(x_{jl}-\bar x_j))_{
 2、多维数据的一种图形表示方法。多元统计研究的问题大都多于3个变量，要把研究的问题用图形表示出来是不可能的。然而，经过主成分分析后，我们可以选取前两个主成分或其中某两个主成分，根据主成分的得分，画出n个样品在二维平面上的分布情况，由图形可直观地看出各样品在主分量中的地位。
 3、用主成分分析法构造回归模型。即把各主成分作为新自变量代替原来的自变量做回归分析。
 **主成分回归方法**
-$$ F_1=u_{11}X_1+u_{21}X_2+\cdots+u_{p1}X_p \\ F_1=u_{12}X_1+u_{22}X_2+\cdots+u_{p2}X_p \\ \cdots \\ F_1=u_{1p}X_1+u_{2p}X_2+\cdots+u_{pp}X_p$$
+$$ F_1=u_{11}X_1+u_{21}X_2+\cdots+u_{p1}X_p \\ F_2=u_{12}X_1+u_{22}X_2+\cdots+u_{p2}X_p \\ \cdots \\ F_p=u_{1p}X_1+u_{2p}X_2+\cdots+u_{pp}X_p$$
 $$ Y_i^*=\gamma_1F_{11}+\gamma_2F_{12}+\cdots+\gamma_mF_{1m}+\varepsilon_i \\ \sum_{i=1}^n[Y_i^*-\gamma_1F_{11}-\gamma_2F_{12}-\cdots-\gamma_mF_{1m}]^2=min $$
 原始数据观测矩阵
 $$ X_0=\begin {bmatrix} x_{11} & x_{12} & \cdots & x_{1p} \\ x_{21} & x_{22} & \cdots & x_{2p} \\ \vdots & \vdots & & \vdots \\ x_{n1} & x_{n2} & \cdots & x_{np} \end {bmatrix} $$
