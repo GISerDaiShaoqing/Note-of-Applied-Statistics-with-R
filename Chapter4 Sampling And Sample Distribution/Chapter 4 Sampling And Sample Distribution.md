@@ -1,4 +1,4 @@
-﻿# Chapter 4 Sampling And Sample Distribution
+# Chapter 4 Sampling And Sample Distribution
 本篇是第四章，内容主要是抽样方法与抽样分布。这一章内容比较多（从抽样方法一直到许多分布函数，尤其是介绍了四个重要分布——正态分布、卡方分布、t分布、F分布，以及部分统计推断的内容）。
 
 [TOC]
