@@ -9,6 +9,8 @@
 This is some note of Applied Statistics with R which comes from my course "Applied Statistics" at this term.
 The Note includes 14 Chapters. The note is in Chinese.
 
+[gitbook online](https://giserdaishaoqing.gitbooks.io/note-of-applied-statistics-with-r-book/content/)
+
 #### [Chapter 1 Introduction](https://giserdaishaoqing.github.io/2017/05/02/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B/)
 #### [Chapter 2 Data Collection](https://giserdaishaoqing.github.io/2017/05/04/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/)
 #### [Chapter 3 Descriptive Statistics](https://giserdaishaoqing.github.io/2017/05/05/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E6%8F%8F%E8%BF%B0%E6%80%A7%E7%BB%9F%E8%AE%A1/)
@@ -35,6 +37,8 @@ The Note includes 14 Chapters. The note is in Chinese.
 
 这是应用统计学与R语言实现的学习笔记，来自于我这学期的课程《应用统计学》。
 笔记包括了14章的内容,中文版。
+
+[gitbook在线电子书](https://giserdaishaoqing.gitbooks.io/note-of-applied-statistics-with-r-book/content/)
 
 #### [Chapter 1 简介](https://giserdaishaoqing.github.io/2017/05/02/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B/)
 #### [Chapter 2 数据收集](https://giserdaishaoqing.github.io/2017/05/04/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/)
