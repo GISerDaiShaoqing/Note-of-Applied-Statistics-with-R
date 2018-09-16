@@ -42,7 +42,7 @@ The Note includes 14 Chapters. The note is in Chinese.
 >* daishaoqing16@mails.ucas.ac.cn.
 
 这是应用统计学与R语言实现的学习笔记，来自于我这学期的课程《应用统计学》。
-笔记包括了14章的内容,中文版。
+笔记包括了14章的内容，中文版。
 
 [gitbook在线电子书](https://giserdaishaoqing.gitbooks.io/note-of-applied-statistics-with-r-book/content/)
 
