@@ -236,9 +236,9 @@ cond(no)->op(right)->sub
 3、若$d(x_k,x_1^{(1)})\lt d(x_k,x_2^{(1)})$，则将$x_k$划为第一类，否则划给第二类。于是得图（b）的两个类。
 4、分别计算两个类的重心，则得$x_1^{(2)}$和$x_2^{(2)}$，以其为新的聚核，对空间中的点进行重新分类，得到新分类。
 
-![](http://img.blog.csdn.net/20170617221339152?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170617221221.jpg)
 
-![](http://img.blog.csdn.net/20170617221358031?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170617221244.jpg)
 
 > * 选择凝聚点
 初始凝聚点（聚类种子、initial cluster seeds/clustercenters）就是一批有代表性的点，是欲形成类的中心。初始凝聚点的选择直接决定初始分类，对分类结果也有很大的影响，由于凝聚点的不同选择，其最终分类结果也将出现不同，故选择时要慎重。通常选择初始凝聚点的方法有：
@@ -310,7 +310,7 @@ R语言自带的聚类分析函数包括了hclust和k-means。所以本篇主要
 > 环境云官网：http://www.envicloud.cn/
 
 数据：
-![](http://img.blog.csdn.net/20170621000012294?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170620235956.jpg)
 
 ```{r}
 dist.pm25<-dist(airnew[,-1],method='euclidean')
@@ -322,7 +322,7 @@ dist函数的参数事实上有不少，但是其实一般重点用的就是输�
 函数计算完之后得到的是一个距离矩阵。我们用热力图的方式进行可视化，这就是上面的第二句代码。
 heatmap函数是个热图可视化函数，要求输入一个矩阵。labRow其实是输入列名，labcol是与labRow相关，用来映射输入的值的。结果如下图。
 
-![](http://img.blog.csdn.net/20170621005643871?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/plot1cl.png)
 
 计算完矩阵，即可进行聚类分析了。hclust函数的必要参数与前面距离的参数类似——输入矩阵参数，方法参数（这里聚类的方法前面也有提到，这里就不赘述了，有兴趣的可以自己看官方帮助文档）。而聚类完的结果存储在model1里面，用plot即可画出聚类谱系图。事实上，plclust也是相同的作用，参数基本是统一的，labels填写我们聚类的变量。而聚类完的结果则可以用cutree来获得，输入的model1——聚类结果，k是要求的类数。
 
@@ -332,7 +332,7 @@ plot(model1,labels=stationname,hang=-1,las=1)
 plclust(model1,labels=stationname,hang=-1)
 ```
 
-![](http://img.blog.csdn.net/20170621005711631?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/plot2cl.png)
 
 对聚类结果做个简单可视化。以0点和1点的PM2.5值分别为x和y轴，以聚类结果做划分。
 
@@ -341,7 +341,7 @@ result=cutree(model1,k=3)
 plot(airnew[,2],airnew[,3],col=result,pch=as.integer(result))
 ```
 
-![](http://img.blog.csdn.net/20170621005728521?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/plot3cl.png)
 
 接下来是K-means的方法。函数并不复杂，输入数据框或者矩阵（做聚类的数据），center就是聚类数，nstart是迭代次数。迭代次数高，聚类可信度高些。后面的这个函数是聚类可视化的函数，是fpc包下面的，使用前请先确认是否安装。
 ```{r}
@@ -349,14 +349,14 @@ kres<-kmeans(airnew[,-1],centers=3,nstart=10)
 plotcluster(airnew[,-1],kres$cluster)
 ```
 
-![](http://img.blog.csdn.net/20170621005751271?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/plot4cl.png)
 
 对比了二者的分类结果，是一致的。
 
-![](http://img.blog.csdn.net/20170621005808492?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/plot5cl.png)
 
 聚类结束后，我们就这个数据和结果做些简单的分析。事实上作为地学人员，我们就简单地画个站点分布图来对应看看具体情况。从这张图来看，PM2.5的聚类结果显示了它具有很好的空间分异性。当然下面的图有点简陋，给出一个对比的，基于leaflet和R Notebook的交互式小地图（老规矩）。
 
-![](http://img.blog.csdn.net/20170621024446772?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/plot6cl.png)
 
-![](http://img.blog.csdn.net/20170621024710015?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170621024700.jpg)

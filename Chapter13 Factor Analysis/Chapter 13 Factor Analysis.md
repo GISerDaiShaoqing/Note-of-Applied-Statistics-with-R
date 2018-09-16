@@ -185,16 +185,16 @@ r是相关系数矩阵或原始数据矩阵；nfactors设定提取的因子数�
 用上一章提供的数据再进行因子分析。比较不同函数结果的差异。
 基于factnal函数，3个因子。
 
-![](http://img.blog.csdn.net/20171006171325567?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171006171159.jpg)
 
 基于自编函数，3个因子。
 
-![](http://img.blog.csdn.net/20171006171646756?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171006171641.jpg)
 
 基于fa函数，3个因子。
 
-![](http://img.blog.csdn.net/20171006171827685?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171006171818.jpg)
 
-![](http://img.blog.csdn.net/20171006171925164?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/FA1.png)
 
-![](http://img.blog.csdn.net/20171006171946111?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/FA2.png)

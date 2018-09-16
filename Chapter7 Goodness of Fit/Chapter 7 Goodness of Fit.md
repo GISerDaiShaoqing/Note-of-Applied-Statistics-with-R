@@ -29,7 +29,7 @@
 > * 之前通常用两个或两个以上特征来对样本观测值分类。
 > * 也被称为交叉表。
 
-![这里写图片描述](http://img.blog.csdn.net/20170514170656815?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170514170437.jpg)
 
 一般在R中，使用Table函数即可生成两个特征（分类变量）的联立表，xtabs则是根据公式创立联立表，prop.table则可以直接计算出比例。
 联立表如何做独立性检验呢？首先提出假设（这里不详述，相信大家应该懂怎么建立了），接着计算期望的联立表每个单元格的期望频次。
@@ -68,7 +68,7 @@ qqline(a,col="red")
 dev.off()
 ```
 
-![这里写图片描述](http://img.blog.csdn.net/20170510011333319?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/plot1.png)
 
 除了QQ图之外，另外一类方法就是通过统计方法——拟合优度检验来探测数据是否正态分布。
 以正态分布为例。

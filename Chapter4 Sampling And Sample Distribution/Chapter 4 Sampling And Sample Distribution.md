@@ -57,9 +57,9 @@ $$ f(x)=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2} -\in
 
 下图给出了两个图（一个是用核密度生成的曲线，一个是正态分布概率密度函数）来说明以上的部分性质（具体实现的R语言代码在附录文件夹中的src里面）。
 
-![这里写图片描述](http://img.blog.csdn.net/20170506153724595?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/ndplot2.jpg)
 
-![这里写图片描述](http://img.blog.csdn.net/20170506153700996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/ndplot.jpg)
 
 标准正态分布就是指均值为0，标准差为1的正态分布。通过标准正态分布可以很方便地求算各种概率，所以实际应用中，往往将正态分布数据通过标准化的方式转化为标准正态分布求解具体概率。
 即令
@@ -73,7 +73,7 @@ $$ Q_d/s\approx1/3 $$
 
 一般可以通过画这个图来进行检验（代码同在附录文件夹src中这一章的代码文件里面）。
 
-![这里写图片描述](http://img.blog.csdn.net/20170506153739704?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/ndplot3.jpg)
 
 或者计算四分位差和标准差比值。
 这里给出这个方法的R语言实现(用户自编函数）。
@@ -125,11 +125,11 @@ $$ X_1,X_2, \cdots ,X_n是相互独立的随机变量 $$
         cat("The Standard deviation of Population : ",Psd)
         }
         
-![这里写图片描述](http://img.blog.csdn.net/20170506153800251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/ndplot4.jpg)
 
 建立n=2的抽样分布，样本均值分布如下，均值为21，方差为1.58
 
-![这里写图片描述](http://img.blog.csdn.net/20170506153818748?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/ndplot5.jpg)
 
 可以发现总体分布是均匀分布，而样本均值的抽样分布却呈现了近似正态分布，均值是相同的，但是方差却有差异。
 根据总体分布以及样本容量可以将抽样分布分为以下三类：
@@ -147,7 +147,7 @@ $$设从均值为\mu， 方差为\sigma^2的一个任意总体中抽取容量为
 
 用一张图来说明这个定理（摘自参考书目1：贾俊平，《统计学》（第五版），中国人民大学出版社，2012.）。
 
-![这里写图片描述](http://img.blog.csdn.net/20170506154006095?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170506153952.jpg)
 
 当然也在这里诞生了一个统计学闻名于世的规定，样本容量n一般至少要求>30。
 因此样本均值的抽样分布中，样本均值的数学期望（也就是均值）和方差就有对应的公式了。
@@ -192,7 +192,7 @@ $$ 若U和V为两个独立的\chi^2分布随机变量，U\sim \chi^2(n_1)， V\s
 
 卡方分布的性质可以根据这张图来看。
 
-![这里写图片描述](http://img.blog.csdn.net/20170506163624562?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/Rplot6.png)
 
 卡方分布一般用于样本方差的分布的计算。
 样本方差的分布——在重复选取容量为n的样本时， 由样本方差的所有可能取值形成的相对频数分布。
@@ -210,7 +210,7 @@ t分布的性质和特点如下：
 
 t分布的性质可以根据这张图来看。
 
-![这里写图片描述](http://img.blog.csdn.net/20170506165455196?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/Rplot7.png)
 
 t分布的应用是在求样本均值与样本标准差之比上
 样本均值与样本标准差之比的分布为：
@@ -240,7 +240,7 @@ F分布：
 $$ 设若U为服从自由度为n_1的\chi^2分布，即U\sim \chi^2(n_1), $$ $$ V为服从自由度为n_2的\chi^2分布，即V\sim \chi^2(n_2),且U与V相互独立, $$ $$ F=\frac{U/n_1}{V/n_2},F服从自由度n_1和n_2的F分布, $$ $$记为 F\sim F(n_1,n_2) $$
 不同自由度下的F分布
 
-![这里写图片描述](http://img.blog.csdn.net/20170506194529874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/Rplot8.png)
 
 两个样本方差比的抽样分布：
 > * 两个总体都为正态分布，即

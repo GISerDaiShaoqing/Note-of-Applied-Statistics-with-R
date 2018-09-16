@@ -10,7 +10,7 @@
 
 相关关系包括了线性相关（正相关、负相关）、非线性相关、完全相关（正相关、负相关）、不相关。
 
-![](http://c.hiphotos.baidu.com/image/pic/item/adaf2edda3cc7cd9ef270c6b3301213fb80e917d.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot.jpeg)
 
 除了如上的图，可以看下面的链接——关于相同统计量不同数据的一篇外文。
 > https://www.autodeskresearch.com/publications/samestats
@@ -199,7 +199,7 @@ con<-predict.lm(modele,h,interval="confidence",level=0.95)
 polygon(c(h[,1], rev(h[,1])), c(con[,3], rev(con[,2])),border="red",lwd=1,lty = c("dashed", "solid"))
 ```
 
-![](http://e.hiphotos.baidu.com/image/pic/item/e1fe9925bc315c60f07e93b187b1cb1348547781.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot2.jpeg)
 
 ### 4 残差分析
 **残差(residual)**——因变量的观测值与根据估计的回归方程求出的预测值之差，用e表示。
@@ -247,7 +247,7 @@ plot(modele)
 ```
 结果如图
 
-![](http://f.hiphotos.baidu.com/image/pic/item/7acb0a46f21fbe0906ef384a61600c338744ad3f.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot3.jpeg)
 
 **异常值(outlier)与识别**
 如果某一个点与其他点所呈现的趋势不相吻合，这个点就有可能是异常点。
@@ -296,7 +296,7 @@ $$E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_px_p+\varepsilon$$
 
 二元回归方程的几何表达——回归面。
 
-![](http://f.hiphotos.baidu.com/image/pic/item/c995d143ad4bd11366254c6c50afa40f4afb0587.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot4.jpeg)
 
 **估计的多元回归的方程(estimated multiple regression equation)**
 用样本统计量$b_0,b_1,b_2,\cdots,b_p$估计回归方程中的参数$\beta_0,\beta_1,\beta_2,\cdots,\beta_p$时得到的方程。一般形式为。
@@ -381,7 +381,7 @@ $R_2^j$是第j个自变量对其它自变量进行回归的判定系数。VIF=1�
 **（1）二阶回归模型(Quadratic Regression Model)**——当散点图如下所示，可考虑二次回归模型。
 $$y_i=\beta_0+\beta_1x_i+\beta_2x_i^2+\varepsilon$$
 
-![](http://a.hiphotos.baidu.com/image/pic/item/342ac65c1038534373c8627f9913b07eca80886d.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot5.jpeg)
 
 **二阶回归模型的显著性检验**
 > * 总体显著性检验
@@ -413,26 +413,26 @@ $$ H_1：\beta_3\neq 0 （x_1和x_2有交互作用）$$
 > * 双曲线
 基本形式：$y=\frac{x}{\alpha x+\beta}$
 线性化方法：$令y'=\frac{1}{y}，x'=\frac{1}{x}，则有y'=\alpha+\beta x'$
-![](http://f.hiphotos.baidu.com/image/pic/item/359b033b5bb5c9ea68b6e6bddf39b6003af3b323.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot6.jpeg)
 
 > * 幂函数曲线
 基本形式：$y=\alpha x^\beta$
 线性化方法：$两端取对数得：lgy=lg\alpha+\beta lgx，y'=lgy，x'=lgx，则有y'=lg\alpha+\beta x'$
-![](http://e.hiphotos.baidu.com/image/pic/item/faf2b2119313b07e46efb55606d7912397dd8c1a.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot7.jpeg)
 
 > * 对数曲线
 基本形式：$y=\alpha+\beta lnx$
 线性化方法：$x'=lnx，则有y'=\alpha+\beta x'$
-![](http://a.hiphotos.baidu.com/image/pic/item/c8ea15ce36d3d53936c4ea9d3087e950342ab0f7.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot8.jpeg)
 
 > * 指数曲线
 基本形式：$y=\alpha^{\beta x}$
 线性化方法：$两端取对数得：lny=ln\alpha+\beta x，y'=lny，则有y'=ln\alpha+\beta x$
-![](http://a.hiphotos.baidu.com/image/pic/item/b812c8fcc3cec3fd0c24432bdc88d43f87942752.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot9.jpeg)
 > * S型曲线
 基本形式：$y=\frac{1}{\alpha+\beta e^{-x}}$
 线性化方法：$令y'=1/y，x'=e^{-x}，则有y'=\alpha+\beta x'$
-![](http://g.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a5e0ae6f5093b5bb5c9eab869.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot10.jpeg)
 
 ### 9 建立回归模型
 得到描述因变量与一个或一个以上自变量之间关系的估计的回归方程。目的是建立一个基于最好自变量集合的模型。找到一个适合的描述变量关系之间关系的函数。选择模型应包含的变量。
@@ -523,11 +523,11 @@ F越大，说明增加变量减少预测误差的效果越显著。
 ### 11 Logistic 回归
 Logistic回归提出的目的是为了解决二值化数据的回归问题。那么为什么简单线性回归模型不适合二值化数据的回归呢？详细原因可见如下图。
  
-![](http://f.hiphotos.baidu.com/image/pic/item/6a63f6246b600c33ea0a3996104c510fd9f9a179.jpg) 
+![](http://pbl6hpz34.bkt.clouddn.com/plot11.jpeg) 
 
 二值化变量是“yes”或者"no"的数据。可以被编码为1和0，也就是说不会有其他的变异数值。所以对于这种情况模型的要求是：模型的边界为0和1，模型可以输出的是一个在这类或者另一类的概率。我们想要的是一个实际值落入这类或者另一类的概率大小。而理想的模型是很好的估计0和1，或者换句话说，结果是0或1。所以解决方案就是Logistic回归。
 
-![](http://h.hiphotos.baidu.com/image/pic/item/2fdda3cc7cd98d10963de06f2b3fb80e7aec9087.jpg)
+![](http://pbl6hpz34.bkt.clouddn.com/plot12.jpeg)
 
 Logistic的基本形式为
 $$ \pi_i'=ln(\frac{\pi_i}{1-\pi_i})=\beta_0+\beta_1x_i $$

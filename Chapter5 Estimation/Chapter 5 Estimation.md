@@ -38,7 +38,7 @@
 
 二者的区别在于：点估计是一个数，区间估计给出一个区间，提供更多关于变异性的信息。通俗的解释，你女朋友买了件衣服，让你猜价格，你猜中准确价格很难，但是你猜一个范围还是准确度比较高的。
 
-![这里写图片描述](http://img.blog.csdn.net/20170507151431021?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170507151334.jpg)
 
 所以区间估计(interval estimate)的概念是——根据样本统计量的抽样分布能够对样本统计量与总体参数的接近程度给出一个概率度量。
 由概率度量则引出了置信区间（Confidence Intervals）的概念。

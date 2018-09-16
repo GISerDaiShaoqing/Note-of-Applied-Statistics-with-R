@@ -1,12 +1,16 @@
 # Note-of-Applied-Statistics-with-R
-### Author: Dai Shaoqing
-### E-mails: dsq1993qingge@163.com. 
+
+|Author|Shaoqing Dai|
+|---|---|
+|E-mail|dsq1993qingge@163.com|
+
 ### Other E-mails:
 >* giser1993dsq@gmail.com. 
 >* sqdai@iue.ac.cn. 
 >* daishaoqing16@mails.ucas.ac.cn.
 
 This is some note of Applied Statistics with R which comes from my course "Applied Statistics" at this term.
+
 The Note includes 14 Chapters. The note is in Chinese.
 
 [gitbook online](https://giserdaishaoqing.gitbooks.io/note-of-applied-statistics-with-r-book/content/)
@@ -26,10 +30,12 @@ The Note includes 14 Chapters. The note is in Chinese.
 #### [Chapter 13 Factor Analysis](https://giserdaishaoqing.github.io/2017/10/06/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E5%9B%A0%E5%AD%90%E5%88%86%E6%9E%90/)
 #### [Chapter 14 Case and Practice](https://giserdaishaoqing.github.io/2017/10/08/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%8D%81%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E6%A1%88%E4%BE%8B%E4%B8%8E%E5%AE%9E%E8%B7%B5/)
 
-
 # 应用统计学与R语言实现学习笔记
-### 作者: 戴劭勍
-### 邮箱：dsq1993qingge@163.com. 
+
+|作者|戴劭勍|
+|---|---|
+|邮箱|dsq1993qingge@163.com|
+
 ### 其他邮箱:
 >* giser1993dsq@gmail.com. 
 >* sqdai@iue.ac.cn. 
