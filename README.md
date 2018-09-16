@@ -1,4 +1,4 @@
-# Note-of-Applied-Statistics-with-R
+# Note of Applied Statistics with R
 
 |Author|Shaoqing Dai|
 |---|---|
@@ -14,6 +14,15 @@ This is some note of Applied Statistics with R which comes from my course "Appli
 The Note includes 14 Chapters. The note is in Chinese.
 
 [gitbook online](https://giserdaishaoqing.gitbooks.io/note-of-applied-statistics-with-r-book/content/)
+
+### Download
+[Note-of-Applied-Statistics-with-R pdf](http://p04n283nf.bkt.clouddn.com/note-of-applied-statistics-with-r-book.pdf)
+
+[Note-of-Applied-Statistics-with-R mobi](http://p04n283nf.bkt.clouddn.com/note-of-applied-statistics-with-r-book.mobi)
+
+[Note-of-Applied-Statistics-with-R epub](http://p04n283nf.bkt.clouddn.com/note-of-applied-statistics-with-r-book.epub)
+
+[Note-of-Applied-Statistics-with-R Baidu Pan](https://pan.baidu.com/share/home?uk=2855623577&suk=QR0keGnZkZWNh9Pf3aQyaQ&view=share#category/type=0)
 
 #### [Chapter 1 Introduction](https://giserdaishaoqing.github.io/2017/05/02/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B/)
 #### [Chapter 2 Data Collection](https://giserdaishaoqing.github.io/2017/05/04/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/)
@@ -46,6 +55,15 @@ The Note includes 14 Chapters. The note is in Chinese.
 笔记包括了14章的内容，中文版。
 
 [gitbook在线电子书](https://giserdaishaoqing.gitbooks.io/note-of-applied-statistics-with-r-book/content/)
+
+### 下载
+[应用统计学与R与语言实现笔记 pdf版](http://p04n283nf.bkt.clouddn.com/note-of-applied-statistics-with-r-book.pdf)
+
+[应用统计学与R与语言实现笔记 mobi版](http://p04n283nf.bkt.clouddn.com/note-of-applied-statistics-with-r-book.mobi)
+
+[应用统计学与R与语言实现笔记 epub版](http://p04n283nf.bkt.clouddn.com/note-of-applied-statistics-with-r-book.epub)
+
+[应用统计学与R与语言实现笔记 网盘链接](https://pan.baidu.com/share/home?uk=2855623577&suk=QR0keGnZkZWNh9Pf3aQyaQ&view=share#category/type=0)
 
 #### [Chapter 1 简介](https://giserdaishaoqing.github.io/2017/05/02/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B/)
 #### [Chapter 2 数据收集](https://giserdaishaoqing.github.io/2017/05/04/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/)
