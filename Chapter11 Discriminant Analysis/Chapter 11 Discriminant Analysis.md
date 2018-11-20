@@ -93,7 +93,7 @@ $W(x)=(x-\mu_j)'\Sigma_j^{-1}(x-\mu_j)-(x-\mu_i)'\Sigma_i^{-1}(x-\mu_i),i,j=1,\c
 #### 2.2 Fisher判别法
 Fisher判别法的思想就是投影，将k组p维数据投影到某一个方向，使得它们的投影组与组之间尽可能的分开。考虑只有两个(预测)变量的判别问题。假定只有两类。数据中的每个观测值是二维空间的一个点。这里只有两种已知类型的训练样本。一 类 有 38 个 点 ( 用“o”表示)，另一类有44个点(用“*”表示)。按原来变量(横坐标和纵坐标)，很难将这两种点分开。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170909171613.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170909171613.jpg)
 
 但是沿着图上的虚线方向朝和这个虚线垂直的一条直线进行投影会使得这两类分得最清楚。可以看出，如果向其他方向投影，判别效果不会比这个好。有了投影之后，再用前面讲到的距离远近的方法得到判别准则。这种先投影的判别方法就是Fisher判别法。
 Fisher判别法
@@ -192,19 +192,19 @@ Fisher判别法的依据不是x属于哪个总体的概率的大小，而是类�
 正如上文提到的，我们以一个简单的地物分类的例子来进行实践。
 原始的遥感影像如图所示(高分一号卫星16 m数据）。
 
-![](http://pbl6hpz34.bkt.clouddn.com/rawImage.jpg)
+![](http://blog.gisersqdai.top/rawImage.jpg)
 
 高分一号卫星有四个波段，分别显示如下：
 
-![](http://pbl6hpz34.bkt.clouddn.com/singleband.jpg)
+![](http://blog.gisersqdai.top/singleband.jpg)
 
 我们随机在区域内生成了55个样本点，并根据目视解译做了分类，由于所处研究区位于新城且仅作测试，用地类型仅选择了两类：建设用地/不透水面和植被。前面已经用4，3，2显示了原始影像，红色部分即为植被。植被为类型1，建设用地/不透水面为类型2。
 
-![](http://pbl6hpz34.bkt.clouddn.com/traindata.jpg)
+![](http://blog.gisersqdai.top/traindata.jpg)
 
 另外我们随机在区域内还生成了10个样本点作为验证点。
 
-![](http://pbl6hpz34.bkt.clouddn.com/validation.jpg)
+![](http://blog.gisersqdai.top/validation.jpg)
 
 接着下来我们读取数据并且利用三种不同的判别分析方法进行判别分析地物类别。
 判别分析可以自己通过dist函数计算距离得到。现在已经有对应的包可以直接分析。
@@ -225,30 +225,30 @@ Trnx是训练样本数据。TrnG为分类结果，p为指定先验概率的向�
 接下来就是基于高分影像的四个波段进行训练和判别分析。
 距离判别分析结果。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170911203442.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170911203442.jpg)
 
 Fisher判别分析结果。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170911203533.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170911203533.jpg)
 
 列联表分析及判别准确率。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170911203539.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170911203539.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170911203545.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170911203545.jpg)
 
 Bayes判别分析结果。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170911203556.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170911203556.jpg)
 
 从样本数据来看，Fisher结果是最好的。
 接下来即按照训练好的判别规则进行分类。这里发现WMDB包的两个函数并没有提供预测功能，这里选用了另一个包klaR来做贝叶斯分类（朴素贝叶斯）。
 分类结果对比：
 
-![](http://pbl6hpz34.bkt.clouddn.com/twoclassification.jpg)
+![](http://blog.gisersqdai.top/twoclassification.jpg)
 
 为了验证准确率，这里利用随机生成的10个验证点进行精度验证。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170911211130.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170911211130.jpg)
 
 由于选取验证点较少，准确率都达到了100%。从实际影像对比来看，似乎Bayes方法将更多细小的植被提取出来了，但是也有一部分道路错分。Fisher方法少提取了一部分，但错分的部分几乎没有。

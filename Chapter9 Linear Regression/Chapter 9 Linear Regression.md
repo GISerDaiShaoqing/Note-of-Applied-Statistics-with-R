@@ -10,7 +10,7 @@
 
 相关关系包括了线性相关（正相关、负相关）、非线性相关、完全相关（正相关、负相关）、不相关。
 
-![](http://pbl6hpz34.bkt.clouddn.com/plot.jpeg)
+![](http://blog.gisersqdai.top/plot.jpeg)
 
 除了如上的图，可以看下面的链接——关于相同统计量不同数据的一篇外文。
 > https://www.autodeskresearch.com/publications/samestats
@@ -199,7 +199,7 @@ con<-predict.lm(modele,h,interval="confidence",level=0.95)
 polygon(c(h[,1], rev(h[,1])), c(con[,3], rev(con[,2])),border="red",lwd=1,lty = c("dashed", "solid"))
 ```
 
-![](http://pbl6hpz34.bkt.clouddn.com/plot2.jpeg)
+![](http://blog.gisersqdai.top/plot2.jpeg)
 
 ### 4 残差分析
 **残差(residual)**——因变量的观测值与根据估计的回归方程求出的预测值之差，用e表示。
@@ -247,7 +247,7 @@ plot(modele)
 ```
 结果如图
 
-![](http://pbl6hpz34.bkt.clouddn.com/plot3.jpeg)
+![](http://blog.gisersqdai.top/plot3.jpeg)
 
 **异常值(outlier)与识别**
 如果某一个点与其他点所呈现的趋势不相吻合，这个点就有可能是异常点。
@@ -296,7 +296,7 @@ $$E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_px_p+\varepsilon$$
 
 二元回归方程的几何表达——回归面。
 
-![](http://pbl6hpz34.bkt.clouddn.com/plot4.jpeg)
+![](http://blog.gisersqdai.top/plot4.jpeg)
 
 **估计的多元回归的方程(estimated multiple regression equation)**
 用样本统计量$b_0,b_1,b_2,\cdots,b_p$估计回归方程中的参数$\beta_0,\beta_1,\beta_2,\cdots,\beta_p$时得到的方程。一般形式为。
@@ -381,7 +381,7 @@ $R_2^j$是第j个自变量对其它自变量进行回归的判定系数。VIF=1�
 **（1）二阶回归模型(Quadratic Regression Model)**——当散点图如下所示，可考虑二次回归模型。
 $$y_i=\beta_0+\beta_1x_i+\beta_2x_i^2+\varepsilon$$
 
-![](http://pbl6hpz34.bkt.clouddn.com/plot5.jpeg)
+![](http://blog.gisersqdai.top/plot5.jpeg)
 
 **二阶回归模型的显著性检验**
 > * 总体显著性检验
@@ -413,26 +413,26 @@ $$ H_1：\beta_3\neq 0 （x_1和x_2有交互作用）$$
 > * 双曲线
 基本形式：$y=\frac{x}{\alpha x+\beta}$
 线性化方法：$令y'=\frac{1}{y}，x'=\frac{1}{x}，则有y'=\alpha+\beta x'$
-![](http://pbl6hpz34.bkt.clouddn.com/plot6.jpeg)
+![](http://blog.gisersqdai.top/plot6.jpeg)
 
 > * 幂函数曲线
 基本形式：$y=\alpha x^\beta$
 线性化方法：$两端取对数得：lgy=lg\alpha+\beta lgx，y'=lgy，x'=lgx，则有y'=lg\alpha+\beta x'$
-![](http://pbl6hpz34.bkt.clouddn.com/plot7.jpeg)
+![](http://blog.gisersqdai.top/plot7.jpeg)
 
 > * 对数曲线
 基本形式：$y=\alpha+\beta lnx$
 线性化方法：$x'=lnx，则有y'=\alpha+\beta x'$
-![](http://pbl6hpz34.bkt.clouddn.com/plot8.jpeg)
+![](http://blog.gisersqdai.top/plot8.jpeg)
 
 > * 指数曲线
 基本形式：$y=\alpha^{\beta x}$
 线性化方法：$两端取对数得：lny=ln\alpha+\beta x，y'=lny，则有y'=ln\alpha+\beta x$
-![](http://pbl6hpz34.bkt.clouddn.com/plot9.jpeg)
+![](http://blog.gisersqdai.top/plot9.jpeg)
 > * S型曲线
 基本形式：$y=\frac{1}{\alpha+\beta e^{-x}}$
 线性化方法：$令y'=1/y，x'=e^{-x}，则有y'=\alpha+\beta x'$
-![](http://pbl6hpz34.bkt.clouddn.com/plot10.jpeg)
+![](http://blog.gisersqdai.top/plot10.jpeg)
 
 ### 9 建立回归模型
 得到描述因变量与一个或一个以上自变量之间关系的估计的回归方程。目的是建立一个基于最好自变量集合的模型。找到一个适合的描述变量关系之间关系的函数。选择模型应包含的变量。
@@ -464,82 +464,4 @@ F越大，说明增加变量减少预测误差的效果越显著。
 1.先检查是否有变量需从模型中删除。
 2.再检查增加一个变量是否能改善模型。
 3.重复以上过程。
-注意： α进≤α出，否则F进<F<F出，会导致无限循环。
-> * 最佳子集回归(Best-subset approach)
-对所有可能的自变量组合进行估计。找出具有最大的修正判定系数$adj.R^2$和最小的估计误差标准差$s_ε$。
-
-### 10 回归中的常见错误
-（1）没有检验线性关系假设
->画散点图。
->如果不是线性的，检验其它非线性。
->用线性关系描述非线性关系会引起误导。
-
-（2）只看结果不看图表
->要将画散点图作为回归分析的一部分。
->检验回归直线与实际观测值间的关系。
->对自动回归来说这一步更为重要。
-
-（3）用回归系数判定变量的重要性
->回归系数依赖于自变量的量纲，因此系数的大小与变量的重要性无关。
->例如，将秒变为微秒没有改变任何事实，但是变量的系数却有所改变。
-
-（4）没有确定置信区间
->观察值是随机样本，所以回归结果有一定随机性。
->不确定置信区间，不可能理解参数的真正含义。
-
-（5）没有计算判定系数
->没有$R^2$，很难确定多少变异是由回归解释的。
->即使$R^2$看起来很好，安全起见还应做F-test。
-
-（6）错误解释相关系数
->判定系数是$R^2$。
->相关系数是R。
->$R^2$给出变异由回归解释的百分比，不是R。
->如：R =0.5,$R^2$=0.25——回归解释了25%的变异，不是50%。
-
-（7）使用强相关的自变量
->模型同时包括两强相关的自变量会降低回归模型的显著性。
->要尽可能的了解自变量间的关系。
-
-（8）用回归模型预测观测值范围之外的区域
->回归是基于某一特定观测样本的。
->在样本观测值范围内能提供较为精确的估计。
-
-（9）观测值取值范围太小
->回归只有在观测值取值范围附近预测的结果比较好。
->如果不在常用的范围内取值，回归模型用处不大。
-
-(10)包括太多的自变量
->变量越多的模型不一定越好。
->有可能出现多重共线性。
-
-（11）认为好的预测变量是好的控制变量
-相关关系不一定因果关系：A与B相关，并不意味着可以通过改变A来控制B。
-
-（12）线性回归结果会给人以误导
->为了提供一个简练的总结，回归过程中舍弃了一些信息。
->有时一些重要的特征也舍弃了——看图形表示可以告诉我们是否有问题。
-
-### 11 Logistic 回归
-Logistic回归提出的目的是为了解决二值化数据的回归问题。那么为什么简单线性回归模型不适合二值化数据的回归呢？详细原因可见如下图。
- 
-![](http://pbl6hpz34.bkt.clouddn.com/plot11.jpeg) 
-
-二值化变量是“yes”或者"no"的数据。可以被编码为1和0，也就是说不会有其他的变异数值。所以对于这种情况模型的要求是：模型的边界为0和1，模型可以输出的是一个在这类或者另一类的概率。我们想要的是一个实际值落入这类或者另一类的概率大小。而理想的模型是很好的估计0和1，或者换句话说，结果是0或1。所以解决方案就是Logistic回归。
-
-![](http://pbl6hpz34.bkt.clouddn.com/plot12.jpeg)
-
-Logistic的基本形式为
-$$ \pi_i'=ln(\frac{\pi_i}{1-\pi_i})=\beta_0+\beta_1x_i $$
-通过观测值估计$n_i$的概率$p_i$，并且用$ln(\frac{p_i}{1-p_i})$估计。
-典型案例：
-城市增长问题，城市化预测模拟，
-
-**常见的问题**
-
-> * 都有一个二值化（或分类）变量：
-> * 都涉及到预测的思想机会，概率，比例或百分比。
-> * 不像其他的预测情况，y值是有界的。
-
-**Logistic 回归与简单线性回归**
-> logistic回归是一种统计技术，可以用二值化变量问题中。回归虽有相似之处，但它不同于普通最小二乘法。识别重要和相似之处是两种技术的区别。
+注意： α进≤α出，否则F进<F<F出，会导致�

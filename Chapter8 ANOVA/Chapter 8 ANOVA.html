@@ -118,7 +118,7 @@
 </blockquote><div class="md-section-divider"></div><h3 data-anchor-id="brn4" id="2单因子方差分析one-way-anova">2.单因子方差分析（One-way ANOVA)</h3><p data-anchor-id="igrn">从这章开始后面的部分基本是典型数据分析，故我会渗透更多的数据分析的一些经验和理念。在这里因为要正式进入方差分析的具体内容里，所以我想谈的一点是我曾经说过的一句话——编程先学数据结构。数据结构的重要性可以参加下面的知乎。</p><blockquote data-anchor-id="h02t" class="white-blockquote">
   <p><a href="https://www.zhihu.com/question/29587605" target="_blank">https://www.zhihu.com/question/29587605</a></p>
 </blockquote><p data-anchor-id="x28g">当然对于R或是其他数据处理语言来说，我觉得最关键的是你在使用分析数据（调用各种包）时需要了解你所调用的包或者函数处理的是什么样的数据（你要把数据处理成你的函数可以读的形式）。 <br>
-当然这是题外话，还是回到标题的单因子方差分析。</p><p data-anchor-id="i59d">如果一个试验中，只有一个因子在变，而其它因素保持不变，称此试验为单因子试验（只涉及一个分类型自变量）。那么它的数据结构如下所示：</p><p data-anchor-id="rvb7"><img src="http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170607211632.jpg" alt="" title=""></p><p data-anchor-id="zxlr">当然事实上在分析的时候，个人觉得R和其他数据所能读取的数据结构或者说组织方式还是2列的变量（数值型变量与分类变量）。</p><p data-anchor-id="m5d9">分析步骤则是统计学的经典三部曲：</p><blockquote data-anchor-id="i38y" class="white-blockquote">
+当然这是题外话，还是回到标题的单因子方差分析。</p><p data-anchor-id="i59d">如果一个试验中，只有一个因子在变，而其它因素保持不变，称此试验为单因子试验（只涉及一个分类型自变量）。那么它的数据结构如下所示：</p><p data-anchor-id="rvb7"><img src="http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170607211632.jpg" alt="" title=""></p><p data-anchor-id="zxlr">当然事实上在分析的时候，个人觉得R和其他数据所能读取的数据结构或者说组织方式还是2列的变量（数值型变量与分类变量）。</p><p data-anchor-id="m5d9">分析步骤则是统计学的经典三部曲：</p><blockquote data-anchor-id="i38y" class="white-blockquote">
   <ul>
   <li>提出假设；</li>
   <li>构造检验统计量；</li>

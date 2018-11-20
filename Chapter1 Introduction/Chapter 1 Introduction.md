@@ -36,7 +36,7 @@ Copyright 1994-2000 Encyclopaedia Britannica, In
 
 同时跟统计学密切相关的就是概率论。这二者都是研究随机现象数量规律的学科。而二者的区别可以用一张图来形象体现：
 
-![这里写图片描述](http://img.blog.csdn.net/20170501221112045?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRVNBX0RTUQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20170501221059.jpg)
 
 也就是说，概率论是——我知道箱子里面是什么样的，我想知道我拿在手里的球是什么样的可能性分别有多大。统计学则是——我不知道箱子里面是什么样的，但是我已经知道我拿在手里的球是什么样的，我想靠我手里的球的样子去推断箱子是什么样的。
 有兴趣的也可以查看知乎上的回答。

@@ -73,38 +73,38 @@ b)不重复抽样，总体单位数分别为10000、1000时的样本均值的抽
 这一份作业汇总从最原始的描述统计、参数估计、假设检验到基础的方差分析与回归分析均有了。根据这里的习题即可对前面的内容再次熟悉。
 这里就不多说了，我有一份比较完整的文档针对这份内容。这里先给出节选部分的截图。具体地址再给出。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212350.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212350.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212403.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212403.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212410.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212410.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212420.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212420.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212433.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212433.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212442.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212442.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212459.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212459.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212511.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212511.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212519.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212519.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212528.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212528.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212538.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212538.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212545.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212545.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212552.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212552.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212558.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212558.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212607.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212607.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212612.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212612.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212620.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212620.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171008212629.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171008212629.jpg)

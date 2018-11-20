@@ -185,16 +185,16 @@ r是相关系数矩阵或原始数据矩阵；nfactors设定提取的因子数�
 用上一章提供的数据再进行因子分析。比较不同函数结果的差异。
 基于factnal函数，3个因子。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171006171159.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171006171159.jpg)
 
 基于自编函数，3个因子。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171006171641.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171006171641.jpg)
 
 基于fa函数，3个因子。
 
-![](http://pbl6hpz34.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20171006171818.jpg)
+![](http://blog.gisersqdai.top/QQ%E6%88%AA%E5%9B%BE20171006171818.jpg)
 
-![](http://pbl6hpz34.bkt.clouddn.com/FA1.png)
+![](http://blog.gisersqdai.top/FA1.png)
 
-![](http://pbl6hpz34.bkt.clouddn.com/FA2.png)
+![](http://blog.gisersqdai.top/FA2.png)
