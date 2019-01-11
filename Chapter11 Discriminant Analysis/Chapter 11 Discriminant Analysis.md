@@ -54,7 +54,8 @@ $$ d^2(x,G_i)=(x-μ_i)’(\Sigma_i)^{-1}(x-μ_i) $$
 定义：
 $$ \begin{aligned}
 d^2(x,G_1)-d^2(x,G_2) & =(x-\mu_1)'\Sigma^{-1}(x-\mu_1)-(x-\mu_2)'\Sigma^{-1}(x-\mu_2) \\ &=-2[x-(\mu_1+\mu_2)/2]'\Sigma^{-1}(\mu_1-\mu_2) \end{aligned} $$
-令：$ \bar\mu=(\mu_1+\mu_2)/2, \alpha=\Sigma^{-1}(\mu_1-\mu_2),W(x)=(x-\bar\mu)'\alpha=\alpha'(x-\bar\mu) $
+令：$ \bar\mu=(\mu_1+\mu_2)/2, \alpha=\Sigma^{-1}(\mu_1-\mu_2) $,
+所以$ W(x)=(x-\bar\mu)'\alpha=\alpha'(x-\bar\mu) $
 判别规则：
 > 如果W(x)>0，d(x,$G_1$) < d(x,$G_2$)则$x\in G_1$
 > 如果W(x)<0，d(x,$G_,1$) > d(x,$G_2$)则$x\in G_2$
@@ -62,9 +63,11 @@ d^2(x,G_1)-d^2(x,G_2) & =(x-\mu_1)'\Sigma^{-1}(x-\mu_1)-(x-\mu_2)'\Sigma^{-1}(x-
 称W(x)为判别函数(discriminant function)，α为判别系数。
 当$\mu_1,\mu_2,\Sigma$未知时，可通过样本来估计。
 $ x_1^{(i)},\cdots,x_{n_i}^{(i)} $为来自$G_i$的样本(i=1,2)。
+根据样本估计总体，有如下公式：
 $$ \hat\mu^{(i)}=\frac{1}{n_i}\sum_{k=1}^{n_2}x_k^{(i)}=\bar x^{(i)},\hat \Sigma=\frac{1}{n_1+n_2-2}(S_1+S_2), $$
 $$ S_i=\sum_{t=1}^{n_i}(x_t^{(i)}-\bar x^{(i)})(x_t^{(i)}-\bar x^{(i)})',\bar x=\frac{1}{2}(\bar x^{(1)}+\bar x^{(2)}) $$
-判别函数为$W(x)=(x-\bar x)'\Sigma^{-1}(\bar x^{(1)}-\bar x^{(2)})$
+
+因此最后的判别函数为$W(x)=(x-\bar x)'\hat \Sigma^{-1}(\bar x^{(1)}-\bar x^{(2)})$
 > * $\Sigma_1 \neq \Sigma_2$
 判别函数为二次函数
 $W(x)=d^2(x,G_2)-d^2(x,G_1)=(x-\mu_2)'\Sigma_2^{-1}(x-\mu_2)-(x-\mu_1)'\Sigma_2^{-1}(x-\mu_1)$
@@ -76,7 +79,7 @@ $W(x)=d^2(x,G_2)-d^2(x,G_1)=(x-\mu_2)'\Sigma_2^{-1}(x-\mu_2)-(x-\mu_1)'\Sigma_2^
 **多总体情况**
 > * 多总体情况：协方差相同
 假设有k个总体$G_1,G_2,\cdots,G_k$，它们的均值向量分别为$\mu_1,\mu_2,\cdots,\mu_k$,协方差阵为$\Sigma$，类似于两总体的讨论，判别函数为：
-$W_{ij}(x)=[x-(\mu_1+\mu_2)/2]'\Sigma^{-1}(\mu_i-\mu_j),i,j=1,\cdots,k$
+$W_{ij}(x)=[x-(\mu_i+\mu_j)/2]'\Sigma^{-1}(\mu_i-\mu_j),i,j=1,\cdots,k$
 判别规则：
 如果存在i，对所有j≠i，有$W_{ij}(x)>0$，则$x\in G_i$，否则待判。
 如果服从多元正态分布，且各组协方差相同
