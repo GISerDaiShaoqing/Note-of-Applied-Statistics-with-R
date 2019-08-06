@@ -4,11 +4,6 @@
 |---|---|
 |E-mail|dsq1993qingge@163.com|
 
-### Other E-mails:
->* giser1993dsq@gmail.com. 
->* sqdai@iue.ac.cn. 
->* daishaoqing16@mails.ucas.ac.cn.
-
 This is some note of Applied Statistics with R which comes from my course "Applied Statistics" at this term.
 
 The Note includes 14 Chapters. The note is in Chinese.
