@@ -11,13 +11,11 @@ The Note includes 14 Chapters. The note is in Chinese.
 [gitbook online](https://giserdaishaoqing.gitbooks.io/note-of-applied-statistics-with-r-book/content/)
 
 ### Download
-[Note-of-Applied-Statistics-with-R pdf](http://science.gisersqdai.top/note-of-applied-statistics-with-r-book.pdf)
+[Note-of-Applied-Statistics-with-R pdf](http://science.gisersqdai.top/NBAPR%2Fnote-of-applied-statistics-with-r-book.pdf)
 
-[Note-of-Applied-Statistics-with-R mobi](http://science.gisersqdai.top/note-of-applied-statistics-with-r-book.mobi)
+[Note-of-Applied-Statistics-with-R mobi](http://science.gisersqdai.top/NBAPR%2Fnote-of-applied-statistics-with-r-book.mobi)
 
-[Note-of-Applied-Statistics-with-R epub](http://science.gisersqdai.top/note-of-applied-statistics-with-r-book.epub)
-
-[Note-of-Applied-Statistics-with-R Baidu Pan](https://pan.baidu.com/share/home?uk=2855623577&suk=QR0keGnZkZWNh9Pf3aQyaQ&view=share#category/type=0)
+[Note-of-Applied-Statistics-with-R epub](http://science.gisersqdai.top/NBAPR%2Fnote-of-applied-statistics-with-r-book.epub)
 
 ### Blog
 [Chapter 1 Introduction](https://gisersqdai.top/2017/05/02/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B/)
@@ -52,6 +50,8 @@ The Note includes 14 Chapters. The note is in Chinese.
 
 [Modification 1 about Discriminant Analysis](http://gisersqdai.top/2019/01/10/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%95%AA%E5%A4%96%E7%AF%87%E4%B8%80%EF%BC%89/)
 
+[Modification 2 about Hypothesis Test](http://gisersqdai.top/2020/02/19/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%95%AA%E5%A4%96%E7%AF%87%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C%E6%9B%B4%E6%AD%A3/)
+
 # 应用统计学与R语言实现学习笔记
 
 |作者|戴劭勍|
@@ -70,13 +70,11 @@ The Note includes 14 Chapters. The note is in Chinese.
 [gitbook在线电子书](https://giserdaishaoqing.gitbooks.io/note-of-applied-statistics-with-r-book/content/)
 
 ### 下载
-[应用统计学与R与语言实现笔记 pdf版](http://science.gisersqdai.top/note-of-applied-statistics-with-r-book.pdf)
+[应用统计学与R与语言实现笔记 pdf版](http://science.gisersqdai.top/NBAPR%2Fnote-of-applied-statistics-with-r-book.pdf)
 
-[应用统计学与R与语言实现笔记 mobi版](http://science.gisersqdai.top/note-of-applied-statistics-with-r-book.mobi)
+[应用统计学与R与语言实现笔记 mobi版](http://science.gisersqdai.top/NBAPR%2Fnote-of-applied-statistics-with-r-book.mobi)
 
-[应用统计学与R与语言实现笔记 epub版](http://science.gisersqdai.top/note-of-applied-statistics-with-r-book.epub)
-
-[应用统计学与R与语言实现笔记 网盘链接](https://pan.baidu.com/share/home?uk=2855623577&suk=QR0keGnZkZWNh9Pf3aQyaQ&view=share#category/type=0)
+[应用统计学与R与语言实现笔记 epub版](http://science.gisersqdai.top/NBAPR%2Fnote-of-applied-statistics-with-r-book.epub)
 
 ### 博客链接
 [Chapter 1 简介](https://gisersqdai.top/2017/05/02/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B/)
@@ -110,3 +108,5 @@ The Note includes 14 Chapters. The note is in Chinese.
 ### 更正
 
 [番外篇一——判别分析更正](http://gisersqdai.top/2019/01/10/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%95%AA%E5%A4%96%E7%AF%87%E4%B8%80%EF%BC%89/)
+
+[番外篇二——假设检验更正](http://gisersqdai.top/2020/02/19/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%95%AA%E5%A4%96%E7%AF%87%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C%E6%9B%B4%E6%AD%A3/)
