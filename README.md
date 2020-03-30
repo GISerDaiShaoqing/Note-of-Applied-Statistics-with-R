@@ -52,7 +52,7 @@ The Note includes 14 Chapters. The note is in Chinese.
 
 [Modification 2 about Hypothesis Test](http://gisersqdai.top/2020/02/19/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%95%AA%E5%A4%96%E7%AF%87%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C%E6%9B%B4%E6%AD%A3/)
 
-[Supplementary Material about Correaltion Analysis](hhttp://gisersqdai.top/2020/03/30/%E5%BA%94%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B8%8ER%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%95%AA%E5%A4%96%E7%AF%87%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E5%88%86%E6%9E%90/)
+
 
 # 应用统计学与R语言实现学习笔记
 
