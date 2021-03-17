@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 13 章 Factor Analysis | 应用统计学与R语言实现学习笔记</title>
+  <meta name="description" content="第 13 章 Factor Analysis | 应用统计学与R语言实现学习笔记" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 13 章 Factor Analysis | 应用统计学与R语言实现学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  
+  <meta name="github-repo" content="GISerDaiShaoqing/Note-of-Applied-Statistics-with-R-Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 13 章 Factor Analysis | 应用统计学与R语言实现学习笔记" />
+  
+  
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="戴劭勍" />
+
+
+<meta name="date" content="2021-03-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="pca.html"/>
+<link rel="next" href="homework.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">中文书示例</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#从问题说起"><i class="fa fa-check"></i><b>1.1</b> 从问题说起</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#统计学及其研究过程"><i class="fa fa-check"></i><b>1.2</b> 统计学及其研究过程</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#统计方法及其应用领域"><i class="fa fa-check"></i><b>1.3</b> 统计方法及其应用领域</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#统计数据类型"><i class="fa fa-check"></i><b>1.4</b> 统计数据类型</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#统计学中的几个基本概念"><i class="fa fa-check"></i><b>1.5</b> 统计学中的几个基本概念</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="datacollec.html"><a href="datacollec.html"><i class="fa fa-check"></i><b>2</b> Data Collection</a><ul>
+<li class="chapter" data-level="2.1" data-path="datacollec.html"><a href="datacollec.html#数据来源"><i class="fa fa-check"></i><b>2.1</b> 数据来源</a></li>
+<li class="chapter" data-level="2.2" data-path="datacollec.html"><a href="datacollec.html#调查设计"><i class="fa fa-check"></i><b>2.2</b> 调查设计</a></li>
+<li class="chapter" data-level="2.3" data-path="datacollec.html"><a href="datacollec.html#数据质量"><i class="fa fa-check"></i><b>2.3</b> 数据质量</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptive.html"><a href="descriptive.html"><i class="fa fa-check"></i><b>3</b> Descriptive Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptive.html"><a href="descriptive.html#数据的预处理"><i class="fa fa-check"></i><b>3.1</b> 数据的预处理</a></li>
+<li class="chapter" data-level="3.2" data-path="descriptive.html"><a href="descriptive.html#数据的整理与展示"><i class="fa fa-check"></i><b>3.2</b> 数据的整理与展示</a></li>
+<li class="chapter" data-level="3.3" data-path="descriptive.html"><a href="descriptive.html#数据的概括性度量"><i class="fa fa-check"></i><b>3.3</b> 数据的概括性度量</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sampling.html"><a href="sampling.html"><i class="fa fa-check"></i><b>4</b> Sampling And Sample Distribution</a><ul>
+<li class="chapter" data-level="4.1" data-path="sampling.html"><a href="sampling.html#抽样方法"><i class="fa fa-check"></i><b>4.1</b> 抽样方法</a></li>
+<li class="chapter" data-level="4.2" data-path="sampling.html"><a href="sampling.html#正态分布"><i class="fa fa-check"></i><b>4.2</b> 正态分布</a></li>
+<li class="chapter" data-level="4.3" data-path="sampling.html"><a href="sampling.html#三种不同性质的分布"><i class="fa fa-check"></i><b>4.3</b> 三种不同性质的分布</a></li>
+<li class="chapter" data-level="4.4" data-path="sampling.html"><a href="sampling.html#一个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.4</b> 一个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.5" data-path="sampling.html"><a href="sampling.html#两个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.5</b> 两个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.6" data-path="sampling.html"><a href="sampling.html#附录"><i class="fa fa-check"></i><b>4.6</b> 附录</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>5</b> Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation.html"><a href="estimation.html#参数估计的一般问题"><i class="fa fa-check"></i><b>5.1</b> 参数估计的一般问题</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation.html"><a href="estimation.html#区间估计-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> 区间估计 Confidence Intervals</a></li>
+<li class="chapter" data-level="5.3" data-path="estimation.html"><a href="estimation.html#样本容量的确定"><i class="fa fa-check"></i><b>5.3</b> 样本容量的确定</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis.html"><a href="hypothesis.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Test</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis.html"><a href="hypothesis.html#基本思想"><i class="fa fa-check"></i><b>6.1</b> 基本思想</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis.html"><a href="hypothesis.html#原假设和备择假设"><i class="fa fa-check"></i><b>6.2</b> 原假设和备择假设</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis.html"><a href="hypothesis.html#第一类错误和第二类错误"><i class="fa fa-check"></i><b>6.3</b> 第一类错误和第二类错误</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis.html"><a href="hypothesis.html#统计量与拒绝域"><i class="fa fa-check"></i><b>6.4</b> 统计量与拒绝域</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis.html"><a href="hypothesis.html#利用p值进行决策"><i class="fa fa-check"></i><b>6.5</b> 利用p值进行决策</a></li>
+<li class="chapter" data-level="6.6" data-path="hypothesis.html"><a href="hypothesis.html#一个总体参数的检验"><i class="fa fa-check"></i><b>6.6</b> 一个总体参数的检验</a></li>
+<li class="chapter" data-level="6.7" data-path="hypothesis.html"><a href="hypothesis.html#两个总体参数的检验"><i class="fa fa-check"></i><b>6.7</b> 两个总体参数的检验</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="goodness.html"><a href="goodness.html"><i class="fa fa-check"></i><b>7</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="7.1" data-path="goodness.html"><a href="goodness.html#多项分布"><i class="fa fa-check"></i><b>7.1</b> 多项分布</a></li>
+<li class="chapter" data-level="7.2" data-path="goodness.html"><a href="goodness.html#独立性"><i class="fa fa-check"></i><b>7.2</b> 独立性</a></li>
+<li class="chapter" data-level="7.3" data-path="goodness.html"><a href="goodness.html#概率分布"><i class="fa fa-check"></i><b>7.3</b> 概率分布</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ANOVA.html"><a href="ANOVA.html"><i class="fa fa-check"></i><b>8</b> ANOVA</a><ul>
+<li class="chapter" data-level="8.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的引论"><i class="fa fa-check"></i><b>8.1</b> 方差分析的引论</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的部分概念"><i class="fa fa-check"></i><b>8.1.1</b> 方差分析的部分概念</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本思想和原理"><i class="fa fa-check"></i><b>8.1.2</b> 方差分析的基本思想和原理</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本假定"><i class="fa fa-check"></i><b>8.1.3</b> 方差分析的基本假定</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ANOVA.html"><a href="ANOVA.html#单因子方差分析one-way-anova"><i class="fa fa-check"></i><b>8.2</b> 单因子方差分析（One-way ANOVA)</a></li>
+<li class="chapter" data-level="8.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析中的多重比较"><i class="fa fa-check"></i><b>8.3</b> 方差分析中的多重比较</a></li>
+<li class="chapter" data-level="8.4" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析two-way-anova"><i class="fa fa-check"></i><b>8.4</b> 双因子方差分析（Two-way ANOVA）</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析的基本假定"><i class="fa fa-check"></i><b>8.4.1</b> 双因子方差分析的基本假定</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ANOVA.html"><a href="ANOVA.html#无交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.2</b> 无交互作用双因子方差分析</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ANOVA.html"><a href="ANOVA.html#有交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.3</b> 有交互作用双因子方差分析</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ANOVA.html"><a href="ANOVA.html#实验设计初步"><i class="fa fa-check"></i><b>8.5</b> 实验设计初步</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Linear Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#变量间的关系"><i class="fa fa-check"></i><b>9.1</b> 变量间的关系</a></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#回归分析和简单线性回归分析"><i class="fa fa-check"></i><b>9.2</b> 回归分析和简单线性回归分析</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#回归分析"><i class="fa fa-check"></i><b>9.2.1</b> 回归分析</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#简单线性回归分析"><i class="fa fa-check"></i><b>9.2.2</b> 简单线性回归分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#利用回归方程进行估计和预测"><i class="fa fa-check"></i><b>9.3</b> 利用回归方程进行估计和预测</a></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#残差分析"><i class="fa fa-check"></i><b>9.4</b> 残差分析</a></li>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#多元线性回归multiple-regression-model"><i class="fa fa-check"></i><b>9.5</b> 多元线性回归(multiple regression model)</a></li>
+<li class="chapter" data-level="9.6" data-path="regression.html"><a href="regression.html#定性自变量的回归"><i class="fa fa-check"></i><b>9.6</b> 定性自变量的回归</a></li>
+<li class="chapter" data-level="9.7" data-path="regression.html"><a href="regression.html#非线性回归"><i class="fa fa-check"></i><b>9.7</b> 非线性回归</a></li>
+<li class="chapter" data-level="9.8" data-path="regression.html"><a href="regression.html#建立回归模型"><i class="fa fa-check"></i><b>9.8</b> 建立回归模型</a></li>
+<li class="chapter" data-level="9.9" data-path="regression.html"><a href="regression.html#回归中的常见错误"><i class="fa fa-check"></i><b>9.9</b> 回归中的常见错误</a></li>
+<li class="chapter" data-level="9.10" data-path="regression.html"><a href="regression.html#logistic-回归"><i class="fa fa-check"></i><b>9.10</b> Logistic 回归</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="cluster.html"><a href="cluster.html"><i class="fa fa-check"></i><b>10</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="cluster.html"><a href="cluster.html#多元分布基本概念"><i class="fa fa-check"></i><b>10.1</b> 多元分布基本概念</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster.html"><a href="cluster.html#数据的变换处理"><i class="fa fa-check"></i><b>10.2</b> 数据的变换处理</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster.html"><a href="cluster.html#聚类分析"><i class="fa fa-check"></i><b>10.3</b> 聚类分析</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster.html"><a href="cluster.html#样品间亲疏程度的测度"><i class="fa fa-check"></i><b>10.4</b> 样品间亲疏程度的测度</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster.html"><a href="cluster.html#类与类之间的距离"><i class="fa fa-check"></i><b>10.5</b> 类与类之间的距离</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster.html"><a href="cluster.html#系统聚类hierarchical-clustering-method"><i class="fa fa-check"></i><b>10.6</b> 系统聚类(hierarchical clustering method)</a></li>
+<li class="chapter" data-level="10.7" data-path="cluster.html"><a href="cluster.html#快速聚类k-means-clustering-method"><i class="fa fa-check"></i><b>10.7</b> 快速聚类(k-means clustering method)</a></li>
+<li class="chapter" data-level="10.8" data-path="cluster.html"><a href="cluster.html#有序聚类"><i class="fa fa-check"></i><b>10.8</b> 有序聚类</a></li>
+<li class="chapter" data-level="10.9" data-path="cluster.html"><a href="cluster.html#聚类分析的主要步骤"><i class="fa fa-check"></i><b>10.9</b> 聚类分析的主要步骤</a></li>
+<li class="chapter" data-level="10.10" data-path="cluster.html"><a href="cluster.html#r语言中聚类分析实现"><i class="fa fa-check"></i><b>10.10</b> R语言中聚类分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="discriminant.html"><a href="discriminant.html"><i class="fa fa-check"></i><b>11</b> Discriminant Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="discriminant.html"><a href="discriminant.html#判别分析应用"><i class="fa fa-check"></i><b>11.1</b> 判别分析应用</a></li>
+<li class="chapter" data-level="11.2" data-path="discriminant.html"><a href="discriminant.html#判别分析方法"><i class="fa fa-check"></i><b>11.2</b> 判别分析方法</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="discriminant.html"><a href="discriminant.html#距离判别法"><i class="fa fa-check"></i><b>11.2.1</b> 距离判别法</a></li>
+<li class="chapter" data-level="11.2.2" data-path="discriminant.html"><a href="discriminant.html#fisher判别法"><i class="fa fa-check"></i><b>11.2.2</b> Fisher判别法</a></li>
+<li class="chapter" data-level="11.2.3" data-path="discriminant.html"><a href="discriminant.html#bayes判别法"><i class="fa fa-check"></i><b>11.2.3</b> Bayes判别法</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="discriminant.html"><a href="discriminant.html#建立判别函数的方法"><i class="fa fa-check"></i><b>11.3</b> 建立判别函数的方法</a></li>
+<li class="chapter" data-level="11.4" data-path="discriminant.html"><a href="discriminant.html#判别分析的步骤及注意事项"><i class="fa fa-check"></i><b>11.4</b> 判别分析的步骤及注意事项</a></li>
+<li class="chapter" data-level="11.5" data-path="discriminant.html"><a href="discriminant.html#r语言中判别分析实现"><i class="fa fa-check"></i><b>11.5</b> R语言中判别分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>12</b> Priciple Component Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="pca.html"><a href="pca.html#主成分分析基本思想"><i class="fa fa-check"></i><b>12.1</b> 主成分分析基本思想</a></li>
+<li class="chapter" data-level="12.2" data-path="pca.html"><a href="pca.html#几何解释与数学模型"><i class="fa fa-check"></i><b>12.2</b> 几何解释与数学模型</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="pca.html"><a href="pca.html#几何解释"><i class="fa fa-check"></i><b>12.2.1</b> 几何解释</a></li>
+<li class="chapter" data-level="12.2.2" data-path="pca.html"><a href="pca.html#数学模型"><i class="fa fa-check"></i><b>12.2.2</b> 数学模型</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="pca.html"><a href="pca.html#主成分的推导"><i class="fa fa-check"></i><b>12.3</b> 主成分的推导</a></li>
+<li class="chapter" data-level="12.4" data-path="pca.html"><a href="pca.html#主成分的性质"><i class="fa fa-check"></i><b>12.4</b> 主成分的性质</a></li>
+<li class="chapter" data-level="12.5" data-path="pca.html"><a href="pca.html#主成分分析的步骤"><i class="fa fa-check"></i><b>12.5</b> 主成分分析的步骤</a></li>
+<li class="chapter" data-level="12.6" data-path="pca.html"><a href="pca.html#主成分的应用与回归"><i class="fa fa-check"></i><b>12.6</b> 主成分的应用与回归</a></li>
+<li class="chapter" data-level="12.7" data-path="pca.html"><a href="pca.html#主成分分析的r语言实现"><i class="fa fa-check"></i><b>12.7</b> 主成分分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="fa.html"><a href="fa.html"><i class="fa fa-check"></i><b>13</b> Factor Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="fa.html"><a href="fa.html#因子分析概念"><i class="fa fa-check"></i><b>13.1</b> 因子分析概念</a></li>
+<li class="chapter" data-level="13.2" data-path="fa.html"><a href="fa.html#因子分析模型"><i class="fa fa-check"></i><b>13.2</b> 因子分析模型</a></li>
+<li class="chapter" data-level="13.3" data-path="fa.html"><a href="fa.html#因子载荷矩阵的估计方法"><i class="fa fa-check"></i><b>13.3</b> 因子载荷矩阵的估计方法</a></li>
+<li class="chapter" data-level="13.4" data-path="fa.html"><a href="fa.html#因子旋转正交变换"><i class="fa fa-check"></i><b>13.4</b> 因子旋转（正交变换）</a></li>
+<li class="chapter" data-level="13.5" data-path="fa.html"><a href="fa.html#因子得分"><i class="fa fa-check"></i><b>13.5</b> 因子得分</a></li>
+<li class="chapter" data-level="13.6" data-path="fa.html"><a href="fa.html#因子分析步骤"><i class="fa fa-check"></i><b>13.6</b> 因子分析步骤</a></li>
+<li class="chapter" data-level="13.7" data-path="fa.html"><a href="fa.html#因子分析的r语言实现"><i class="fa fa-check"></i><b>13.7</b> 因子分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="homework.html"><a href="homework.html"><i class="fa fa-check"></i><b>14</b> Case and Practice</a><ul>
+<li class="chapter" data-level="14.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布"><i class="fa fa-check"></i><b>14.1</b> 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验"><i class="fa fa-check"></i><b>14.2</b> 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析"><i class="fa fa-check"></i><b>14.3</b> 方差分析与回归分析</a></li>
+<li class="chapter" data-level="14.4" data-path="homework.html"><a href="homework.html#作业文档"><i class="fa fa-check"></i><b>14.4</b> 作业文档</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布-1"><i class="fa fa-check"></i><b>14.4.1</b> 1 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.4.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验-1"><i class="fa fa-check"></i><b>14.4.2</b> 2 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.4.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析-1"><i class="fa fa-check"></i><b>14.4.3</b> 3 方差分析与回归分析</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由 bookdown 强力驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">应用统计学与R语言实现学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="fa" class="section level1">
+<h1><span class="header-section-number">第 13 章</span> Factor Analysis</h1>
+<p>本篇是第十三章，内容是因子分析。</p>
+<div id="因子分析概念" class="section level2">
+<h2><span class="header-section-number">13.1</span> 因子分析概念</h2>
+<p>因子分析是一种数据简化的技术。它通过研究众多变量之间的内部依赖关系，探求观测数据中的基本结构，并用少数几个假想变量来表示其基本的数据结构。这几个假想变量能够反映原来众多变量的主要信息。原始的变量是可观测的显在变量，而假想变量是不可观测的潜在变量，称为因子。即一种用来在众多变量中辨别、分析和归结出变量间的相互关系并用简单的变量（因子）来描述这种关系的数据分析方法。</p>
+<p><strong>寻求基本结构</strong></p>
+<blockquote>
+<ul>
+<li>通过因子分析，找出几个较少的有实际意义的因子，反映出原来数据的基本结构。</li>
+<li>通常找出的这组观察不到的因子概括了原始的变量的大多数信息。</li>
+</ul>
+</blockquote>
+<p><strong>数据简化</strong></p>
+<blockquote>
+<ul>
+<li>强相关问题会对分析带来困难。</li>
+<li>通过因子分析，可以用所找出的少数几个因子代替原来的变量做回归分析、聚类分析、判别分析等。</li>
+</ul>
+</blockquote>
+<p><strong>因子分析的用途</strong></p>
+<blockquote>
+<ul>
+<li>产生新的、更少的变量以便为后续的回归和其他分析做基础。</li>
+<li>识别概念或产品的基本感知和特性。</li>
+<li>改善市场研究领域多元测量的结构与方法。</li>
+</ul>
+</blockquote>
+</div>
+<div id="因子分析模型" class="section level2">
+<h2><span class="header-section-number">13.2</span> 因子分析模型</h2>
+<p><strong>数学模型</strong>：设<span class="math inline">\(X_i(i=1,2,\cdots,p)\)</span>p个变量，如果表示为：</p>
+<p><span class="math display">\[X_i=\mu_i+a_{i1}F_1+\cdots+a_{im}F_m+\varepsilon_i(m\le p)\]</span></p>
+<p>或</p>
+<p><span class="math display">\[\begin {bmatrix} X_1\\X_2\\\vdots\\X_p  \end {bmatrix}=\begin {bmatrix} \mu_1\\\mu_2\\\vdots\\\mu_p  \end {bmatrix}+\begin {bmatrix} \alpha_{11}&amp;\alpha_{12}&amp;\cdots&amp;\alpha_{1m}\\\alpha_{21}&amp;\alpha_{22}&amp;\cdots&amp;\alpha_{2m}\\\vdots&amp;\vdots&amp;&amp;\vdots\\\alpha_{p1}&amp;\alpha_{p2}&amp;\cdots&amp;\alpha_{pm} \end {bmatrix}\begin {bmatrix} F_1\\F_2\\\vdots\\F_m  \end {bmatrix}+\begin{bmatrix} \varepsilon_1\\ \varepsilon_2\\\vdots\\ \varepsilon_p  \end {bmatrix}\]</span></p>
+<p>或</p>
+<p><span class="math display">\[X-\mu=AF+\varepsilon\]</span></p>
+<p><span class="math inline">\(F_1,F_2,\cdots,F_m\)</span>称为公共因子,是不可观测的变量，它们的系数称为因子载荷。<span class="math inline">\(\varepsilon_i\)</span>是特殊因子，是不可能被前m个公共因子包含的部分。并且满足：<span class="math inline">\(cov(F,\varepsilon)=0\)</span>，即<span class="math inline">\(F,\varepsilon\)</span>不相关；</p>
+<p><span class="math display">\[D(F)=\begin {bmatrix} 1 &amp; &amp; &amp; \\&amp;1&amp;&amp;&amp;\\&amp;&amp;\ddots&amp;\\&amp;&amp;&amp;1 \end {bmatrix}=I\]</span></p>
+<p>即<span class="math inline">\(F_1,F_2,\cdots,F_m\)</span>互不相关，方差为1。</p>
+<p><span class="math display">\[D(\varepsilon)=\begin {bmatrix}\sigma_1^2&amp;&amp;&amp;\\&amp;\sigma_w^2&amp;&amp;&amp;\\&amp;&amp;\ddots&amp;\\&amp;&amp;&amp;\sigma_p^2\end {bmatrix}\]</span></p>
+<p>即<span class="math inline">\(\varepsilon_i\sim N(0,\sigma_i^2)\)</span>互不相关，方差不一定相等。</p>
+<p><strong>用矩阵的方式表达</strong></p>
+<p><span class="math display">\[X-\mu=AF+\varepsilon\]</span></p>
+<p><span class="math display">\[E(F)=0\]</span></p>
+<p><span class="math display">\[E(\varepsilon)=0\]</span></p>
+<p><span class="math display">\[Var(F)=1\]</span></p>
+<p><span class="math display">\[cov(F,\varepsilon)=E(F\varepsilon&#39;)=\begin {pmatrix}E(F_1\varepsilon_1)&amp;E(F_1\varepsilon_2)&amp;\cdots&amp;E(F_1\varepsilon_p)\\E(F_2\varepsilon_1)&amp;E(F_2\varepsilon_2)&amp;\cdots&amp;E(F_2\varepsilon_p)\\\vdots&amp;\vdots&amp;&amp;\vdots\\E(F_p\varepsilon_1)&amp;E(F_p\varepsilon_2)&amp;\cdots&amp;E(F_p\varepsilon_p) \end {pmatrix}=0\]</span></p>
+<p><span class="math display">\[Var(\varepsilon)=diag(\sigma_1^2,\sigma_2^2,\cdots,\sigma_p^2)\]</span></p>
+<p><strong>因子分析模型的性质</strong></p>
+<p>（1）原始变量X的协方差矩阵的分解</p>
+<p><span class="math display">\[\Sigma_x=AA&#39;+D\]</span></p>
+<p>A是因子模型的系数</p>
+<p><span class="math display">\[Var(\varepsilon)=D=diag(\sigma_1^2,\sigma_2^2,\cdots,\sigma_p^2)\]</span></p>
+<p>D的主对角线上的元素值越小，则公共因子共享的成分越多。</p>
+<p>（2）模型不受计量单位的影响。</p>
+<p>（3）因子载荷不是惟一的：设T为一个p×p的正交矩阵，令<span class="math inline">\(A^*=AT， F^*=T&#39;F\)</span>也是一个满足因子模型条件的因子载荷。</p>
+<p><strong>因子载荷矩阵中的统计特征</strong></p>
+<blockquote>
+<ul>
+<li>因子载荷<span class="math inline">\(a_{ij}\)</span>是第i个变量与第j个公共因子的相关系数。</li>
+<li>变量<span class="math inline">\(X_i\)</span>的共同度是因子载荷矩阵的第i行的元素的平方和。记为<span class="math inline">\(h_i^2=\sum_{i=1}^ma_{ij}^2\)</span>所有的公共因子和特殊因子对变量<span class="math inline">\(X_i\)</span>的贡献为1。如果<span class="math inline">\(\sum_{i=1}^ma_{ij}^2\)</span>非常靠近1， <span class="math inline">\(\sigma_i^2\)</span>非常小，则因子分析的效果好，从原变量空间到公共因子空间的转化性质好。</li>
+<li>因子载荷矩阵中各列元素的平方和<span class="math inline">\(S_j=\sum_{i=1}^pa_{ij}^2\)</span><span class="math inline">\(称为\)</span><span class="math inline">\(F_j(j=1,2,\cdots,m)\)</span>对所有的<span class="math inline">\(X_i\)</span>的方差贡献和。衡量<span class="math inline">\(F_j\)</span>的相对重要性。</li>
+</ul>
+</blockquote>
+</div>
+<div id="因子载荷矩阵的估计方法" class="section level2">
+<h2><span class="header-section-number">13.3</span> 因子载荷矩阵的估计方法</h2>
+<blockquote>
+<ul>
+<li>主成分分析法：设随机向量<span class="math inline">\(x=(x_1,x_2,\cdots,x_p)&#39;\)</span>的均值为<span class="math inline">\(\mu\)</span>，协方差为<span class="math inline">\(\Sigma\)</span>，<span class="math inline">\(\lambda_1\ge\lambda_2\ge\cdots\ge\lambda_p\ge0\)</span>为<span class="math inline">\(\Sigma\)</span>的特征根，<span class="math inline">\(u_1,u_2,\cdots,u_p\)</span>为对应的标准化特征向量，则：</li>
+</ul>
+</blockquote>
+<p><span class="math display">\[\Sigma=U\begin {bmatrix}\lambda_1&amp;&amp;&amp;\\&amp;\lambda_2&amp;&amp;\\&amp;&amp;\cdots&amp;\\&amp;&amp;&amp;\lambda_p \end {bmatrix}U&#39;=AA&#39;+D=\begin {bmatrix}\sqrt\lambda_1u_1&amp;\sqrt\lambda_2u_2&amp;\cdots&amp;\sqrt\lambda_pu_p \end {bmatrix}\begin {bmatrix}\sqrt\lambda_1u_1&#39;\\\sqrt\lambda_2u_2&#39;\\\vdots\\\sqrt\lambda_pu_p&#39; \end {bmatrix}+D\]</span></p>
+<p>上式给出的<span class="math inline">\(\Sigma\)</span>表达式是精确的，然而，它实际上是毫无价值的，因为我们的目的是寻求用少数几个公共因子解释，故略去后面的p-m项的贡献。上式有一个假定：模型中的特殊因子是不重要的，因而从的<span class="math inline">\(\Sigma\)</span>的分解中忽略了特殊因子的方差。确定因子个数（特征根大于1所对应的特征向量；碎石原则：把特征根从大到小排列，把特征根减小速度变缓的特征根都删掉）。</p>
+<blockquote>
+<ul>
+<li>主因子法：主因子方法是对主成分方法的修正，假定我们首先对变量进行标准化变换。则<span class="math inline">\(R=AA&#39;+D\)</span>$ $<span class="math inline">\(^{\ast}=AA&#39;=R-D\)</span>，称<span class="math inline">\(R^{\ast}\)</span>为约相关矩阵，<span class="math inline">\(R^{\ast}\)</span>对角线上的元素是<span class="math inline">\(h_i^2\)</span>，而不是1。</li>
+</ul>
+</blockquote>
+<p><span class="math display">\[R^{\ast}=R-\hat D=\begin {bmatrix}\hat h_1^2&amp;r_{12}&amp;\cdots&amp;r_{1p}\\r_{21}&amp;\hat h_2^2&amp;\cdots&amp;r_{2p}\\\vdots&amp;\vdots&amp;&amp;\vdots\\r_{p1}&amp;r_{p2}&amp;\cdots&amp;\hat h_p^2 \end {bmatrix}\]</span></p>
+<p>直接求<span class="math inline">\(R^{\ast}\)</span>的前p个特征根和对应的正交特征向量。得如下的矩阵：</p>
+<p><span class="math display">\[A=\begin {bmatrix}\sqrt{\lambda_1^{\ast}}u_1^{\ast}&amp;\sqrt{\lambda_2^{\ast}}u_2^{\ast}&amp;\cdots&amp;\sqrt{\lambda_p^{\ast}}u_p^{\ast} \end {bmatrix}\]</span></p>
+<p><span class="math inline">\(R^{\ast}\)</span>特征根：<span class="math inline">\(\lambda_1^{\ast}\ge\lambda_2^{\ast}\ge\cdots\ge\lambda_p^{\ast}\ge0\)</span>，正交特征向量：<span class="math inline">\(u_1^{\ast},u_2^{\ast},\cdots,u_p^{\ast}\)</span>。</p>
+<p>当特殊因子<span class="math inline">\(\varepsilon_i\)</span>的方差已知：</p>
+<p><span class="math display">\[R^{\ast}=R-\begin {bmatrix}\sigma_1^2&amp;&amp;&amp;\\&amp;\sigma_2^2&amp;&amp;\\&amp;&amp;\ddots&amp;\\&amp;&amp;&amp;\sigma_p^2 \end {bmatrix}=\begin {bmatrix}\sqrt{\lambda_1^{\ast}}u_1^{\ast}&amp;\sqrt{\lambda_2^{\ast}}u_2^{\ast}&amp;\cdots&amp;\sqrt{\lambda_p^{\ast}}u_p^{\ast} \end {bmatrix}\begin {bmatrix}\sqrt{\lambda_1^{\ast}}u_1^{&#39;\ast}\\\sqrt{\lambda_2^{\ast}}u_2^{&#39;\ast}\\\vdots\\\sqrt{\lambda_p^{\ast}}u_p^{&#39;\ast} \end {bmatrix}\]</span></p>
+<p><span class="math display">\[A=\begin {bmatrix}\sqrt{\lambda_1^{\ast}}u_1^{\ast}&amp;\sqrt{\lambda_2^{\ast}}u_2^{\ast}&amp;\cdots&amp;\sqrt{\lambda_m^{\ast}}u_m^{\ast}\end {bmatrix}\]</span></p>
+<p><span class="math display">\[D=\begin {pmatrix}1-\hat h_1^2&amp;&amp;0\\&amp;\ddots&amp;\\0&amp;&amp;1-\hat h_p^2 \end {pmatrix}\]</span></p>
+<p>在实际的应用中，个性方差矩阵一般都是未知的，可以通过一组样本来估计。估计的方法有如下几种：</p>
+<p>首先，求<span class="math inline">\(h_i^2\)</span>的初始估计值，构造出<span class="math inline">\(R^*\)</span>。</p>
+<p>（1）取<span class="math inline">\(h_i^2=1\)</span>，在这个情况下主因子解与主成分解等价；</p>
+<p>（2）取<span class="math inline">\(h_i^2=R_i^2\)</span>，<span class="math inline">\(R_i^2\)</span>为<span class="math inline">\(x_i\)</span>与其他所有的原始变量<span class="math inline">\(x_j\)</span>的复相关系数的平方，即<span class="math inline">\(x_i\)</span>对其余的p-1个<span class="math inline">\(x_j\)</span>的回归方程的判定系数，这是因为xi与公共因子的关系是通过其余的p-1个<span class="math inline">\(x_j\)</span>的线性组合联系起来的；</p>
+<p>（3）取<span class="math inline">\(\hat h_i^2=max\left|r_{ij}\right|(j\neq i)\)</span>，这意味着取<span class="math inline">\(x_i\)</span>与其余的<span class="math inline">\(x_j\)</span>的简单相关系数的绝对值最大者；</p>
+<p>（4）取<span class="math inline">\(h_i^2=\frac{1}{p-1}\sum_{j=1,j\neq i}^pr_{ij}\)</span>，其中要求该值为正数。</p>
+<p>（5）取<span class="math inline">\(h_i^2=1/r^{ii}\)</span>，其中<span class="math inline">\(r^{ii}\)</span>是<span class="math inline">\(R^{-1}\)</span>的对角元。</p>
+<p>（6） 极大似然估计法：如果假定公共因子F和特殊因子<span class="math inline">\(\varepsilon\)</span>服从正态分布，那么可以得到因子载荷和特殊因子方差的极大似然估计。设<span class="math inline">\(x_1,x_2,\cdots,x_n\)</span>为来自正态总体<span class="math inline">\(N_p(\mu,\Sigma)\)</span>的随机样本。</p>
+<p><span class="math display">\[\Sigma=AA&#39;+\Sigma_{\varepsilon}\]</span></p>
+<p><span class="math display">\[\begin {aligned} L(\hat \mu,\hat A,\hat D)&amp;=f(X)=f(X_1)\cdot f(X_2)\cdots f(X_n)\\&amp;=\prod_{i=1}^n(2\pi)^{-p/2}\left |\Sigma\right|^{1/2}exp\begin {bmatrix}-\frac{1}{2}(x_i-\mu)&#39;\Sigma^{-1}(x_i-\mu) \end {bmatrix}\\&amp;=\begin {bmatrix}(2\pi)^p\left |\Sigma \right |^{-n/2} \end {bmatrix}exp\begin {bmatrix}-\frac{1}{2}\sum_{i=1}^n(X_i-\mu)&#39;\Sigma^{-1}(X_i-\mu) \end {bmatrix} \end {aligned}\]</span></p>
+<p>用数值极大化的方法可以得到极大似然估计。</p>
+</div>
+<div id="因子旋转正交变换" class="section level2">
+<h2><span class="header-section-number">13.4</span> 因子旋转（正交变换）</h2>
+<p><strong>旋转因子的目的：</strong>因子分析的目的不仅仅是要找出公共因子以及对变量进行分组，更重要的是要知道每个公共因子的意义，以便进行进一步的分析。如果每个公共因子的含义不清，则不便于进行实际背景的解释。初始因子的综合性太强，难以找出因子的实际意义。由于因子载荷阵是不唯一的，所以可以对因子载荷阵进行旋转，使因子载荷阵的结构简化，使其每列或行的元素平方值向0和1两极分化。</p>
+<p><strong>旋转方法：</strong>设<span class="math inline">\(\Gamma\)</span>正交矩阵，做正交变换<span class="math inline">\(B=A\Gamma\)</span>。</p>
+<blockquote>
+<ul>
+<li>变换后各变量的共同度不会发生变化。</li>
+<li>变换后各因子的贡献会发生变化。</li>
+</ul>
+</blockquote>
+<p>三种主要的正交旋转法。</p>
+<blockquote>
+<ul>
+<li>方差最大法L：方差最大法从简化因子载荷矩阵的每一列出发，使和每个因子有关的载荷的平方的方差最大。当只有少数几个变量在某个因子上有较高的载荷时，对因子的解释最简单。方差最大的直观意义是希望通过因子旋转后，使每个因子上的载荷尽量拉开距离，一部分的载荷趋于<span class="math inline">\(\pm1\)</span>，另一部分趋于0。</li>
+</ul>
+</blockquote>
+<p><span class="math display">\[A=\begin {bmatrix}a_{11}&amp;a_{12}\\a_{21}&amp;a_{22}\\\vdots&amp;\vdots\\a_{p1}&amp;a_{p2} \end {bmatrix}\]</span></p>
+<p><span class="math display">\[X_1=a_{11}F_1+a_{12}F_2\]</span><span class="math display">\[X_2=a_{21}F_1+a_{22}F_2\]</span><span class="math display">\[\cdots\]</span><span class="math display">\[X_p=a_{p1}F_1+a_{p2}F_2\]</span></p>
+<p>设旋转矩阵：<span class="math inline">\(T=\begin {pmatrix}\cos\varphi&amp;-\sin\varphi\\\sin\varphi&amp;\cos\varphi \end {pmatrix}\)</span>，则</p>
+<p><span class="math display">\[\begin {aligned}B&amp;=AT=A\begin {pmatrix}\cos\varphi&amp;-\sin\varphi\\\sin\varphi&amp;\cos\varphi \end {pmatrix}\\&amp;=\begin {pmatrix}a_{11}\cos\varphi+a_{12}\sin\varphi&amp;-a_{11}\sin\varphi+a_{12}\cos\varphi\\\vdots&amp;\vdots\\a_{p1}\cos\varphi+a_{p2}\sin\varphi&amp;-a_{p1}\sin\varphi+a_{p2}\cos\varphi \end {pmatrix}\\&amp;=\begin {pmatrix}a_{11}^{\ast}&amp;a_{12}^{\ast}\\\vdots&amp;\vdots\\a_{p1}^{\ast}&amp;a_{p2}^{\ast} \end {pmatrix} \end {aligned}\]</span></p>
+<p>令<span class="math inline">\(d_{ij}=\frac{a_{ij}^{\ast}}{h_i},i=1,2,\cdots,p;j=1,2\)</span>，<span class="math inline">\(\bar d_j=\frac{1}{p}\sum_{i=1}^pd_{ij}^2\)</span>（这是列和），简化准则为：<span class="math inline">\(V(\theta)=\sum_{j=1}^m\sum_{i=1}^p(d_{ij}^2-\bar d_j)^2=max\)</span>，即：<span class="math inline">\(V_1+V_2+V_3+\cdots+V_m=max\)</span>。</p>
+<p>令<span class="math inline">\(\frac{\partial V}{\partial \theta}=0\)</span>，则可以解出<span class="math inline">\(\theta_0\)</span>，旋转矩阵为：<span class="math inline">\(T=\begin {pmatrix}\cos\theta_0&amp;-\sin\theta_0\\\sin\theta_0&amp;\cos\theta_0 \end {pmatrix}\)</span></p>
+<blockquote>
+<ul>
+<li>四次方最大法：四次方最大旋转是从简化载荷矩阵的行出发，通过旋转初始因子，使每个变量只在一个因子上有较高的载荷，而在其它的因子上尽可能低的载荷。 如果每个变量只在一个因子上有非零的载荷，这时的因子解释是最简单的。四次方最大法通过使因子载荷矩阵中每一行的因子载荷平方的方差达到最大。简化准则为：<span class="math inline">\(Q=\sum_{i=1}^p\sum_{j=1}^m(b_{ij}^2-\frac{1}{m})^2=max\)</span></li>
+</ul>
+</blockquote>
+<p><span class="math display">\[\begin {aligned} Q&amp;=\sum_{i=1}^p\sum_{j=1}^m(b_{ij}^2-\frac{1}{m})^2=\sum_{i=1}^p\sum_{j=1}^m(b_{ij}^4-2\frac{1}{m}b_{ij}^2+\frac{1}{m^2})\\&amp;=\sum_{i=1}^p\sum_{j=1}^m(b_{ij}^4-2\sum_{i=1}^p\sum_{j=1}^m\frac{1}{m}b_{ij}^2+\sum_{i=1}^p\sum_{j=1}^m\frac{1}{m^2})\\&amp;=\sum_{i=1}^p\sum_{j=1}^m(b_{ij}^4-2\sum_{i=1}^p\sum_{j=1}^m\frac{1}{m}b_{ij}^2+\sum_{i=1}^p\sum_{j=1}^m\frac{1}{m^2})\\&amp;=\sum_{i=1}^p\sum_{j=1}^m(b_{ij}^4-2+\frac{p}{m}) \end {aligned}\]</span></p>
+<p>最终的简化准则为：<span class="math inline">\(Q=\sum_{i=1}^p\sum_{j=1}^mb_{ij}^4=MAX\)</span></p>
+<blockquote>
+<ul>
+<li>等量最大法：等量最大法把四次方最大法和方差最大法结合起来求Q和V的加权平均最大。最终的简化准则为：<span class="math inline">\(E=\sum_{i=1}^p\sum_{j=1}^mb_{ij}^4-\gamma\sum_{j=1}^m(\sum_{i=1}^pb_{ij}^2)^2/p=MAX\)</span>，权数<span class="math inline">\(\gamma\)</span>等于<span class="math inline">\(m/2\)</span>，因子数有关。</li>
+</ul>
+</blockquote>
+</div>
+<div id="因子得分" class="section level2">
+<h2><span class="header-section-number">13.5</span> 因子得分</h2>
+<p>当解决了用一组公共因子的线性组合来表示一组观测变量后，有时我们需要使用这些因子做其他的研究。比如把得到的因子作为自变量来做回归分析，对样本进行分类或评价，这就需要我们对公共因子进行测度，即给出公共因子的值。</p>
+<p><strong>因子得分</strong></p>
+<p>因子分析的数学模型：</p>
+<p><span class="math display">\[\begin {bmatrix}X_1\\X_2\\\vdots\\X_p \end {bmatrix}=\begin {bmatrix}\alpha_{11}&amp;\alpha_{12}&amp;\cdots&amp;\alpha_{1m}\\\alpha_{21}&amp;\alpha_{22}&amp;\cdots&amp;\alpha_{2m}\\\vdots&amp;\vdots&amp;&amp;\vdots\\\alpha_{p1}&amp;\alpha_{p2}&amp;\cdots&amp;\alpha_{pm} \end {bmatrix}\begin {bmatrix}F_1\\F_2\\\vdots\\F_p \end {bmatrix}\]</span></p>
+<p>原变量被表示为公共因子的线性组合，当载荷矩阵旋转之后，公共因子可以做出解释，通常的情况下，我们还想反过来把公共因子表示为原变量的线性组合。因子得分函数：<span class="math inline">\(F_j=\beta_{j1}X_1+\cdots+\beta_{jp}X_p, j=1,\cdots,m\)</span>。可见，要求得每个因子的得分，必须求得分函数的系数，而由于p&gt;m，所以不能得到精确的得分，只能通过估计。</p>
+<p><strong>巴特莱特因子得分(加权最小二乘法）</strong></p>
+<p>把<span class="math inline">\(x_i-\mu_i\)</span>看作因变量；把因子载荷矩阵<span class="math inline">\(\begin {bmatrix}\alpha_{11}&amp;\alpha_{12}&amp;\cdots&amp;\alpha_{1m}\\\alpha_{21}&amp;\alpha_{22}&amp;\cdots&amp;\alpha_{2m}\\\vdots&amp;\vdots&amp;&amp;\vdots\\\alpha_{p1}&amp;\alpha_{p2}&amp;\cdots&amp;\alpha_{pm} \end {bmatrix}\)</span>看成自变量的观测；把某个个案的得分<span class="math inline">\(F_j\)</span>看作最小二乘法需要求的系数。</p>
+<p><span class="math display">\[\begin {cases}x_{i1}-\mu_1=a_{11}f_1+a_{12}f_2+\cdots+a_{1m}f_m+\varepsilon_1\\x_{i2}-\mu_2=a_{21}f_1+a_{22}f_2+\cdots+a_{2m}f_m+\varepsilon_2\\\cdots\\x_{ip}-\mu_p=a_{p1}f_1+a_{p2}f_2+\cdots+a_{pm}f_m+\varepsilon_p \end {cases}\]</span></p>
+<p>由于特殊因子的方差相异，所以用加权最小二乘法求得分，每个个案作一次，要求出所有样品的得分，需要作n次。</p>
+<p><span class="math display">\[\sum_{j=1}^p[(x_i-\mu_i)-(a_{i1}\hat f_1+a_{i2}\hat f_2+\cdots+a_{im}\hat f_m)]^2/\sigma_i^2\]</span></p>
+<p>使上式最小的<span class="math inline">\(\hat f_1,\cdots,\hat f_m\)</span>是相应个案的因子得分。</p>
+<p><strong>回归方法</strong></p>
+<p><span class="math display">\[\begin {bmatrix}X_1\\X_2\\\vdots\\X_n \end {bmatrix}=\begin {bmatrix}\alpha_{11}&amp;\alpha_{12}&amp;\cdots&amp;\alpha_{1m}\\\alpha_{21}&amp;\alpha_{22}&amp;\cdots&amp;\alpha_{2m}\\\vdots&amp;\vdots&amp;&amp;\vdots\\\alpha_{p1}&amp;\alpha_{p2}&amp;\cdots&amp;\alpha_{pm} \end {bmatrix}\begin {bmatrix}F_1\\F_2\\\vdots\\F_p \end {bmatrix}+\begin {bmatrix}\varepsilon_1\\\varepsilon_2\\\vdots\\\varepsilon_n \end {bmatrix}\]</span></p>
+<p><span class="math display">\[\hat F_j=b_{j1}X_1+\cdots+b_{jp}X_p, j=1,\cdots,m\]</span></p>
+<p><span class="math display">\[\begin {bmatrix}b_{11}&amp;b_{12}&amp;\cdots&amp;b_{1p}\\b_{21}&amp;b_{22}&amp;\cdots&amp;b_{2p}\\\vdots&amp;\vdots&amp;&amp;\vdots\\b_{m1}&amp;b_{m2}&amp;\cdots&amp;b_{mp} \end {bmatrix}=\begin {bmatrix}b_1\\b_2\\\vdots\\b_m \end {bmatrix}\]</span></p>
+<p><span class="math display">\[\begin {aligned} \alpha_{ij}=\gamma_{x_iF_j}=E(X_i,F_j)&amp;=E[X_i(b_{j1}X_1+\cdots+b_{jp}X_p)]\\&amp;=b_{j1}\gamma_{i1}+\cdots+b_{jp}\gamma_{ip}=\begin {bmatrix}\gamma_{i1}&amp;\gamma_{i2}&amp;\cdots&amp;\gamma_{ip} \end {bmatrix}\begin {bmatrix}b_{j1}\\b_{j2}\\\vdots\\b_{jp} \end {bmatrix} \end {aligned}\]</span></p>
+<p>则，我们有如下的方程组：</p>
+<p><span class="math display">\[\begin {bmatrix}\gamma_{11}&amp;\gamma_{12}&amp;\cdots&amp;\gamma_{1p}\\\gamma_{21}&amp;\gamma_{22}&amp;\cdots&amp;\gamma_{2p}\\\vdots&amp;\vdots&amp;&amp;\vdots\\\gamma_{p1}&amp;\gamma_{p2}&amp;\cdots&amp;\gamma_{pp} \end {bmatrix}\begin {bmatrix}b_{j1}\\b_{j2}\\\vdots\\b_{jp} \end {bmatrix}=\begin {bmatrix}a_{1j}\\a_{2j}\\\vdots\\a_{pj} \end {bmatrix},j=1,2,\cdots,m\]</span></p>
+<p><span class="math inline">\(\begin {bmatrix}\gamma_{11}&amp;\gamma_{12}&amp;\cdots&amp;\gamma_{1p}\\\gamma_{21}&amp;\gamma_{22}&amp;\cdots&amp;\gamma_{2p}\\\vdots&amp;\vdots&amp;&amp;\vdots\\\gamma_{p1}&amp;\gamma_{p2}&amp;\cdots&amp;\gamma_{pp} \end {bmatrix}\)</span>为原始变量的相关系数；<span class="math inline">\(\begin {bmatrix}b_{j1}\\b_{j2}\\\vdots\\b_{jp} \end {bmatrix}\)</span>为第j个因子得分函数的系数；<span class="math inline">\(\begin {bmatrix}a_{1j}\\a_{2j}\\\vdots\\a_{pj} \end {bmatrix}\)</span>为载荷矩阵的第 j列</p>
+<p><strong>注：共需要解m次才能解出所有的得分函数的系数。</strong></p>
+</div>
+<div id="因子分析步骤" class="section level2">
+<h2><span class="header-section-number">13.6</span> 因子分析步骤</h2>
+<blockquote>
+<ul>
+<li>选择分析的变量：用定性分析和定量分析的方法选择变量，因子分析的前提条件是观测变量间有较强的相关性，因为如果变量之间无相关性或相关性较小的话，他们不会有共享因子，所以原始变量间应该有较强的相关性。</li>
+<li>计算所选原始变量的相关系数矩阵：相关系数矩阵描述了原始变量之间的相关关系。可以帮助判断原始变量之间是否存在相关关系，这对因子分析是非常重要的，因为如果所选变量之间无关系，做因子分析是不恰当的。并且相关系数矩阵是估计因子结构的基础。</li>
+<li>提取公共因子：这一步要确定因子求解的方法和因子的个数。需要根据研究者的设计方案或有关的经验或知识事先确定。因子个数的确定可以根据因子方差的大小，只取方差大于1(或特征值大于1)的那些因子，因为方差小于1的因子其贡献可能很小。或者按照因子的累计方差贡献率来确定，一般认为要达到60％才能符合要求。</li>
+<li>因子旋转：通过坐标变换使每个原始变量在尽可能少的因子之间有密切的关系，这样因子的实际意义更容易解释,也更容易为每个潜在因子赋予有实际意义的名字。</li>
+<li>计算因子得分：求出各样本的因子得分，有了因子得分值，则可以在许多分析中使用这些因子，例如以因子的得分做聚类分析的变量，做回归分析中的回归因子。</li>
+</ul>
+</blockquote>
+<p><strong>注</strong></p>
+<blockquote>
+<ul>
+<li>因子分析是十分主观的，在许多出版的资料中，因子分析模型都用少数可命名因子提供了合理解释。实际上，绝大多数因子分析并没有产生如此明确的结果。不幸的是，评价因子分析质量的法则尚未很好量化，质量问题只好依赖一个“哇！”准则如果在仔细检查因子分析的时候，研究人员能够喊出“哇，我明白这些因子”的时候，就可认为是成功地运用了因子分析方法。</li>
+</ul>
+</blockquote>
+<p><strong>主成分分析与因子分析</strong></p>
+<p>主成分分析与因子分析有所不同，主成分分析仅仅是变量变换。</p>
+<blockquote>
+<ul>
+<li>主成分分析：原始变量的线性组合表示新的综合变量，即主成分。</li>
+<li>因子分析：潜在的假想变量和随机影响变量的线性组合表示原始变量。因子模型除了公共因子外还有特殊因子。公共因子只解释了原来变量的部分方差，而全部主成分解释了原来变量的全部方差。</li>
+</ul>
+</blockquote>
+<p>主成分和公共因子的位置不同。因子分析也有因子载荷（factor loading）的概念，代表了因子和原先变量的相关系数。但是在因子分析公式中的因子载荷位置和主成分分析不同。在数学模型上，因子分析和主成分分析也有不少区别。而且因子分析的计算也复杂得多。根据因子分析模型的特点，它还多一道程序：因子旋转（ factor rotation）；这个步骤可以使结果更好。旋转后的公共因子一般没有主成分那么综合，公共因子往往可以找到实际意义，而主成分常找不到实际的含义。可以看出，因子分析和主成分分析都依赖于原始变量，也只能反映原始变量的信息。所以原始变量的选择很重要。在得到分析的结果时，并不一定会都得到如我们例子那样清楚的结果。这与问题的性质，选取的原始变量以及数据的质量等都有关系。如果原始变量本质上独立，就很难把很多独立变量用少数综合的变量概括，降维就可能失败。数据越相关，降维效果就越好。可用如下方法进行变量间的相关性检验：</p>
+<blockquote>
+<ul>
+<li>KMO样本测度： KMO在0.9以上，非常适合； 0.8-0.9，很适合； 0.7-0.8，适合； 0.6-0.7，不太适合；
+0.5-0.6；很勉强； 0.5以下，不适合；</li>
+<li>巴特莱特球体检验： H0：相关系数矩阵R为单位阵I。拒绝时H0可作因子分析</li>
+</ul>
+</blockquote>
+</div>
+<div id="因子分析的r语言实现" class="section level2">
+<h2><span class="header-section-number">13.7</span> 因子分析的R语言实现</h2>
+<p>R语言做因子分析这里主要介绍三个函数，一个是自带的factanal函数。</p>
+<pre><code>factanal(x,factors,data=NULL,covmat=NUL,n.obs=NA,subset,na.action,start=NULL,score=c(&quot;none&quot;,&quot;regression&quot;,&quot;Bartlett&quot;),rotation=&quot;varimax&quot;,control=NULL,…)</code></pre>
+<p>x是公式或者用于因子分析的数据，可以是矩阵（每一行为一个样本）或数据框；factors表示要生成的因子个数；data指定数据集，当x为公式的时候使用；covmat是样本的协方差矩阵或者相关系数矩阵，使用这个参数的时候x可以忽略；scores表示计算因子得分的方法；rotation表示因子旋转的方法，默认为“varimax”，最大方差旋转。这里近介绍几个常用的几个参数，其他参数说明可查询R语言官方帮助。另外，这个函数事实上仅支持用极大似然估计方法做因子分析。</p>
+<p>第二个函数就是自编函数实现的主成分分析方法做因子分析（具体函数代码后面给出）。</p>
+<pre><code>factor.analysis(x,m)</code></pre>
+<p>x为相关系数矩阵，m为因子个数。</p>
+<p>第三个函数是psych包里的fa函数。</p>
+<pre><code>fa（r，nfactors=，n.obs=，rotate=，scores=，fm）</code></pre>
+<p>r是相关系数矩阵或原始数据矩阵；nfactors设定提取的因子数（默认为1）；n.obs是观测数（输入相关系数矩阵时需要填写）；rotate设定放置的方法（默认互变异数最小法）；scores设定是否计算因子得分（默认不计算）；fm设定因子化方法（默认极小残差法）。</p>
+<p>用上一章提供的数据再进行因子分析。比较不同函数结果的差异。</p>
+<p>基于factnal函数，3个因子。</p>
+<p><img src="fig/fig39.jpg" width="60%" height="35%" /></p>
+<p>基于自编函数，3个因子。</p>
+<p><img src="fig/fig40.jpg" width="20%" height="40%" /></p>
+<p>基于fa函数，3个因子</p>
+<p><img src="fig/fig41.jpg" width="60%" height="40%" /></p>
+<pre><code>## Factor Analysis using method =  ml
+## Call: fa(r = aclean[, -c(1:2, 9)], nfactors = 3, fm = &quot;mle&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##                 ML3   ML1   ML2    h2     u2 com
+## population     0.77  0.33 -0.18 0.518 0.4820 1.5
+## govermancepop  0.94 -0.04  0.06 0.931 0.0692 1.0
+## bussinesspop   0.84 -0.07  0.07 0.774 0.2260 1.0
+## nojobpop       0.76  0.03  0.08 0.618 0.3823 1.0
+## first          0.08  0.16  0.09 0.041 0.9588 2.0
+## second         0.92 -0.16 -0.01 0.935 0.0645 1.1
+## ratio1        -0.09  0.98 -0.16 0.997 0.0035 1.1
+## ratio2         0.01 -0.76 -0.54 0.997 0.0026 1.8
+## ratio3         0.09 -0.04  0.97 0.996 0.0039 1.0
+## 
+##                        ML3  ML1  ML2
+## SS loadings           3.68 1.75 1.38
+## Proportion Var        0.41 0.19 0.15
+## Cumulative Var        0.41 0.60 0.76
+## Proportion Explained  0.54 0.26 0.20
+## Cumulative Proportion 0.54 0.80 1.00
+## 
+##  With factor correlations of 
+##       ML3   ML1  ML2
+## ML3  1.00 -0.23 0.30
+## ML1 -0.23  1.00 0.15
+## ML2  0.30  0.15 1.00
+## 
+## Mean item complexity =  1.3
+## Test of the hypothesis that 3 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  36  and the objective function was  18.64 with Chi Square of  5221.9
+## The degrees of freedom for the model are 12  and the objective function was  7.18 
+## 
+## The root mean square of the residuals (RMSR) is  0.03 
+## The df corrected root mean square of the residuals is  0.06 
+## 
+## The harmonic number of observations is  285 with the empirical chi square  23.49  with prob &lt;  0.024 
+## The total number of observations was  285  with Likelihood Chi Square =  1996.53  with prob &lt;  0 
+## 
+## Tucker Lewis Index of factoring reliability =  -0.156
+## RMSEA index =  0.762  and the 90 % confidence intervals are  0.735 0.792
+## BIC =  1928.7
+## Fit based upon off diagonal values = 0.99
+## Measures of factor score adequacy             
+##                                                    ML3  ML1  ML2
+## Correlation of (regression) scores with factors   0.98 1.00 1.00
+## Multiple R square of scores with factors          0.97 1.00 1.00
+## Minimum correlation of possible factor scores     0.94 0.99 0.99</code></pre>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-95-1.png" width="100%" height="40%" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-96-1.png" width="100%" height="40%" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pca.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/13-fa.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

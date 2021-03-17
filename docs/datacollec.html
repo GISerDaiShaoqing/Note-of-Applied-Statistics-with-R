@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 2 章 Data Collection | 应用统计学与R语言实现学习笔记</title>
+  <meta name="description" content="第 2 章 Data Collection | 应用统计学与R语言实现学习笔记" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 2 章 Data Collection | 应用统计学与R语言实现学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  
+  <meta name="github-repo" content="GISerDaiShaoqing/Note-of-Applied-Statistics-with-R-Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 2 章 Data Collection | 应用统计学与R语言实现学习笔记" />
+  
+  
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="戴劭勍" />
+
+
+<meta name="date" content="2021-03-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="descriptive.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">中文书示例</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#从问题说起"><i class="fa fa-check"></i><b>1.1</b> 从问题说起</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#统计学及其研究过程"><i class="fa fa-check"></i><b>1.2</b> 统计学及其研究过程</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#统计方法及其应用领域"><i class="fa fa-check"></i><b>1.3</b> 统计方法及其应用领域</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#统计数据类型"><i class="fa fa-check"></i><b>1.4</b> 统计数据类型</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#统计学中的几个基本概念"><i class="fa fa-check"></i><b>1.5</b> 统计学中的几个基本概念</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="datacollec.html"><a href="datacollec.html"><i class="fa fa-check"></i><b>2</b> Data Collection</a><ul>
+<li class="chapter" data-level="2.1" data-path="datacollec.html"><a href="datacollec.html#数据来源"><i class="fa fa-check"></i><b>2.1</b> 数据来源</a></li>
+<li class="chapter" data-level="2.2" data-path="datacollec.html"><a href="datacollec.html#调查设计"><i class="fa fa-check"></i><b>2.2</b> 调查设计</a></li>
+<li class="chapter" data-level="2.3" data-path="datacollec.html"><a href="datacollec.html#数据质量"><i class="fa fa-check"></i><b>2.3</b> 数据质量</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptive.html"><a href="descriptive.html"><i class="fa fa-check"></i><b>3</b> Descriptive Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptive.html"><a href="descriptive.html#数据的预处理"><i class="fa fa-check"></i><b>3.1</b> 数据的预处理</a></li>
+<li class="chapter" data-level="3.2" data-path="descriptive.html"><a href="descriptive.html#数据的整理与展示"><i class="fa fa-check"></i><b>3.2</b> 数据的整理与展示</a></li>
+<li class="chapter" data-level="3.3" data-path="descriptive.html"><a href="descriptive.html#数据的概括性度量"><i class="fa fa-check"></i><b>3.3</b> 数据的概括性度量</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sampling.html"><a href="sampling.html"><i class="fa fa-check"></i><b>4</b> Sampling And Sample Distribution</a><ul>
+<li class="chapter" data-level="4.1" data-path="sampling.html"><a href="sampling.html#抽样方法"><i class="fa fa-check"></i><b>4.1</b> 抽样方法</a></li>
+<li class="chapter" data-level="4.2" data-path="sampling.html"><a href="sampling.html#正态分布"><i class="fa fa-check"></i><b>4.2</b> 正态分布</a></li>
+<li class="chapter" data-level="4.3" data-path="sampling.html"><a href="sampling.html#三种不同性质的分布"><i class="fa fa-check"></i><b>4.3</b> 三种不同性质的分布</a></li>
+<li class="chapter" data-level="4.4" data-path="sampling.html"><a href="sampling.html#一个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.4</b> 一个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.5" data-path="sampling.html"><a href="sampling.html#两个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.5</b> 两个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.6" data-path="sampling.html"><a href="sampling.html#附录"><i class="fa fa-check"></i><b>4.6</b> 附录</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>5</b> Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation.html"><a href="estimation.html#参数估计的一般问题"><i class="fa fa-check"></i><b>5.1</b> 参数估计的一般问题</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation.html"><a href="estimation.html#区间估计-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> 区间估计 Confidence Intervals</a></li>
+<li class="chapter" data-level="5.3" data-path="estimation.html"><a href="estimation.html#样本容量的确定"><i class="fa fa-check"></i><b>5.3</b> 样本容量的确定</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis.html"><a href="hypothesis.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Test</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis.html"><a href="hypothesis.html#基本思想"><i class="fa fa-check"></i><b>6.1</b> 基本思想</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis.html"><a href="hypothesis.html#原假设和备择假设"><i class="fa fa-check"></i><b>6.2</b> 原假设和备择假设</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis.html"><a href="hypothesis.html#第一类错误和第二类错误"><i class="fa fa-check"></i><b>6.3</b> 第一类错误和第二类错误</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis.html"><a href="hypothesis.html#统计量与拒绝域"><i class="fa fa-check"></i><b>6.4</b> 统计量与拒绝域</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis.html"><a href="hypothesis.html#利用p值进行决策"><i class="fa fa-check"></i><b>6.5</b> 利用p值进行决策</a></li>
+<li class="chapter" data-level="6.6" data-path="hypothesis.html"><a href="hypothesis.html#一个总体参数的检验"><i class="fa fa-check"></i><b>6.6</b> 一个总体参数的检验</a></li>
+<li class="chapter" data-level="6.7" data-path="hypothesis.html"><a href="hypothesis.html#两个总体参数的检验"><i class="fa fa-check"></i><b>6.7</b> 两个总体参数的检验</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="goodness.html"><a href="goodness.html"><i class="fa fa-check"></i><b>7</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="7.1" data-path="goodness.html"><a href="goodness.html#多项分布"><i class="fa fa-check"></i><b>7.1</b> 多项分布</a></li>
+<li class="chapter" data-level="7.2" data-path="goodness.html"><a href="goodness.html#独立性"><i class="fa fa-check"></i><b>7.2</b> 独立性</a></li>
+<li class="chapter" data-level="7.3" data-path="goodness.html"><a href="goodness.html#概率分布"><i class="fa fa-check"></i><b>7.3</b> 概率分布</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ANOVA.html"><a href="ANOVA.html"><i class="fa fa-check"></i><b>8</b> ANOVA</a><ul>
+<li class="chapter" data-level="8.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的引论"><i class="fa fa-check"></i><b>8.1</b> 方差分析的引论</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的部分概念"><i class="fa fa-check"></i><b>8.1.1</b> 方差分析的部分概念</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本思想和原理"><i class="fa fa-check"></i><b>8.1.2</b> 方差分析的基本思想和原理</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本假定"><i class="fa fa-check"></i><b>8.1.3</b> 方差分析的基本假定</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ANOVA.html"><a href="ANOVA.html#单因子方差分析one-way-anova"><i class="fa fa-check"></i><b>8.2</b> 单因子方差分析（One-way ANOVA)</a></li>
+<li class="chapter" data-level="8.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析中的多重比较"><i class="fa fa-check"></i><b>8.3</b> 方差分析中的多重比较</a></li>
+<li class="chapter" data-level="8.4" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析two-way-anova"><i class="fa fa-check"></i><b>8.4</b> 双因子方差分析（Two-way ANOVA）</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析的基本假定"><i class="fa fa-check"></i><b>8.4.1</b> 双因子方差分析的基本假定</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ANOVA.html"><a href="ANOVA.html#无交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.2</b> 无交互作用双因子方差分析</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ANOVA.html"><a href="ANOVA.html#有交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.3</b> 有交互作用双因子方差分析</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ANOVA.html"><a href="ANOVA.html#实验设计初步"><i class="fa fa-check"></i><b>8.5</b> 实验设计初步</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Linear Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#变量间的关系"><i class="fa fa-check"></i><b>9.1</b> 变量间的关系</a></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#回归分析和简单线性回归分析"><i class="fa fa-check"></i><b>9.2</b> 回归分析和简单线性回归分析</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#回归分析"><i class="fa fa-check"></i><b>9.2.1</b> 回归分析</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#简单线性回归分析"><i class="fa fa-check"></i><b>9.2.2</b> 简单线性回归分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#利用回归方程进行估计和预测"><i class="fa fa-check"></i><b>9.3</b> 利用回归方程进行估计和预测</a></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#残差分析"><i class="fa fa-check"></i><b>9.4</b> 残差分析</a></li>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#多元线性回归multiple-regression-model"><i class="fa fa-check"></i><b>9.5</b> 多元线性回归(multiple regression model)</a></li>
+<li class="chapter" data-level="9.6" data-path="regression.html"><a href="regression.html#定性自变量的回归"><i class="fa fa-check"></i><b>9.6</b> 定性自变量的回归</a></li>
+<li class="chapter" data-level="9.7" data-path="regression.html"><a href="regression.html#非线性回归"><i class="fa fa-check"></i><b>9.7</b> 非线性回归</a></li>
+<li class="chapter" data-level="9.8" data-path="regression.html"><a href="regression.html#建立回归模型"><i class="fa fa-check"></i><b>9.8</b> 建立回归模型</a></li>
+<li class="chapter" data-level="9.9" data-path="regression.html"><a href="regression.html#回归中的常见错误"><i class="fa fa-check"></i><b>9.9</b> 回归中的常见错误</a></li>
+<li class="chapter" data-level="9.10" data-path="regression.html"><a href="regression.html#logistic-回归"><i class="fa fa-check"></i><b>9.10</b> Logistic 回归</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="cluster.html"><a href="cluster.html"><i class="fa fa-check"></i><b>10</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="cluster.html"><a href="cluster.html#多元分布基本概念"><i class="fa fa-check"></i><b>10.1</b> 多元分布基本概念</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster.html"><a href="cluster.html#数据的变换处理"><i class="fa fa-check"></i><b>10.2</b> 数据的变换处理</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster.html"><a href="cluster.html#聚类分析"><i class="fa fa-check"></i><b>10.3</b> 聚类分析</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster.html"><a href="cluster.html#样品间亲疏程度的测度"><i class="fa fa-check"></i><b>10.4</b> 样品间亲疏程度的测度</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster.html"><a href="cluster.html#类与类之间的距离"><i class="fa fa-check"></i><b>10.5</b> 类与类之间的距离</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster.html"><a href="cluster.html#系统聚类hierarchical-clustering-method"><i class="fa fa-check"></i><b>10.6</b> 系统聚类(hierarchical clustering method)</a></li>
+<li class="chapter" data-level="10.7" data-path="cluster.html"><a href="cluster.html#快速聚类k-means-clustering-method"><i class="fa fa-check"></i><b>10.7</b> 快速聚类(k-means clustering method)</a></li>
+<li class="chapter" data-level="10.8" data-path="cluster.html"><a href="cluster.html#有序聚类"><i class="fa fa-check"></i><b>10.8</b> 有序聚类</a></li>
+<li class="chapter" data-level="10.9" data-path="cluster.html"><a href="cluster.html#聚类分析的主要步骤"><i class="fa fa-check"></i><b>10.9</b> 聚类分析的主要步骤</a></li>
+<li class="chapter" data-level="10.10" data-path="cluster.html"><a href="cluster.html#r语言中聚类分析实现"><i class="fa fa-check"></i><b>10.10</b> R语言中聚类分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="discriminant.html"><a href="discriminant.html"><i class="fa fa-check"></i><b>11</b> Discriminant Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="discriminant.html"><a href="discriminant.html#判别分析应用"><i class="fa fa-check"></i><b>11.1</b> 判别分析应用</a></li>
+<li class="chapter" data-level="11.2" data-path="discriminant.html"><a href="discriminant.html#判别分析方法"><i class="fa fa-check"></i><b>11.2</b> 判别分析方法</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="discriminant.html"><a href="discriminant.html#距离判别法"><i class="fa fa-check"></i><b>11.2.1</b> 距离判别法</a></li>
+<li class="chapter" data-level="11.2.2" data-path="discriminant.html"><a href="discriminant.html#fisher判别法"><i class="fa fa-check"></i><b>11.2.2</b> Fisher判别法</a></li>
+<li class="chapter" data-level="11.2.3" data-path="discriminant.html"><a href="discriminant.html#bayes判别法"><i class="fa fa-check"></i><b>11.2.3</b> Bayes判别法</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="discriminant.html"><a href="discriminant.html#建立判别函数的方法"><i class="fa fa-check"></i><b>11.3</b> 建立判别函数的方法</a></li>
+<li class="chapter" data-level="11.4" data-path="discriminant.html"><a href="discriminant.html#判别分析的步骤及注意事项"><i class="fa fa-check"></i><b>11.4</b> 判别分析的步骤及注意事项</a></li>
+<li class="chapter" data-level="11.5" data-path="discriminant.html"><a href="discriminant.html#r语言中判别分析实现"><i class="fa fa-check"></i><b>11.5</b> R语言中判别分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>12</b> Priciple Component Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="pca.html"><a href="pca.html#主成分分析基本思想"><i class="fa fa-check"></i><b>12.1</b> 主成分分析基本思想</a></li>
+<li class="chapter" data-level="12.2" data-path="pca.html"><a href="pca.html#几何解释与数学模型"><i class="fa fa-check"></i><b>12.2</b> 几何解释与数学模型</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="pca.html"><a href="pca.html#几何解释"><i class="fa fa-check"></i><b>12.2.1</b> 几何解释</a></li>
+<li class="chapter" data-level="12.2.2" data-path="pca.html"><a href="pca.html#数学模型"><i class="fa fa-check"></i><b>12.2.2</b> 数学模型</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="pca.html"><a href="pca.html#主成分的推导"><i class="fa fa-check"></i><b>12.3</b> 主成分的推导</a></li>
+<li class="chapter" data-level="12.4" data-path="pca.html"><a href="pca.html#主成分的性质"><i class="fa fa-check"></i><b>12.4</b> 主成分的性质</a></li>
+<li class="chapter" data-level="12.5" data-path="pca.html"><a href="pca.html#主成分分析的步骤"><i class="fa fa-check"></i><b>12.5</b> 主成分分析的步骤</a></li>
+<li class="chapter" data-level="12.6" data-path="pca.html"><a href="pca.html#主成分的应用与回归"><i class="fa fa-check"></i><b>12.6</b> 主成分的应用与回归</a></li>
+<li class="chapter" data-level="12.7" data-path="pca.html"><a href="pca.html#主成分分析的r语言实现"><i class="fa fa-check"></i><b>12.7</b> 主成分分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="fa.html"><a href="fa.html"><i class="fa fa-check"></i><b>13</b> Factor Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="fa.html"><a href="fa.html#因子分析概念"><i class="fa fa-check"></i><b>13.1</b> 因子分析概念</a></li>
+<li class="chapter" data-level="13.2" data-path="fa.html"><a href="fa.html#因子分析模型"><i class="fa fa-check"></i><b>13.2</b> 因子分析模型</a></li>
+<li class="chapter" data-level="13.3" data-path="fa.html"><a href="fa.html#因子载荷矩阵的估计方法"><i class="fa fa-check"></i><b>13.3</b> 因子载荷矩阵的估计方法</a></li>
+<li class="chapter" data-level="13.4" data-path="fa.html"><a href="fa.html#因子旋转正交变换"><i class="fa fa-check"></i><b>13.4</b> 因子旋转（正交变换）</a></li>
+<li class="chapter" data-level="13.5" data-path="fa.html"><a href="fa.html#因子得分"><i class="fa fa-check"></i><b>13.5</b> 因子得分</a></li>
+<li class="chapter" data-level="13.6" data-path="fa.html"><a href="fa.html#因子分析步骤"><i class="fa fa-check"></i><b>13.6</b> 因子分析步骤</a></li>
+<li class="chapter" data-level="13.7" data-path="fa.html"><a href="fa.html#因子分析的r语言实现"><i class="fa fa-check"></i><b>13.7</b> 因子分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="homework.html"><a href="homework.html"><i class="fa fa-check"></i><b>14</b> Case and Practice</a><ul>
+<li class="chapter" data-level="14.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布"><i class="fa fa-check"></i><b>14.1</b> 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验"><i class="fa fa-check"></i><b>14.2</b> 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析"><i class="fa fa-check"></i><b>14.3</b> 方差分析与回归分析</a></li>
+<li class="chapter" data-level="14.4" data-path="homework.html"><a href="homework.html#作业文档"><i class="fa fa-check"></i><b>14.4</b> 作业文档</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布-1"><i class="fa fa-check"></i><b>14.4.1</b> 1 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.4.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验-1"><i class="fa fa-check"></i><b>14.4.2</b> 2 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.4.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析-1"><i class="fa fa-check"></i><b>14.4.3</b> 3 方差分析与回归分析</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由 bookdown 强力驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">应用统计学与R语言实现学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="datacollec" class="section level1">
+<h1><span class="header-section-number">第 2 章</span> Data Collection</h1>
+<p>本篇是第二章，内容是数据收集。</p>
+<div id="数据来源" class="section level2">
+<h2><span class="header-section-number">2.1</span> 数据来源</h2>
+<p>做科学研究离不开数据，而数据的来源有哪些呢？这里比较简单地将数据来源分为两类：直接（一手）数据和间接（二手）数据。直接数据的数据获取来源包括：观测、调查、实验。间接数据的数据获取来源包括：出版物、互联网等。</p>
+<p>接下来分别谈谈这几个来源。观测——自然科学里有观测，如气象气候、植物生长期等，社会科学同样有观测，譬如像街区人的观测等。观测的数据可以说是纯粹第一手数据，在研究中是很宝贵的数据，但是很容易受到观测记录员主观因素的影响。调查——自然科学里的调查（室外样品采集，环境状况调查）一般是跟室内实验相结合，而社会科学的调查会更丰富，如典型的问卷调查、访谈、座谈会等。实验——实验是自然科学的核心，这里就不详述了（比如：土壤理化性质分析、植物生态生理特性分析）。不过近年来随着学科交叉增多，社会科学也开始更多地引入实验的方法（以笔者另一门公选课《初级社会网络》为例，耶鲁大学的社会心理学家米尔格兰姆(Stanley Milgram)就设计了一个连锁信件实验，这就是著名的六度分割理论的由来）。
+当然除了以上三种，我认为在现在的大数据时代，还存在一些新的直接数据来源。</p>
+<blockquote>
+<ul>
+<li>物联网（Interest of Thing,IOT),以各类传感器（RFID、红外感应系统、GPS、通量塔等）为代表，代表数据就是如今火热的大数据——如RFID记录数据、浮动车与出租车GPS轨迹数据、通量塔测量的NEE等。</li>
+<li>遥感（Remote Sensing，RS），某种程度上，遥感也是靠传感器接收数据，但是它与物联网还是有所差别，故单列出来。作为地学和生态学背景（尤其是GIS和RS相关方向的）的学生，对遥感会非常熟悉。遥感的特征就是，可以大范围快速获取地表信息数据（譬如地形、地表温度、气溶胶、albedo等，当然这些都需要进行反演等）。</li>
+</ul>
+</blockquote>
+<p>总的来说，观测在自然科学和社会科学中都有渗透较多，但是观测往往受到记录人员主观因素影响导致误差。而且观测的数据结构一般来说呈现非结构化的特征。调查在社会科学中有较多应用，自然科学中较少，而实验则是在自然科学中应用广泛，社会科学则应用较少。这两类的实质是类似的，需要提前设计好调查的大纲或者实验方案，然后按照设计好的大纲和方案进行调查和实验。也因此这两类数据结构化特征比较明显。</p>
+<p>所谓的间接数据就是指已经经过他人整理的相关数据。这边列出来的主要包括：出版物：统计年鉴、书籍、论文等。统计年鉴是大部分社会科学相关研究的重要数据来源，这边就不详述了。书籍对于很多如社会研究的文本分析是重要的数据来源。论文作为数据，是近年来兴起的文献计量学的典型数据。此外对Meta分析，论文里的数据则是重要来源。互联网：百度指数、阿里指数、大众点评等数据。互联网数据可以利用网络爬虫获取。总的来说，间接数据易于获取，作用广泛，但使用的时候需要控制数据质量以及引用。</p>
+</div>
+<div id="调查设计" class="section level2">
+<h2><span class="header-section-number">2.2</span> 调查设计</h2>
+<p>这边主要介绍的是数据的调查方式、调查方案的结构和设计以及调查问卷设计。</p>
+<p>（1）数据的调查方式</p>
+<p>数据的调查方式一般而言是遵循统计学规律的（我们称之为统计调查方式），这里列举了我国统计调查的常用方式：普查（人口普查、农业普查、甚至到最近刚刚发布成果的全国第一次地理国情普查）、抽样调查（概率抽样、非概率抽样，具体后面第三章会详述）、统计报表（统计公报）。而除了以上之外，当我们需要自己收集直接数据的时候又可以分为以下几种：</p>
+<p>询问调查类：</p>
+<blockquote>
+<ul>
+<li>访问调查</li>
+<li>邮寄调查</li>
+<li>电话调查</li>
+<li>电脑辅助</li>
+<li>座谈会</li>
+<li>个别深访</li>
+</ul>
+</blockquote>
+<p>观察实验:</p>
+<blockquote>
+<ul>
+<li>观察</li>
+<li>实验</li>
+</ul>
+</blockquote>
+<p>（2）调查方案的结构和设计</p>
+<p>如何做调查？是很多人在科学研究中的第一道难关。这里给出一个关于做调查的普遍步骤流程图：</p>
+<p><img src="fig/fig5.jpg" width="100%" height="60%" /></p>
+<p>那么调查方案又是什么呢？我认为调查方案就是调查的策划书。明确你调查的一些目的、对象、项目以及调查方法等。一般结构如下：</p>
+<blockquote>
+<ul>
+<li>调查目的</li>
+<li>调查对象调查单位</li>
+<li>调查项目</li>
+<li>其他</li>
+</ul>
+</blockquote>
+<p>（3）调查问卷设计</p>
+<p>最后这部分是谈谈调查问卷设计的一些内容（包括笔者自己的一些经验）。</p>
+<p>问卷结构</p>
+<blockquote>
+<ul>
+<li>开头部分（问候语、填写说明、问卷编号 ）</li>
+<li>甄别部分</li>
+<li>主体部分</li>
+<li>背景部分</li>
+</ul>
+</blockquote>
+<p>其他部分就不详述了，甄别部分一般是针对过滤的问题，就是不符合条件的即可跳过部分调查题目。接下来主要针对主体部分简单介绍。主体部分其实就是问卷主要调查的部分。一般来说要注意一下几点。</p>
+<blockquote>
+<ul>
+<li>提问内容尽可能简短</li>
+<li>用词准确通俗（可按6W原则推敲：Who,Where,When,Why,What,How）</li>
+<li>一项提问只包括一项内容</li>
+<li>避免诱导性提问、否定形式提问、敏感性问题</li>
+</ul>
+</blockquote>
+<p>而问题则又可以分为两大类：开放性问题（自由回答型）和封闭性问题（选择回答型）。封闭性问题包括了二项选择、多项选择（单项、多项、限制选择）、顺序选择法、评定尺度法、双向列联表法。</p>
+<blockquote>
+<ul>
+<li>开放性问题——一般就是可以随便答，这类数据一般是问卷者的主观感受，不会受客观影响。但是最大的问题在于数据收集呈现非结构化特征，多以文本形式存在。研究时必须通过重编码、文本分析等方法。</li>
+<li>封闭性问题——相当于是选择题或者填空题。二项选择就是，只有两个选项（A或B）；多项选择则是有多个选项，可以选至少一个（一个为单项、一个以上且不限制选择的数量为多项、一个以上且限制选择的数量为限制）；顺序选择法，就是给出多个选项，让你按照自己的认识对选项进行排序；评定尺度法，给出多个选项且是有等级划分的（如很差，差，一般，好，很好）进行选择；双向列联表法，将两类不同问题综合到一起，用表格形式，横向为一类问题，纵向为一类问题。</li>
+</ul>
+</blockquote>
+<p>从笔者的经验来说，在设置问卷的时候，必须要先从自己想研究的问题出发，思索如何用数据分析证明自己的结论，然后大致思索需要用来分析的统计方法与统计指标，然后对应选择问题的形式，因为不同的问题形式对应的数据结构大不相同，而且统计方法也不尽相同。最后的最后安利大家一个软件：Survey123 for ArcGIS。这是由esri北京研发中心开发的一款外业数据收集软件——获得“问卷好帮手”称号的application。</p>
+<blockquote>
+<ul>
+<li><a href="http://www.esri.com/products/survey123" class="uri">http://www.esri.com/products/survey123</a></li>
+</ul>
+</blockquote>
+<p>主要包括了桌面端Survey123 connect和移动端Survey123 app两大软件。可以简便地建立问卷、分享问卷、搜集数据、分析数据，同时采集时受访者的GPS位置也将被记录。具体教程参照如下网址。</p>
+<blockquote>
+<ul>
+<li><a href="http://doc.arcgis.com/zh-cn/survey123/" class="uri">http://doc.arcgis.com/zh-cn/survey123/</a></li>
+</ul>
+</blockquote>
+</div>
+<div id="数据质量" class="section level2">
+<h2><span class="header-section-number">2.3</span> 数据质量</h2>
+<p>采集数据的时候必须考虑的就是数据的质量，即降低采集数据时产生误差。科学研究中的数据误差无可避免，而误差的来源主要包括：抽样误差、非抽样误差。抽样误差，在抽样方式确定时就无法避免，具体的方法可能还是统计学万能解药———增加样本量。非抽样误差则包括了如下的内容：</p>
+<blockquote>
+<ul>
+<li>抽样框误差</li>
+<li>回答误差</li>
+<li>无回答误差</li>
+<li>调查员误差</li>
+</ul>
+</blockquote>
+<p>抽样框误差——其实就是抽取的样本无法代表总体；回答误差和无回答误差都是由于受访者导致的错误，而调查员误差则无须再介绍，即采集者自身的误差。那么控制误差的方法无非就在于样本大小以及合适的数据框（针对非抽样误差和抽样框误差），靠重访来进行修正（回答误差和无回答误差），调查员误差则需要对调查员进行培训。当然这里还得普及一个概念，在统计学里面，precision（精度）和accuracy（准确性）是不相同的。中文里面往往因为两个单词都翻译成精度，事实上这两个词指的是不一样的内容。二者的区别可以看下面的图。</p>
+<p><img src="fig/fig6.jpg" width="100%" height="50%" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="descriptive.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/02-datacollect.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

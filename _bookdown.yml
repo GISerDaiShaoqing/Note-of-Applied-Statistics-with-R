@@ -1,0 +1,10 @@
+book_filename: bookdown
+clean: [packages.bib, bookdown.bbl]
+language:
+  label:
+    fig: "图 "
+    tab: "表 "
+  ui:
+    edit: "编辑"
+    chapter_name: ["第 ", " 章"]
+output_dir: "docs"

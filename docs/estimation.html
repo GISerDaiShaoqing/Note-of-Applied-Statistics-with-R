@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 5 章 Estimation | 应用统计学与R语言实现学习笔记</title>
+  <meta name="description" content="第 5 章 Estimation | 应用统计学与R语言实现学习笔记" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 5 章 Estimation | 应用统计学与R语言实现学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  
+  <meta name="github-repo" content="GISerDaiShaoqing/Note-of-Applied-Statistics-with-R-Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 5 章 Estimation | 应用统计学与R语言实现学习笔记" />
+  
+  
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="戴劭勍" />
+
+
+<meta name="date" content="2021-03-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sampling.html"/>
+<link rel="next" href="hypothesis.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">中文书示例</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#从问题说起"><i class="fa fa-check"></i><b>1.1</b> 从问题说起</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#统计学及其研究过程"><i class="fa fa-check"></i><b>1.2</b> 统计学及其研究过程</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#统计方法及其应用领域"><i class="fa fa-check"></i><b>1.3</b> 统计方法及其应用领域</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#统计数据类型"><i class="fa fa-check"></i><b>1.4</b> 统计数据类型</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#统计学中的几个基本概念"><i class="fa fa-check"></i><b>1.5</b> 统计学中的几个基本概念</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="datacollec.html"><a href="datacollec.html"><i class="fa fa-check"></i><b>2</b> Data Collection</a><ul>
+<li class="chapter" data-level="2.1" data-path="datacollec.html"><a href="datacollec.html#数据来源"><i class="fa fa-check"></i><b>2.1</b> 数据来源</a></li>
+<li class="chapter" data-level="2.2" data-path="datacollec.html"><a href="datacollec.html#调查设计"><i class="fa fa-check"></i><b>2.2</b> 调查设计</a></li>
+<li class="chapter" data-level="2.3" data-path="datacollec.html"><a href="datacollec.html#数据质量"><i class="fa fa-check"></i><b>2.3</b> 数据质量</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptive.html"><a href="descriptive.html"><i class="fa fa-check"></i><b>3</b> Descriptive Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptive.html"><a href="descriptive.html#数据的预处理"><i class="fa fa-check"></i><b>3.1</b> 数据的预处理</a></li>
+<li class="chapter" data-level="3.2" data-path="descriptive.html"><a href="descriptive.html#数据的整理与展示"><i class="fa fa-check"></i><b>3.2</b> 数据的整理与展示</a></li>
+<li class="chapter" data-level="3.3" data-path="descriptive.html"><a href="descriptive.html#数据的概括性度量"><i class="fa fa-check"></i><b>3.3</b> 数据的概括性度量</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sampling.html"><a href="sampling.html"><i class="fa fa-check"></i><b>4</b> Sampling And Sample Distribution</a><ul>
+<li class="chapter" data-level="4.1" data-path="sampling.html"><a href="sampling.html#抽样方法"><i class="fa fa-check"></i><b>4.1</b> 抽样方法</a></li>
+<li class="chapter" data-level="4.2" data-path="sampling.html"><a href="sampling.html#正态分布"><i class="fa fa-check"></i><b>4.2</b> 正态分布</a></li>
+<li class="chapter" data-level="4.3" data-path="sampling.html"><a href="sampling.html#三种不同性质的分布"><i class="fa fa-check"></i><b>4.3</b> 三种不同性质的分布</a></li>
+<li class="chapter" data-level="4.4" data-path="sampling.html"><a href="sampling.html#一个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.4</b> 一个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.5" data-path="sampling.html"><a href="sampling.html#两个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.5</b> 两个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.6" data-path="sampling.html"><a href="sampling.html#附录"><i class="fa fa-check"></i><b>4.6</b> 附录</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>5</b> Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation.html"><a href="estimation.html#参数估计的一般问题"><i class="fa fa-check"></i><b>5.1</b> 参数估计的一般问题</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation.html"><a href="estimation.html#区间估计-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> 区间估计 Confidence Intervals</a></li>
+<li class="chapter" data-level="5.3" data-path="estimation.html"><a href="estimation.html#样本容量的确定"><i class="fa fa-check"></i><b>5.3</b> 样本容量的确定</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis.html"><a href="hypothesis.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Test</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis.html"><a href="hypothesis.html#基本思想"><i class="fa fa-check"></i><b>6.1</b> 基本思想</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis.html"><a href="hypothesis.html#原假设和备择假设"><i class="fa fa-check"></i><b>6.2</b> 原假设和备择假设</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis.html"><a href="hypothesis.html#第一类错误和第二类错误"><i class="fa fa-check"></i><b>6.3</b> 第一类错误和第二类错误</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis.html"><a href="hypothesis.html#统计量与拒绝域"><i class="fa fa-check"></i><b>6.4</b> 统计量与拒绝域</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis.html"><a href="hypothesis.html#利用p值进行决策"><i class="fa fa-check"></i><b>6.5</b> 利用p值进行决策</a></li>
+<li class="chapter" data-level="6.6" data-path="hypothesis.html"><a href="hypothesis.html#一个总体参数的检验"><i class="fa fa-check"></i><b>6.6</b> 一个总体参数的检验</a></li>
+<li class="chapter" data-level="6.7" data-path="hypothesis.html"><a href="hypothesis.html#两个总体参数的检验"><i class="fa fa-check"></i><b>6.7</b> 两个总体参数的检验</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="goodness.html"><a href="goodness.html"><i class="fa fa-check"></i><b>7</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="7.1" data-path="goodness.html"><a href="goodness.html#多项分布"><i class="fa fa-check"></i><b>7.1</b> 多项分布</a></li>
+<li class="chapter" data-level="7.2" data-path="goodness.html"><a href="goodness.html#独立性"><i class="fa fa-check"></i><b>7.2</b> 独立性</a></li>
+<li class="chapter" data-level="7.3" data-path="goodness.html"><a href="goodness.html#概率分布"><i class="fa fa-check"></i><b>7.3</b> 概率分布</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ANOVA.html"><a href="ANOVA.html"><i class="fa fa-check"></i><b>8</b> ANOVA</a><ul>
+<li class="chapter" data-level="8.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的引论"><i class="fa fa-check"></i><b>8.1</b> 方差分析的引论</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的部分概念"><i class="fa fa-check"></i><b>8.1.1</b> 方差分析的部分概念</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本思想和原理"><i class="fa fa-check"></i><b>8.1.2</b> 方差分析的基本思想和原理</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本假定"><i class="fa fa-check"></i><b>8.1.3</b> 方差分析的基本假定</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ANOVA.html"><a href="ANOVA.html#单因子方差分析one-way-anova"><i class="fa fa-check"></i><b>8.2</b> 单因子方差分析（One-way ANOVA)</a></li>
+<li class="chapter" data-level="8.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析中的多重比较"><i class="fa fa-check"></i><b>8.3</b> 方差分析中的多重比较</a></li>
+<li class="chapter" data-level="8.4" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析two-way-anova"><i class="fa fa-check"></i><b>8.4</b> 双因子方差分析（Two-way ANOVA）</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析的基本假定"><i class="fa fa-check"></i><b>8.4.1</b> 双因子方差分析的基本假定</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ANOVA.html"><a href="ANOVA.html#无交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.2</b> 无交互作用双因子方差分析</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ANOVA.html"><a href="ANOVA.html#有交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.3</b> 有交互作用双因子方差分析</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ANOVA.html"><a href="ANOVA.html#实验设计初步"><i class="fa fa-check"></i><b>8.5</b> 实验设计初步</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Linear Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#变量间的关系"><i class="fa fa-check"></i><b>9.1</b> 变量间的关系</a></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#回归分析和简单线性回归分析"><i class="fa fa-check"></i><b>9.2</b> 回归分析和简单线性回归分析</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#回归分析"><i class="fa fa-check"></i><b>9.2.1</b> 回归分析</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#简单线性回归分析"><i class="fa fa-check"></i><b>9.2.2</b> 简单线性回归分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#利用回归方程进行估计和预测"><i class="fa fa-check"></i><b>9.3</b> 利用回归方程进行估计和预测</a></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#残差分析"><i class="fa fa-check"></i><b>9.4</b> 残差分析</a></li>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#多元线性回归multiple-regression-model"><i class="fa fa-check"></i><b>9.5</b> 多元线性回归(multiple regression model)</a></li>
+<li class="chapter" data-level="9.6" data-path="regression.html"><a href="regression.html#定性自变量的回归"><i class="fa fa-check"></i><b>9.6</b> 定性自变量的回归</a></li>
+<li class="chapter" data-level="9.7" data-path="regression.html"><a href="regression.html#非线性回归"><i class="fa fa-check"></i><b>9.7</b> 非线性回归</a></li>
+<li class="chapter" data-level="9.8" data-path="regression.html"><a href="regression.html#建立回归模型"><i class="fa fa-check"></i><b>9.8</b> 建立回归模型</a></li>
+<li class="chapter" data-level="9.9" data-path="regression.html"><a href="regression.html#回归中的常见错误"><i class="fa fa-check"></i><b>9.9</b> 回归中的常见错误</a></li>
+<li class="chapter" data-level="9.10" data-path="regression.html"><a href="regression.html#logistic-回归"><i class="fa fa-check"></i><b>9.10</b> Logistic 回归</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="cluster.html"><a href="cluster.html"><i class="fa fa-check"></i><b>10</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="cluster.html"><a href="cluster.html#多元分布基本概念"><i class="fa fa-check"></i><b>10.1</b> 多元分布基本概念</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster.html"><a href="cluster.html#数据的变换处理"><i class="fa fa-check"></i><b>10.2</b> 数据的变换处理</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster.html"><a href="cluster.html#聚类分析"><i class="fa fa-check"></i><b>10.3</b> 聚类分析</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster.html"><a href="cluster.html#样品间亲疏程度的测度"><i class="fa fa-check"></i><b>10.4</b> 样品间亲疏程度的测度</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster.html"><a href="cluster.html#类与类之间的距离"><i class="fa fa-check"></i><b>10.5</b> 类与类之间的距离</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster.html"><a href="cluster.html#系统聚类hierarchical-clustering-method"><i class="fa fa-check"></i><b>10.6</b> 系统聚类(hierarchical clustering method)</a></li>
+<li class="chapter" data-level="10.7" data-path="cluster.html"><a href="cluster.html#快速聚类k-means-clustering-method"><i class="fa fa-check"></i><b>10.7</b> 快速聚类(k-means clustering method)</a></li>
+<li class="chapter" data-level="10.8" data-path="cluster.html"><a href="cluster.html#有序聚类"><i class="fa fa-check"></i><b>10.8</b> 有序聚类</a></li>
+<li class="chapter" data-level="10.9" data-path="cluster.html"><a href="cluster.html#聚类分析的主要步骤"><i class="fa fa-check"></i><b>10.9</b> 聚类分析的主要步骤</a></li>
+<li class="chapter" data-level="10.10" data-path="cluster.html"><a href="cluster.html#r语言中聚类分析实现"><i class="fa fa-check"></i><b>10.10</b> R语言中聚类分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="discriminant.html"><a href="discriminant.html"><i class="fa fa-check"></i><b>11</b> Discriminant Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="discriminant.html"><a href="discriminant.html#判别分析应用"><i class="fa fa-check"></i><b>11.1</b> 判别分析应用</a></li>
+<li class="chapter" data-level="11.2" data-path="discriminant.html"><a href="discriminant.html#判别分析方法"><i class="fa fa-check"></i><b>11.2</b> 判别分析方法</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="discriminant.html"><a href="discriminant.html#距离判别法"><i class="fa fa-check"></i><b>11.2.1</b> 距离判别法</a></li>
+<li class="chapter" data-level="11.2.2" data-path="discriminant.html"><a href="discriminant.html#fisher判别法"><i class="fa fa-check"></i><b>11.2.2</b> Fisher判别法</a></li>
+<li class="chapter" data-level="11.2.3" data-path="discriminant.html"><a href="discriminant.html#bayes判别法"><i class="fa fa-check"></i><b>11.2.3</b> Bayes判别法</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="discriminant.html"><a href="discriminant.html#建立判别函数的方法"><i class="fa fa-check"></i><b>11.3</b> 建立判别函数的方法</a></li>
+<li class="chapter" data-level="11.4" data-path="discriminant.html"><a href="discriminant.html#判别分析的步骤及注意事项"><i class="fa fa-check"></i><b>11.4</b> 判别分析的步骤及注意事项</a></li>
+<li class="chapter" data-level="11.5" data-path="discriminant.html"><a href="discriminant.html#r语言中判别分析实现"><i class="fa fa-check"></i><b>11.5</b> R语言中判别分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>12</b> Priciple Component Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="pca.html"><a href="pca.html#主成分分析基本思想"><i class="fa fa-check"></i><b>12.1</b> 主成分分析基本思想</a></li>
+<li class="chapter" data-level="12.2" data-path="pca.html"><a href="pca.html#几何解释与数学模型"><i class="fa fa-check"></i><b>12.2</b> 几何解释与数学模型</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="pca.html"><a href="pca.html#几何解释"><i class="fa fa-check"></i><b>12.2.1</b> 几何解释</a></li>
+<li class="chapter" data-level="12.2.2" data-path="pca.html"><a href="pca.html#数学模型"><i class="fa fa-check"></i><b>12.2.2</b> 数学模型</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="pca.html"><a href="pca.html#主成分的推导"><i class="fa fa-check"></i><b>12.3</b> 主成分的推导</a></li>
+<li class="chapter" data-level="12.4" data-path="pca.html"><a href="pca.html#主成分的性质"><i class="fa fa-check"></i><b>12.4</b> 主成分的性质</a></li>
+<li class="chapter" data-level="12.5" data-path="pca.html"><a href="pca.html#主成分分析的步骤"><i class="fa fa-check"></i><b>12.5</b> 主成分分析的步骤</a></li>
+<li class="chapter" data-level="12.6" data-path="pca.html"><a href="pca.html#主成分的应用与回归"><i class="fa fa-check"></i><b>12.6</b> 主成分的应用与回归</a></li>
+<li class="chapter" data-level="12.7" data-path="pca.html"><a href="pca.html#主成分分析的r语言实现"><i class="fa fa-check"></i><b>12.7</b> 主成分分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="fa.html"><a href="fa.html"><i class="fa fa-check"></i><b>13</b> Factor Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="fa.html"><a href="fa.html#因子分析概念"><i class="fa fa-check"></i><b>13.1</b> 因子分析概念</a></li>
+<li class="chapter" data-level="13.2" data-path="fa.html"><a href="fa.html#因子分析模型"><i class="fa fa-check"></i><b>13.2</b> 因子分析模型</a></li>
+<li class="chapter" data-level="13.3" data-path="fa.html"><a href="fa.html#因子载荷矩阵的估计方法"><i class="fa fa-check"></i><b>13.3</b> 因子载荷矩阵的估计方法</a></li>
+<li class="chapter" data-level="13.4" data-path="fa.html"><a href="fa.html#因子旋转正交变换"><i class="fa fa-check"></i><b>13.4</b> 因子旋转（正交变换）</a></li>
+<li class="chapter" data-level="13.5" data-path="fa.html"><a href="fa.html#因子得分"><i class="fa fa-check"></i><b>13.5</b> 因子得分</a></li>
+<li class="chapter" data-level="13.6" data-path="fa.html"><a href="fa.html#因子分析步骤"><i class="fa fa-check"></i><b>13.6</b> 因子分析步骤</a></li>
+<li class="chapter" data-level="13.7" data-path="fa.html"><a href="fa.html#因子分析的r语言实现"><i class="fa fa-check"></i><b>13.7</b> 因子分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="homework.html"><a href="homework.html"><i class="fa fa-check"></i><b>14</b> Case and Practice</a><ul>
+<li class="chapter" data-level="14.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布"><i class="fa fa-check"></i><b>14.1</b> 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验"><i class="fa fa-check"></i><b>14.2</b> 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析"><i class="fa fa-check"></i><b>14.3</b> 方差分析与回归分析</a></li>
+<li class="chapter" data-level="14.4" data-path="homework.html"><a href="homework.html#作业文档"><i class="fa fa-check"></i><b>14.4</b> 作业文档</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布-1"><i class="fa fa-check"></i><b>14.4.1</b> 1 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.4.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验-1"><i class="fa fa-check"></i><b>14.4.2</b> 2 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.4.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析-1"><i class="fa fa-check"></i><b>14.4.3</b> 3 方差分析与回归分析</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由 bookdown 强力驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">应用统计学与R语言实现学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="estimation" class="section level1">
+<h1><span class="header-section-number">第 5 章</span> Estimation</h1>
+<p>本篇是第五章，内容是参数估计。</p>
+<div id="参数估计的一般问题" class="section level2">
+<h2><span class="header-section-number">5.1</span> 参数估计的一般问题</h2>
+<p>正如前面介绍的，统计学的两大分支，分别是描述统计和推断统计。所以今天来谈谈推断统计的第一大问题——参数估计。当然一般叫统计推断的会更多些，二者是一样的。统计推断(Statistical Inference)——主要包括参数估计和假设检验，实质就是通过样本的均值、标准差、方差等去估计总体的均值、标准差、方差或者判断总体的分布形式和分布参数。</p>
+<blockquote>
+<ul>
+<li>参数估计：根据从总体中抽得的样本所提供的信息，对总体分布中包含的未知参数作出数值上的估计。
+点估计：用样本的某一函数值来估计总体分布中的未知参数;
+区间估计：按照一定的可靠度估计出参数的一个范围，即确定一个区间，使这一个区间内包含参数真值的概率达到预先所要求的程度。</li>
+<li>假设检验：需要对总体的分布形式或分布参数事先作出某种假设，然后根据样本观测值，运用统计分析的方法来检验这一假设是否正确。</li>
+</ul>
+</blockquote>
+<p>上一篇提到的，获取样本之后，我们需要去猜总体，参数估计就是猜总体的参数（分布中所含的未知参数；分布特征：均值、方差等；事件的概率等）或者参数空间(参数的可能取值范围)。假设检验是下一章内容，这里就不细述了。首先明确两个概念：估计量（estimator）与估计值(estimated value)。</p>
+<blockquote>
+<ul>
+<li>估计量： 用于估计总体参数的随机变量，一般为样本统计量（如样本均值、 样本比例、 样本方差等； 例如：样本均值就是总体均值<span class="math inline">\(\mu\)</span>的一个估计量）。</li>
+<li>估计值： 估计参数时计算出来的统计量的具体值,如果样本均值=80， 则80就是总体均值的估计值。</li>
+</ul>
+</blockquote>
+<p>既然是估计量，就必须有评价估计量的标准。一般包括以下几点：</p>
+<blockquote>
+<ul>
+<li>无偏性：估计量的数学期望等于被估计的总体参数，样本的随机性导致估计偏差， 偏差平均值为0， 无系统误差（所以在这里又提出了渐进无偏估计：估计随着样本量的增加而逐渐趋近于真值。渐进无偏估计指系统偏差会随着样本量的增加而逐渐减小，趋于0，在大样本时可近似当无偏估计使用）。</li>
+<li>有效性： 对同一总体参数的两个无偏点估计量， 有更小标准差的估计量更有效。</li>
+<li>一致性： 随着样本容量的增大， 估计量的值越来越接近被估计的总体参数。</li>
+</ul>
+</blockquote>
+<p>由于无偏性是最普遍的标准。这里再介绍部分无偏性的几个要点：</p>
+<blockquote>
+<ul>
+<li>样本均值是总体期望的无偏估计。</li>
+<li>诸观测值对样本均值的偏差可正可负，其和恒为0（n个偏差中只有n-1个是独立的）。</li>
+<li>自由度：独立偏差个数。</li>
+<li>偏差平方和（样本量相等情况下，偏差平方和的大小反映样本散布的大小， 样本量大，偏差平方和大趋近于平均偏差平方和，偏差平方和的期望小于方差，有偏估计，渐进无偏估计。</li>
+</ul>
+</blockquote>
+<p>点估计（point estimate）</p>
+<blockquote>
+<ul>
+<li>用样本估计量的某个取值直接作为总体参数的估计值（例如：用样本均值直接作为总体均值的估计；用两个样本均值之差直接作为总体均值之差的估计）。</li>
+<li>无法给出估计值接近总体参数程度的信息（虽然在重复抽样条件下，点估计的均值可望接近总体真值，但由于样本是随机的，抽出一个具体的样本得到的估计值等同于总体真值的可能性很小，特别是在连续分布时，该概率几乎为0，一个点估计量的可靠性是由它的抽样标准误差来衡量的，这表明一个具体的点估计值无法给出估计的可靠性的度量）。</li>
+</ul>
+</blockquote>
+</div>
+<div id="区间估计-confidence-intervals" class="section level2">
+<h2><span class="header-section-number">5.2</span> 区间估计 Confidence Intervals</h2>
+<p>正如前面提到的点估计可靠性较低，因此在点估计的基础上又提出了区间估计(interval estimate)，它能解决的问题包括：</p>
+<blockquote>
+<ul>
+<li>为解决参数估计的精确度和可靠性问题， 在点估计的基础上给出总体参数估计的一个区间范围（该区间一般由样本统计量加减抽样误差而得到），使这一个区间内包含参数真值的概率大到预先所要求的程度。</li>
+<li>它不具体指出总体参数等于什么，但能指出总体的未知参数落入某一区间的概率有多大。</li>
+</ul>
+</blockquote>
+<p>二者的区别在于：点估计是一个数，区间估计给出一个区间，提供更多关于变异性的信息。通俗的解释，你女朋友买了件衣服，让你猜价格，你猜中准确价格很难，但是你猜一个范围还是准确度比较高的。</p>
+<p><img src="fig/fig8.jpg" width="100%" height="30%" /></p>
+<p>所以区间估计(interval estimate)的概念是——根据样本统计量的抽样分布能够对样本统计量与总体参数的接近程度给出一个概率度量。由概率度量则引出了置信区间（Confidence Intervals）的概念。设<span class="math inline">\(x_1,x_2,\cdots,x_n\)</span>是来自<span class="math inline">\(f(x,\theta)\)</span>的样本，对于给定的<span class="math inline">\(\alpha,0&lt;\alpha&lt;1\)</span>,如能找到两个统计量<span class="math inline">\(\theta_1(x_1,x_2,\cdots,x_n)\)</span>和<span class="math inline">\(\theta_2(x_1,x_2,\cdots,x_n)\)</span>使得<span class="math inline">\(P\left\{(\theta_1(x_1,x_2,\cdots,x_n)&lt;\theta&lt;\theta_2(x_1,x_2,\cdots,x_n)\right\}\ge1-\alpha\)</span>, 称<span class="math inline">\((\theta_1(x_1,x_2,\cdots,x_n),\theta_2(x_1,x_2,\cdots,x_n))\)</span>是<span class="math inline">\(\theta\)</span>的置信度为<span class="math inline">\(1-\alpha\)</span>的置信区间(Confidence interval);<span class="math inline">\(\theta_1,\theta_2\)</span>为置信上限与置信下限,<span class="math inline">\(1-\alpha\)</span>为置信度,<span class="math inline">\(\alpha\)</span>为显著性水平(Significance level)。</p>
+<p>置信区间实质上是由样本统计量所构造的总体参数的估计区间。在某种程度上确信这个区间包含真正的总体参数（用一个具体的样本所构造的区间是一个特定的区间，我们无法知道这个样本所产生的区间是否包含总体参数的真值，我们只能是希望这个区间是大量包含总体参数真值的区间中的一个，但它也可能是少数几个不包含参数真值的区间中的一个）。置信区间表明了区间估计的精确性， 区间越小越精确，区间越大越不精确。置信水平——将构造置信区间的步骤重复很多次，置信区间包含总体参数真值的次数所占的比例称为置信水平（置信度）。置信水平表明了区间估计的可靠性，表示为<span class="math inline">\((1-\alpha)\)</span>，<span class="math inline">\(\alpha\)</span>是总体参数未在区间内的比例， 区间估计不可靠的概率为<span class="math inline">\(\alpha\)</span>， 如<span class="math inline">\(\alpha\)</span>=0.05， 表明结论犯错误的概率为0.05),常用的置信水平值有99%, 95%, 90%。那么什么样的置信区间是好的置信区间呢？也就是区间估计的评价标准是什么呢？一般包括如下两点：</p>
+<blockquote>
+<ul>
+<li>置信度（置信系数）越大越好——概率越大越放心，但不能一味求大。</li>
+<li>随机区间平均长度越短越好——估计精度越高。</li>
+</ul>
+</blockquote>
+<p>但是在某些实际问题中，我们可能更关心置信上限或置信下限(合金钢强度，越大越好（望大特性），平均强度下限是个重要指标,药物毒性，越小越好（望小特性），平均毒性上限是个重要指标)。这就是单侧置信限问题。谈完了这么多理论，接下来进入实践，如何做一个总体参数的区间估计？
+按照前一章，我们还是讨论三个重要的总体参数：均值、比例、方差。也是先谈一个总体参数的区间估计。首先规定好符号对应统计量和参数。</p>
+<p>总体均值——<span class="math inline">\(\mu\)</span>，总体比例——p，总体方差——<span class="math inline">\(\sigma^2\)</span>;样本均值——<span class="math inline">\(\bar x\)</span>，样本比例——<span class="math inline">\(\bar p\)</span>，样本方差——<span class="math inline">\(s^2\)</span>。</p>
+<ul>
+<li>一个总体均值的置信区间估计方法总结起来就是：</li>
+</ul>
+<blockquote>
+<ul>
+<li>正态分布，且总体方差<span class="math inline">\(\sigma\)</span>已知，用Z值；</li>
+<li>正态分布，且总体方差<span class="math inline">\(\sigma\)</span>未知，用t值；</li>
+<li>非正态分布但是大样本，无论总体方差<span class="math inline">\(\sigma\)</span>是否已知，用Z值。</li>
+</ul>
+</blockquote>
+<p>第一种情况：正态分布统计量z——<span class="math inline">\(z=\frac{\bar x-\mu}{\sigma/\sqrt{n}}\sim N(0,1)\)</span>，总体均值<span class="math inline">\(\mu\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为<span class="math inline">\(\bar x\pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\)</span>，置信下限为<span class="math inline">\(\bar x- z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\)</span>，置信上限为<span class="math inline">\(\bar x+ z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\)</span>。</p>
+<p>第二种情况：t分布统计量——<span class="math inline">\(t=\frac{\bar x-\mu}{s/\sqrt{n}}\sim t(n-1)\)</span>，总体均值<span class="math inline">\(\mu\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为<span class="math inline">\(\bar x\pm t_{\alpha/2}\frac{s}{\sqrt{n}}\)</span>，置信下限为<span class="math inline">\(\bar x- t_{\alpha/2}\frac{s}{\sqrt{n}}\)</span>，置信上限为<span class="math inline">\(\bar x+ t_{\alpha/2}\frac{s}{\sqrt{n}}\)</span>。</p>
+<p>第三种情况：正态分布统计量z——<span class="math inline">\(z=\frac{\bar x-\mu}{\sigma/\sqrt{n}}\sim N(0,1)\)</span>，总体均值<span class="math inline">\(\mu\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为<span class="math inline">\(\bar x\pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\)</span>（<span class="math inline">\(\sigma\)</span>未知的话，把<span class="math inline">\(\sigma\)</span>换成s即可）。</p>
+<ul>
+<li>一个总体比例的置信区间估计方法</li>
+</ul>
+<p>假定条件<span class="math inline">\(np\geq5\)</span>, <span class="math inline">\(n(1-p)\geq5\)</span>, <span class="math inline">\(n\geq30\)</span>。正态分布统计量z——<span class="math inline">\(z=\frac{\bar p-p}{\sqrt{\frac{p(1-p)}{n}}}\sim N(0,1)\)</span>，总体比例的置信区间为</p>
+<p><span class="math display">\[\bar p\pm z_{\alpha/2}\sqrt{\frac{p(1-p)}{n}}\]</span></p>
+<p>或</p>
+<p><span class="math display">\[\bar p\pm z_{\alpha/2}\sqrt{\frac{\bar p(1-\bar p)}{n}}\]</span>。</p>
+<ul>
+<li>一个正态总体方差的置信区间估计方法</li>
+</ul>
+<p>总体方差<span class="math inline">\(\sigma^2\)</span>的点估计量为<span class="math inline">\(s^2\)</span>，则<span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2(n-1)\)</span>，总体方差在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[\frac{(n-1)s^2}{\chi^2_{\alpha/2}(n-1)}\le \sigma^2 \le \frac{(n-1)s^2}{\chi^2_{1-\alpha/2}(n-1)}\]</span></p>
+<p>接下来谈谈两个总体参数的置信区间的估计方法。估计的一般包括均值差、比例差、方差比，主要包括两种抽样方法——独立样本和配对样本。</p>
+<ul>
+<li>两个正态总体均值之差的置信区间（独立样本）：</li>
+</ul>
+<p><span class="math inline">\(\sigma_1^2\)</span>，<span class="math inline">\(\sigma_2^2\)</span>已知，使用正态分布统计量z：<span class="math inline">\(z=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}\sim N(0,1)\)</span>，两个总体均值之差<span class="math inline">\(\mu_1-\mu_2\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[(\bar x_1-\bar x_2)\pm z_{\alpha/2}\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}\]</span>。</p>
+<p><span class="math inline">\(\sigma_1^2=\sigma_2^2\)</span>未知，总体方差的合并估计量：<span class="math inline">\(s_p^2=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}\)</span>，估计量<span class="math inline">\(\bar x_1-\bar x_2\)</span>的抽样标准差：<span class="math inline">\(\sqrt{\frac{sp_1^2}{n_1}+\frac{sp_2^2}{n_2}}\)</span>，两个样本均值之差的标准化：<span class="math inline">\(t=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\sim t(n_1+n_2-2)\)</span>，两个总体均值之差<span class="math inline">\(\mu_1-\mu_2\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[(\bar x_1-\bar x_2)\pm t_{\alpha/2}(n_1+n_2-2)\sqrt{s_p^2(\frac{1}{n_1}+\frac{1}{n_2})}\]</span>。</p>
+<p><span class="math inline">\(\sigma_1^2\neq\sigma_2^2\)</span>未知，<span class="math inline">\(n_1=n_2: (\bar x_1-\bar x_2)\pm t_{\alpha/2}(n_1+n_2-2)\sqrt{(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2})}\)</span>。</p>
+<p><span class="math inline">\(\sigma_1^2\neq\sigma_2^2\)</span>未知，<span class="math inline">\(n_1\neq n_2\)</span>：<span class="math inline">\((\bar x_1-\bar x_2)\pm t_{\alpha/2}(v)\sqrt{(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2})}\)</span>， v为自由度，<span class="math inline">\(v=\frac{(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2})^2}{\frac{(s_1^2/n_1)^2}{n_1-1}+\frac{(s_2^2/n_2)^2}{n_2-1}}\)</span>。</p>
+<ul>
+<li>两个总体均值之差的区间估计(独立大样本)两个总体均值之差的估计</li>
+</ul>
+<p><span class="math inline">\(\sigma_1^2\)</span>，<span class="math inline">\(\sigma_2^2\)</span>已知时，两个总体均值之差<span class="math inline">\(\mu_1-\mu_2\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[(\bar x_1-\bar x_2)\pm z_{\alpha/2}\sqrt{(\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2})}\]</span>。</p>
+<p><span class="math inline">\(\sigma_1^2\)</span>，<span class="math inline">\(\sigma_2^2\)</span>未知时，两个总体均值之差<span class="math inline">\(\mu_1-\mu_2\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[(\bar x_1-\bar x_2)\pm z_{\alpha/2}\sqrt{(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2})}\]</span>。</p>
+<p>两个总体均值之差的区间估计(匹配样本)，匹配大样本的假定条件——两个匹配的大样本(<span class="math inline">\(n_1\ge30\)</span>和<span class="math inline">\(n_2\ge30\)</span>)；</p>
+<p>两个总体均值之差<span class="math inline">\(\mu_d=\mu_1-\mu_2\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[\bar d\pm z_{\alpha/2}\frac{\sigma_d}{\sqrt{n}}\]</span></p>
+<p>或</p>
+<p><span class="math display">\[\bar d\pm z_{\alpha/2}\frac{s_d}{\sqrt{n}}\]</span>。</p>
+<p><span class="math inline">\(\bar d\)</span>为对应差值的均值，<span class="math inline">\(\sigma_d\)</span>为对应差值的标准差。</p>
+<p>匹配小样本的假定条件——两个匹配的小样本(<span class="math inline">\(n_1&lt;30\)</span>和<span class="math inline">\(n_2&lt;30\)</span>)，两个总体各观察值的配对差服从正态分布。两个总体均值之差<span class="math inline">\(\mu_d=\mu_1-\mu_2\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[\bar d\pm t_{\alpha/2}(n-1)\frac{s_d}{n}\]</span></p>
+<p>两个总体比例之差区间的估计，假定条件——两个总体服从二项分布，可以用正态分布来近似，两个样本是独立的。</p>
+<p>两个总体比例之差<span class="math inline">\(p_1-p_2\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[\bar p_1-\bar p_2\pm z_{\alpha/2}\sqrt{\frac{\bar q_1(1-\bar q_1)}{n_1}+\frac{\bar q_2(1-\bar q_2)}{n_2}}\]</span>。</p>
+<p>两个正态总体方差比的置信区间，实际应用如两种不同方法生产的产品性能的稳定性或两种不同测量工具的精度，需要我们去比较两个总体方差。</p>
+<p>两个正态总体方差比的估计，比较两个总体的方差比，用两个样本的方差比来判断（如果<span class="math inline">\(s_1^2/s_2^2\)</span>接近于1，说明两个总体方差很接近；如果<span class="math inline">\(s_1^2/s_2^2\)</span>远离1，说明两个总体方差存在差异）。</p>
+<p>总体方差比在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为：</p>
+<p><span class="math display">\[\frac{s_1^2/s_2^2}{F_{\alpha/2}}&lt;\frac{\sigma_1^2}{\sigma_2^2}&lt;\frac{s_1^2/s_2^2}{F_{1-\alpha/2}},F\sim F(n_1-1,n_2-1)\]</span></p>
+<p>(F分布性质：<span class="math inline">\(F_{1-\alpha/2}(n_1,n_2)=\frac{1}{F_{\alpha/2}(n_2,n_1)}\)</span>)。</p>
+<p>总的来说，参数估计的东西很多，根据具体研究情况，我们可以根据自己需求选择不同的参数估计。当然据笔者所知，R语言在参数估计上，现成函数（指默认的基础包）比较少，一般需要自编函数或者有额外的包。这里先给出一个样例函数（14章中会涉及到一部分，这里不详述）。</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="estimation.html#cb5-1"></a>conf.int &lt;-<span class="st"> </span><span class="cf">function</span>(x,sigma,alpha) {</span>
+<span id="cb5-2"><a href="estimation.html#cb5-2"></a>  mean =<span class="st"> </span><span class="kw">mean</span>(x)</span>
+<span id="cb5-3"><a href="estimation.html#cb5-3"></a>  n =<span class="st"> </span><span class="kw">length</span>(x)</span>
+<span id="cb5-4"><a href="estimation.html#cb5-4"></a>  z =<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span><span class="op">-</span>alpha<span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">lower.tail =</span> T)</span>
+<span id="cb5-5"><a href="estimation.html#cb5-5"></a>  <span class="kw">c</span>(mean<span class="op">-</span>sigma<span class="op">*</span>z<span class="op">/</span><span class="kw">sqrt</span>(n), mean<span class="op">+</span>sigma<span class="op">*</span>z<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
+<span id="cb5-6"><a href="estimation.html#cb5-6"></a>  }</span></code></pre></div>
+</div>
+<div id="样本容量的确定" class="section level2">
+<h2><span class="header-section-number">5.3</span> 样本容量的确定</h2>
+<p>前一章我们提到统计学闻名于世的规定，样本容量一般必须＞30。但是这种规定，并不是万能的。所以样本容量的确定就成了一个问题。n过大费用高、时间长、人力多；n过小误差增大。事实上n的确定依赖于多大置信度（可靠性），什么样的精度（多宽的区间）。所以样本容量的确定需要根据置信区间的性质来决定。置信区间的性质——以正态总体小样本容量为例。首先置信区间的宽度:<span class="math inline">\(w=2z\frac{\sigma}{\sqrt{n}}\)</span>，因此很容易发现影响区间宽度的因素包括了：</p>
+<blockquote>
+<ul>
+<li>样本容量：大样本容量——小区间。</li>
+<li>总体数据的离散程度：小方差——小区间。</li>
+<li>置信水平：高置信度——大t值——大区间。</li>
+</ul>
+</blockquote>
+<p>边际误差（margin error)——置信区间上下限与点估计之间的距离。</p>
+<p><span class="math display">\[ E=z\frac{\sigma}{\sqrt{n}} \]</span></p>
+<p>给定边际误差E和置信水平<span class="math inline">\(1-\alpha\)</span>，可以找到所需要的样本容量。</p>
+<p>估计总体均值时样本容量的确定(<span class="math inline">\(\sigma^2\)</span>已知)：<span class="math inline">\(n=\frac{(z_{\alpha/2})^2\sigma^2}{E^2}\)</span>，其中<span class="math inline">\(E=z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\)</span>。</p>
+<p>样本容量n与总体方差<span class="math inline">\(\sigma^2\)</span>、边际误差E、置信水平<span class="math inline">\(1-\alpha\)</span>之间的关系为：</p>
+<blockquote>
+<ul>
+<li>随总体方差增大而增大。</li>
+<li>随边际误差减小而增大。</li>
+<li>随<span class="math inline">\(1-\alpha\)</span>增大而增大，随<span class="math inline">\(\alpha\)</span>减小而增大。</li>
+</ul>
+</blockquote>
+<p><span class="math inline">\(\sigma\)</span>未知，如有近期样本可用，用其样本标准差代替<span class="math inline">\(\sigma\)</span>，用t分布分位数代替标准正态分布分位数，自由度为近期样本容量-1。否则，可以用一个至少比<span class="math inline">\(\sigma\)</span>大的数来替代<span class="math inline">\(\sigma\)</span>，抽一个样本，用s代替<span class="math inline">\(\sigma\)</span>——Stein 两步法。</p>
+<p>估计总体比例时样本容量的确定：根据比例区间估计公式可得样本容量n为<span class="math inline">\(n=\frac{(z_{\alpha/2})^2\cdot p(1-p)}{E^2}\)</span>，其中：<span class="math inline">\(E=z_{\alpha/2}\sqrt{\frac{p(1-p)}{n}}\)</span>，E的取值一般小于0.1，p 未知时， 可用之前样本比率估计，或保守的取最大值0.5。</p>
+<p>估计两个总体均值之差时样本容量的确定：设<span class="math inline">\(n_1\)</span>和<span class="math inline">\(n_2\)</span>为来自两个总体的样本，并假定<span class="math inline">\(n_1=n_2\)</span>。根据均值之差的区间估计公式可得两个样本的容量n为：</p>
+<p><span class="math display">\[n_1=n_2=n=\frac{(z_{\alpha/2})^2\cdot (\sigma_1^2+\sigma_2^2)}{E^2}\]</span></p>
+<p>其中<span class="math inline">\(E=z_{\alpha/2}\sqrt{\frac{(\sigma_1^2+\sigma_2^2)}{n}}\)</span>。</p>
+<p>估计两个总体比例之差时样本容量的确定：设<span class="math inline">\(n_1\)</span>和<span class="math inline">\(n_2\)</span>为来自两个总体的样本，并假定<span class="math inline">\(n_1=n_2\)</span>。根据比例之差的区间估计公式可得两个样本的容量n为：</p>
+<p><span class="math display">\[n_1=n_2=n=\frac{(z_{\alpha/2})^2\cdot [p_1(1-p_1)+p_2(1-p_2)]}{E^2}\]</span></p>
+<p>其中<span class="math inline">\(E=z_{\alpha/2}\sqrt{\frac{(p_1(1-p_1)+p_2(1-p_2))}{n}}\)</span>。</p>
+<p>总的来说，样本容量的确定也是根据具体需要以及显著性水平计算得到的。</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sampling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hypothesis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/05-estimation.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

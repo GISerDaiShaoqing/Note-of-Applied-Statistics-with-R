@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 11 章 Discriminant Analysis | 应用统计学与R语言实现学习笔记</title>
+  <meta name="description" content="第 11 章 Discriminant Analysis | 应用统计学与R语言实现学习笔记" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 11 章 Discriminant Analysis | 应用统计学与R语言实现学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  
+  <meta name="github-repo" content="GISerDaiShaoqing/Note-of-Applied-Statistics-with-R-Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 11 章 Discriminant Analysis | 应用统计学与R语言实现学习笔记" />
+  
+  
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="戴劭勍" />
+
+
+<meta name="date" content="2021-03-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="cluster.html"/>
+<link rel="next" href="pca.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">中文书示例</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#从问题说起"><i class="fa fa-check"></i><b>1.1</b> 从问题说起</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#统计学及其研究过程"><i class="fa fa-check"></i><b>1.2</b> 统计学及其研究过程</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#统计方法及其应用领域"><i class="fa fa-check"></i><b>1.3</b> 统计方法及其应用领域</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#统计数据类型"><i class="fa fa-check"></i><b>1.4</b> 统计数据类型</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#统计学中的几个基本概念"><i class="fa fa-check"></i><b>1.5</b> 统计学中的几个基本概念</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="datacollec.html"><a href="datacollec.html"><i class="fa fa-check"></i><b>2</b> Data Collection</a><ul>
+<li class="chapter" data-level="2.1" data-path="datacollec.html"><a href="datacollec.html#数据来源"><i class="fa fa-check"></i><b>2.1</b> 数据来源</a></li>
+<li class="chapter" data-level="2.2" data-path="datacollec.html"><a href="datacollec.html#调查设计"><i class="fa fa-check"></i><b>2.2</b> 调查设计</a></li>
+<li class="chapter" data-level="2.3" data-path="datacollec.html"><a href="datacollec.html#数据质量"><i class="fa fa-check"></i><b>2.3</b> 数据质量</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptive.html"><a href="descriptive.html"><i class="fa fa-check"></i><b>3</b> Descriptive Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptive.html"><a href="descriptive.html#数据的预处理"><i class="fa fa-check"></i><b>3.1</b> 数据的预处理</a></li>
+<li class="chapter" data-level="3.2" data-path="descriptive.html"><a href="descriptive.html#数据的整理与展示"><i class="fa fa-check"></i><b>3.2</b> 数据的整理与展示</a></li>
+<li class="chapter" data-level="3.3" data-path="descriptive.html"><a href="descriptive.html#数据的概括性度量"><i class="fa fa-check"></i><b>3.3</b> 数据的概括性度量</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sampling.html"><a href="sampling.html"><i class="fa fa-check"></i><b>4</b> Sampling And Sample Distribution</a><ul>
+<li class="chapter" data-level="4.1" data-path="sampling.html"><a href="sampling.html#抽样方法"><i class="fa fa-check"></i><b>4.1</b> 抽样方法</a></li>
+<li class="chapter" data-level="4.2" data-path="sampling.html"><a href="sampling.html#正态分布"><i class="fa fa-check"></i><b>4.2</b> 正态分布</a></li>
+<li class="chapter" data-level="4.3" data-path="sampling.html"><a href="sampling.html#三种不同性质的分布"><i class="fa fa-check"></i><b>4.3</b> 三种不同性质的分布</a></li>
+<li class="chapter" data-level="4.4" data-path="sampling.html"><a href="sampling.html#一个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.4</b> 一个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.5" data-path="sampling.html"><a href="sampling.html#两个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.5</b> 两个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.6" data-path="sampling.html"><a href="sampling.html#附录"><i class="fa fa-check"></i><b>4.6</b> 附录</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>5</b> Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation.html"><a href="estimation.html#参数估计的一般问题"><i class="fa fa-check"></i><b>5.1</b> 参数估计的一般问题</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation.html"><a href="estimation.html#区间估计-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> 区间估计 Confidence Intervals</a></li>
+<li class="chapter" data-level="5.3" data-path="estimation.html"><a href="estimation.html#样本容量的确定"><i class="fa fa-check"></i><b>5.3</b> 样本容量的确定</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis.html"><a href="hypothesis.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Test</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis.html"><a href="hypothesis.html#基本思想"><i class="fa fa-check"></i><b>6.1</b> 基本思想</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis.html"><a href="hypothesis.html#原假设和备择假设"><i class="fa fa-check"></i><b>6.2</b> 原假设和备择假设</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis.html"><a href="hypothesis.html#第一类错误和第二类错误"><i class="fa fa-check"></i><b>6.3</b> 第一类错误和第二类错误</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis.html"><a href="hypothesis.html#统计量与拒绝域"><i class="fa fa-check"></i><b>6.4</b> 统计量与拒绝域</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis.html"><a href="hypothesis.html#利用p值进行决策"><i class="fa fa-check"></i><b>6.5</b> 利用p值进行决策</a></li>
+<li class="chapter" data-level="6.6" data-path="hypothesis.html"><a href="hypothesis.html#一个总体参数的检验"><i class="fa fa-check"></i><b>6.6</b> 一个总体参数的检验</a></li>
+<li class="chapter" data-level="6.7" data-path="hypothesis.html"><a href="hypothesis.html#两个总体参数的检验"><i class="fa fa-check"></i><b>6.7</b> 两个总体参数的检验</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="goodness.html"><a href="goodness.html"><i class="fa fa-check"></i><b>7</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="7.1" data-path="goodness.html"><a href="goodness.html#多项分布"><i class="fa fa-check"></i><b>7.1</b> 多项分布</a></li>
+<li class="chapter" data-level="7.2" data-path="goodness.html"><a href="goodness.html#独立性"><i class="fa fa-check"></i><b>7.2</b> 独立性</a></li>
+<li class="chapter" data-level="7.3" data-path="goodness.html"><a href="goodness.html#概率分布"><i class="fa fa-check"></i><b>7.3</b> 概率分布</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ANOVA.html"><a href="ANOVA.html"><i class="fa fa-check"></i><b>8</b> ANOVA</a><ul>
+<li class="chapter" data-level="8.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的引论"><i class="fa fa-check"></i><b>8.1</b> 方差分析的引论</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的部分概念"><i class="fa fa-check"></i><b>8.1.1</b> 方差分析的部分概念</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本思想和原理"><i class="fa fa-check"></i><b>8.1.2</b> 方差分析的基本思想和原理</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本假定"><i class="fa fa-check"></i><b>8.1.3</b> 方差分析的基本假定</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ANOVA.html"><a href="ANOVA.html#单因子方差分析one-way-anova"><i class="fa fa-check"></i><b>8.2</b> 单因子方差分析（One-way ANOVA)</a></li>
+<li class="chapter" data-level="8.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析中的多重比较"><i class="fa fa-check"></i><b>8.3</b> 方差分析中的多重比较</a></li>
+<li class="chapter" data-level="8.4" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析two-way-anova"><i class="fa fa-check"></i><b>8.4</b> 双因子方差分析（Two-way ANOVA）</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析的基本假定"><i class="fa fa-check"></i><b>8.4.1</b> 双因子方差分析的基本假定</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ANOVA.html"><a href="ANOVA.html#无交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.2</b> 无交互作用双因子方差分析</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ANOVA.html"><a href="ANOVA.html#有交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.3</b> 有交互作用双因子方差分析</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ANOVA.html"><a href="ANOVA.html#实验设计初步"><i class="fa fa-check"></i><b>8.5</b> 实验设计初步</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Linear Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#变量间的关系"><i class="fa fa-check"></i><b>9.1</b> 变量间的关系</a></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#回归分析和简单线性回归分析"><i class="fa fa-check"></i><b>9.2</b> 回归分析和简单线性回归分析</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#回归分析"><i class="fa fa-check"></i><b>9.2.1</b> 回归分析</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#简单线性回归分析"><i class="fa fa-check"></i><b>9.2.2</b> 简单线性回归分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#利用回归方程进行估计和预测"><i class="fa fa-check"></i><b>9.3</b> 利用回归方程进行估计和预测</a></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#残差分析"><i class="fa fa-check"></i><b>9.4</b> 残差分析</a></li>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#多元线性回归multiple-regression-model"><i class="fa fa-check"></i><b>9.5</b> 多元线性回归(multiple regression model)</a></li>
+<li class="chapter" data-level="9.6" data-path="regression.html"><a href="regression.html#定性自变量的回归"><i class="fa fa-check"></i><b>9.6</b> 定性自变量的回归</a></li>
+<li class="chapter" data-level="9.7" data-path="regression.html"><a href="regression.html#非线性回归"><i class="fa fa-check"></i><b>9.7</b> 非线性回归</a></li>
+<li class="chapter" data-level="9.8" data-path="regression.html"><a href="regression.html#建立回归模型"><i class="fa fa-check"></i><b>9.8</b> 建立回归模型</a></li>
+<li class="chapter" data-level="9.9" data-path="regression.html"><a href="regression.html#回归中的常见错误"><i class="fa fa-check"></i><b>9.9</b> 回归中的常见错误</a></li>
+<li class="chapter" data-level="9.10" data-path="regression.html"><a href="regression.html#logistic-回归"><i class="fa fa-check"></i><b>9.10</b> Logistic 回归</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="cluster.html"><a href="cluster.html"><i class="fa fa-check"></i><b>10</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="cluster.html"><a href="cluster.html#多元分布基本概念"><i class="fa fa-check"></i><b>10.1</b> 多元分布基本概念</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster.html"><a href="cluster.html#数据的变换处理"><i class="fa fa-check"></i><b>10.2</b> 数据的变换处理</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster.html"><a href="cluster.html#聚类分析"><i class="fa fa-check"></i><b>10.3</b> 聚类分析</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster.html"><a href="cluster.html#样品间亲疏程度的测度"><i class="fa fa-check"></i><b>10.4</b> 样品间亲疏程度的测度</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster.html"><a href="cluster.html#类与类之间的距离"><i class="fa fa-check"></i><b>10.5</b> 类与类之间的距离</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster.html"><a href="cluster.html#系统聚类hierarchical-clustering-method"><i class="fa fa-check"></i><b>10.6</b> 系统聚类(hierarchical clustering method)</a></li>
+<li class="chapter" data-level="10.7" data-path="cluster.html"><a href="cluster.html#快速聚类k-means-clustering-method"><i class="fa fa-check"></i><b>10.7</b> 快速聚类(k-means clustering method)</a></li>
+<li class="chapter" data-level="10.8" data-path="cluster.html"><a href="cluster.html#有序聚类"><i class="fa fa-check"></i><b>10.8</b> 有序聚类</a></li>
+<li class="chapter" data-level="10.9" data-path="cluster.html"><a href="cluster.html#聚类分析的主要步骤"><i class="fa fa-check"></i><b>10.9</b> 聚类分析的主要步骤</a></li>
+<li class="chapter" data-level="10.10" data-path="cluster.html"><a href="cluster.html#r语言中聚类分析实现"><i class="fa fa-check"></i><b>10.10</b> R语言中聚类分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="discriminant.html"><a href="discriminant.html"><i class="fa fa-check"></i><b>11</b> Discriminant Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="discriminant.html"><a href="discriminant.html#判别分析应用"><i class="fa fa-check"></i><b>11.1</b> 判别分析应用</a></li>
+<li class="chapter" data-level="11.2" data-path="discriminant.html"><a href="discriminant.html#判别分析方法"><i class="fa fa-check"></i><b>11.2</b> 判别分析方法</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="discriminant.html"><a href="discriminant.html#距离判别法"><i class="fa fa-check"></i><b>11.2.1</b> 距离判别法</a></li>
+<li class="chapter" data-level="11.2.2" data-path="discriminant.html"><a href="discriminant.html#fisher判别法"><i class="fa fa-check"></i><b>11.2.2</b> Fisher判别法</a></li>
+<li class="chapter" data-level="11.2.3" data-path="discriminant.html"><a href="discriminant.html#bayes判别法"><i class="fa fa-check"></i><b>11.2.3</b> Bayes判别法</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="discriminant.html"><a href="discriminant.html#建立判别函数的方法"><i class="fa fa-check"></i><b>11.3</b> 建立判别函数的方法</a></li>
+<li class="chapter" data-level="11.4" data-path="discriminant.html"><a href="discriminant.html#判别分析的步骤及注意事项"><i class="fa fa-check"></i><b>11.4</b> 判别分析的步骤及注意事项</a></li>
+<li class="chapter" data-level="11.5" data-path="discriminant.html"><a href="discriminant.html#r语言中判别分析实现"><i class="fa fa-check"></i><b>11.5</b> R语言中判别分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>12</b> Priciple Component Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="pca.html"><a href="pca.html#主成分分析基本思想"><i class="fa fa-check"></i><b>12.1</b> 主成分分析基本思想</a></li>
+<li class="chapter" data-level="12.2" data-path="pca.html"><a href="pca.html#几何解释与数学模型"><i class="fa fa-check"></i><b>12.2</b> 几何解释与数学模型</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="pca.html"><a href="pca.html#几何解释"><i class="fa fa-check"></i><b>12.2.1</b> 几何解释</a></li>
+<li class="chapter" data-level="12.2.2" data-path="pca.html"><a href="pca.html#数学模型"><i class="fa fa-check"></i><b>12.2.2</b> 数学模型</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="pca.html"><a href="pca.html#主成分的推导"><i class="fa fa-check"></i><b>12.3</b> 主成分的推导</a></li>
+<li class="chapter" data-level="12.4" data-path="pca.html"><a href="pca.html#主成分的性质"><i class="fa fa-check"></i><b>12.4</b> 主成分的性质</a></li>
+<li class="chapter" data-level="12.5" data-path="pca.html"><a href="pca.html#主成分分析的步骤"><i class="fa fa-check"></i><b>12.5</b> 主成分分析的步骤</a></li>
+<li class="chapter" data-level="12.6" data-path="pca.html"><a href="pca.html#主成分的应用与回归"><i class="fa fa-check"></i><b>12.6</b> 主成分的应用与回归</a></li>
+<li class="chapter" data-level="12.7" data-path="pca.html"><a href="pca.html#主成分分析的r语言实现"><i class="fa fa-check"></i><b>12.7</b> 主成分分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="fa.html"><a href="fa.html"><i class="fa fa-check"></i><b>13</b> Factor Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="fa.html"><a href="fa.html#因子分析概念"><i class="fa fa-check"></i><b>13.1</b> 因子分析概念</a></li>
+<li class="chapter" data-level="13.2" data-path="fa.html"><a href="fa.html#因子分析模型"><i class="fa fa-check"></i><b>13.2</b> 因子分析模型</a></li>
+<li class="chapter" data-level="13.3" data-path="fa.html"><a href="fa.html#因子载荷矩阵的估计方法"><i class="fa fa-check"></i><b>13.3</b> 因子载荷矩阵的估计方法</a></li>
+<li class="chapter" data-level="13.4" data-path="fa.html"><a href="fa.html#因子旋转正交变换"><i class="fa fa-check"></i><b>13.4</b> 因子旋转（正交变换）</a></li>
+<li class="chapter" data-level="13.5" data-path="fa.html"><a href="fa.html#因子得分"><i class="fa fa-check"></i><b>13.5</b> 因子得分</a></li>
+<li class="chapter" data-level="13.6" data-path="fa.html"><a href="fa.html#因子分析步骤"><i class="fa fa-check"></i><b>13.6</b> 因子分析步骤</a></li>
+<li class="chapter" data-level="13.7" data-path="fa.html"><a href="fa.html#因子分析的r语言实现"><i class="fa fa-check"></i><b>13.7</b> 因子分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="homework.html"><a href="homework.html"><i class="fa fa-check"></i><b>14</b> Case and Practice</a><ul>
+<li class="chapter" data-level="14.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布"><i class="fa fa-check"></i><b>14.1</b> 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验"><i class="fa fa-check"></i><b>14.2</b> 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析"><i class="fa fa-check"></i><b>14.3</b> 方差分析与回归分析</a></li>
+<li class="chapter" data-level="14.4" data-path="homework.html"><a href="homework.html#作业文档"><i class="fa fa-check"></i><b>14.4</b> 作业文档</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布-1"><i class="fa fa-check"></i><b>14.4.1</b> 1 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.4.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验-1"><i class="fa fa-check"></i><b>14.4.2</b> 2 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.4.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析-1"><i class="fa fa-check"></i><b>14.4.3</b> 3 方差分析与回归分析</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由 bookdown 强力驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">应用统计学与R语言实现学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="discriminant" class="section level1">
+<h1><span class="header-section-number">第 11 章</span> Discriminant Analysis</h1>
+<p>本篇是第十一章，内容是判别分析。</p>
+<div id="判别分析应用" class="section level2">
+<h2><span class="header-section-number">11.1</span> 判别分析应用</h2>
+<p>判别分析（Discriminant Analysis）——判别分析的目的是对已知分类的数据建立由数值指标构成的分类规则，然后把这样的规则应用到未知分类的样本中去分类，以识别未知样本所属的类别。判别分析是多元数据分析的重要方法之一。通常解决被解释变量是非数值变量，解释变量是数值变量的情形。</p>
+<p>事实上地学领域应用判别分析最多的是在哪里呢？其实是遥感影像的地物分类，通常遥感导论中无论Erdas或者ENVI在做完监督分类之后，其实就是用标注的样本去训练判别函数，然后用判别函数完成整幅影像的判别分析，就可以分出不同的地物类型，这种方法就是我们最普遍使用的极大似然法。而这里的被解释变量就是地物类型，解释变量（多元）就是遥感影像不同波段的DN值，或者是辐射率。</p>
+<blockquote>
+<ul>
+<li>聚类分析和判别分析差异：在聚类分析中，人们一般事先并不知道应该分成几类及哪几类，全根据数据确定。在判别分析中，至少有一个已经明确知道类别的“训练样本”，并利用该样本来建立判别准则，并通过预测变量来为未知类别的观测值进行判别。通常实际问题中，可以先聚类以得知类型,再进行判别。</li>
+</ul>
+</blockquote>
+<p><strong>用机器学习的话来说，聚类分析是非监督学习，判别分析属于监督学习。</strong></p>
+<p>判别分析的数据结构</p>
+<table>
+<thead>
+<tr class="header">
+<th>individuals</th>
+<th align="center"><span class="math display">\[X_1\]</span></th>
+<th align="center"><span class="math display">\[X_2\]</span></th>
+<th align="center"><span class="math display">\[\cdots\]</span></th>
+<th align="right"><span class="math display">\[X_l\]</span></th>
+<th align="right"><span class="math display">\[\cdots\]</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td align="center">28</td>
+<td align="center">1.0</td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right">114</td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td align="center">29</td>
+<td align="center">2.0</td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right">117</td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+<tr class="even">
+<td>i</td>
+<td align="center"><span class="math display">\[x_{i1}\]</span></td>
+<td align="center"><span class="math display">\[x_{i2}\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right"><span class="math display">\[x_{il}\]</span></td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+<tr class="even">
+<td>47</td>
+<td align="center">15</td>
+<td align="center">8</td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right">64</td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+<tr class="odd">
+<td>48</td>
+<td align="center">16</td>
+<td align="center">7.5</td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right">65</td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+<tr class="odd">
+<td>n</td>
+<td align="center"><span class="math display">\[x_{n1}\]</span></td>
+<td align="center"><span class="math display">\[x_{n2}\]</span></td>
+<td align="center"><span class="math display">\[\cdots\]</span></td>
+<td align="right"><span class="math display">\[x_{nl}\]</span></td>
+<td align="right"><span class="math display">\[\cdots\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>对比聚类分析的数据结构，事实上就是多了最后一列的Y。</p>
+<blockquote>
+<ul>
+<li>个体由<span class="math inline">\(X_1,X_2,\cdots,X_p\)</span>变量描述。</li>
+<li>有分类变量<span class="math inline">\(Y\)</span>明确对个体分类。</li>
+<li>问题：建立<span class="math inline">\(Y\)</span>与<span class="math inline">\(X_1,X_2,\cdots,X_p\)</span>变量间关系的函数。根据函数将新个体进行分类。</li>
+</ul>
+</blockquote>
+<p><strong>误判率</strong></p>
+<p>误判率的高低有下面两个因素决定：</p>
+<blockquote>
+<ul>
+<li>主观因素：分界线的位置要正确。</li>
+<li>客观因素：均值，方差——通过选择指标来控制：一般来说，维度高一点，可以使分辨率高一些，但在许多情况下，指标太多，不仅不能提高分辨率，还增加计算量（需要丰富的实际经验和试算）；在做判别分析前，要做假设检验。在两个总体的均值有显著差异的情况下，再做判别分析。</li>
+</ul>
+</blockquote>
+<p><strong>判别分析的假设</strong></p>
+<blockquote>
+<ul>
+<li>每一个判别变量（解释变量）不能是其他判别变量的线性组合——不符合该假设的话，无法估计判别函数，变量间高度相关或一变量与其他变量的线性组合高度相关时，参数估计的标准误差将很大。</li>
+<li>判别变量之间具有多元正态分布——可精确的计算显著性检验值和归属概率。</li>
+<li>如要采用线性判别函数，还要求各组协方差距阵相等——线性判别函数使用起来最方便、在实际中使用最广。</li>
+</ul>
+</blockquote>
+</div>
+<div id="判别分析方法" class="section level2">
+<h2><span class="header-section-number">11.2</span> 判别分析方法</h2>
+<div id="距离判别法" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> 距离判别法</h3>
+<p><strong>两总体情况</strong></p>
+<p>假设有两个总体<span class="math inline">\(G_1\)</span>和<span class="math inline">\(G_2\)</span>，如果能够定义点x到它们的距离d(x,<span class="math inline">\(G_1\)</span>)和d(x,<span class="math inline">\(G_2\)</span>)，则可用如下规则进行判别：</p>
+<blockquote>
+<ul>
+<li>如果d(x,<span class="math inline">\(G_1\)</span>) &lt; d(x,<span class="math inline">\(G_2\)</span>)则<span class="math inline">\(x\in G_1\)</span></li>
+<li>如果d(x,<span class="math inline">\(G_2\)</span>) &lt; d(x,<span class="math inline">\(G_1\)</span>)则<span class="math inline">\(x\in G_2\)</span></li>
+<li>如果d(x,<span class="math inline">\(G_1\)</span>) = d(x,<span class="math inline">\(G_2\)</span>)则待判。</li>
+</ul>
+</blockquote>
+<p>距离常选用马氏距离——假设<span class="math inline">\(\mu_1,\mu_2,\Sigma_1,\Sigma_2\)</span>分别为<span class="math inline">\(G_1\)</span>和<span class="math inline">\(G_2\)</span>的均值向量和协方差阵，则点<span class="math inline">\(x\)</span>到<span class="math inline">\(G_i\)</span>的马氏距离为</p>
+<p><span class="math display">\[d^2(x,G_i)=(x-\mu_i)&#39;(\Sigma_i)^{-1}(x-\mu_i)\]</span></p>
+<p>马氏距离的好处是可以克服变量之间的相关性干扰，并且消除各变量量纲的影响。</p>
+<blockquote>
+<ul>
+<li><span class="math display">\[\Sigma_1=\Sigma_2=\Sigma\]</span></li>
+</ul>
+</blockquote>
+<ul>
+<li>定义：</li>
+</ul>
+<p><span class="math display">\[\begin{aligned}
+d^2(x,G_1)-d^2(x,G_2) &amp; =(x-\mu_1)&#39;\Sigma^{-1}(x-\mu_1)-(x-\mu_2)&#39;\Sigma^{-1}(x-\mu_2) \\ &amp;=-2[x-(\mu_1+\mu_2)/2]&#39;\Sigma^{-1}(\mu_1-\mu_2) \end{aligned}\]</span></p>
+<p>令：<span class="math display">\[\bar\mu=(\mu_1+\mu_2)/2, \alpha=\Sigma^{-1}(\mu_1-\mu_2),W(x)=(x-\bar\mu)&#39;\alpha=\alpha&#39;(x-\bar\mu)\]</span></p>
+<p>判别规则：</p>
+<blockquote>
+<ul>
+<li>如果<span class="math inline">\(W(x)&gt;0\cdot d(x\cdot G_1) &lt; d(x\cdot G_2)\)</span>则<span class="math inline">\(x\in G_1\)</span></li>
+<li>如果<span class="math inline">\(W(x)&lt;0\cdot d(x,G_,1) &gt; d(x\cdot G_2)\)</span>则<span class="math inline">\(x\in G_2\)</span></li>
+<li>如果<span class="math inline">\(W(x)=0，d(x\cdot G_1) = d(x\cdot G_2)\)</span>则待判。</li>
+</ul>
+</blockquote>
+<p>称W(x)为判别函数(discriminant function)，α为判别系数。当<span class="math inline">\(\mu_1,\mu_2,\Sigma\)</span>未知时，可通过样本来估计。<span class="math inline">\(x_1^{(i)},\cdots,x_{n_i}^{(i)}\)</span>为来自<span class="math inline">\(G_i\)</span>的样本(i=1,2)。</p>
+<p><span class="math display">\[\hat\mu^{(i)}=\frac{1}{n_i}\sum_{k=1}^{n_2}x_k^{(i)}=\bar x^{(i)},\hat \Sigma=\frac{1}{n_1+n_2-2}(S_1+S_2)\]</span></p>
+<p><span class="math display">\[S_i=\sum_{t=1}^{n_i}(x_t^{(i)}-\bar x^{(i)})(x_t^{(i)}-\bar x^{(i)})&#39;,\bar x=\frac{1}{2}(\bar x^{(1)}+\bar x^{(2)})\]</span></p>
+<p>判别函数为<span class="math inline">\(W(x)=(x-\bar x)&#39;\hat \Sigma^{-1}(\bar x^{(1)}-\bar x^{(2)})\)</span></p>
+<blockquote>
+<ul>
+<li><span class="math display">\[\Sigma_1 \neq \Sigma_2\]</span></li>
+</ul>
+</blockquote>
+<p>判别函数为二次函数</p>
+<p><span class="math display">\[W(x)=d^2(x,G_2)-d^2(x,G_1)=(x-\mu_2)&#39;\Sigma_2^{-1}(x-\mu_2)-(x-\mu_1)&#39;\Sigma_2^{-1}(x-\mu_1)\]</span></p>
+<p>按照距离最近原则，判别准则为：</p>
+<blockquote>
+<ul>
+<li>如果<span class="math inline">\(W(x)&gt;0\cdot d(x\cdot G_1) &lt; d(x\cdot G_2)\)</span>则<span class="math inline">\(x\in G_1\)</span></li>
+<li>如果<span class="math inline">\(W(x)&lt;0\cdot d(x,G_,1) &gt; d(x\cdot G_2)\)</span>则<span class="math inline">\(x\in G_2\)</span></li>
+<li>如果<span class="math inline">\(W(x)=0，d(x\cdot G_1) = d(x\cdot G_2)\)</span>则待判。</li>
+</ul>
+</blockquote>
+<p><strong>多总体情况</strong></p>
+<blockquote>
+<ul>
+<li>多总体情况：协方差相同，假设有k个总体<span class="math inline">\(G_1,G_2,\cdots,G_k\)</span>，它们的均值向量分别为<span class="math inline">\(\mu_1,\mu_2,\cdots,\mu_k\)</span>,协方差阵为<span class="math inline">\(\Sigma\)</span>，类似于两总体的讨论，判别函数为：</li>
+</ul>
+</blockquote>
+<p><span class="math display">\[W_{ij}(x)=[x-(\mu_i+\mu_j)/2]&#39;\Sigma^{-1}(\mu_i-\mu_j),i,j=1,\cdots,k\]</span></p>
+<p>判别规则：</p>
+<blockquote>
+<ul>
+<li>如果存在i，对所有<span class="math inline">\(j\neq i\)</span>，有<span class="math inline">\(W_{ij}(x)&gt;0\)</span>，则<span class="math inline">\(x\in G_i\)</span>，否则待判。</li>
+<li>如果服从多元正态分布，且各组协方差相同</li>
+</ul>
+</blockquote>
+<p><span class="math display">\[\begin{aligned} d^2(x,G_i)&amp; =(x-\mu_i)&#39;\Sigma^{-1}(x-\mu_i) \\ &amp; =x&#39;\Sigma^{-1}x-2(x&#39;\Sigma^{-1}\mu_i-\mu_i&#39;\Sigma^{-1}\mu_i/2) \\ &amp; =x&#39;\Sigma^{-1}x-f_i(x)\end{aligned}\]</span></p>
+<p>在所有的<span class="math inline">\(f_i(x)\)</span>中，哪个<span class="math inline">\(f_i(x)\)</span>的值大，x到相应的组i的马氏距离小，判<span class="math inline">\(x\in G_i\)</span></p>
+<blockquote>
+<ul>
+<li>多总体情况：协方差不等，假设有k个总体<span class="math inline">\(G_1,G_2,\cdots,G_k\)</span>，它们的均值向量分别为<span class="math inline">\(\mu_1,\mu_2,\cdots,\mu_k\)</span>,协方差阵为<span class="math inline">\(\Sigma_1,\Sigma_2,\cdots,\Sigma_k\)</span>，类似于两总体的讨论，判别函数为：</li>
+</ul>
+</blockquote>
+<p><span class="math display">\[W(x)=(x-\mu_j)&#39;\Sigma_j^{-1}(x-\mu_j)-(x-\mu_i)&#39;\Sigma_i^{-1}(x-\mu_i),i,j=1,\cdots,k\]</span></p>
+<p>判别规则：</p>
+<blockquote>
+<ul>
+<li>如果存在i，对所有<span class="math inline">\(j\neq i\)</span>，有<span class="math inline">\(W_{ij}(x)&gt;0\)</span>，则<span class="math inline">\(x\in G_i\)</span>，否则待判。</li>
+<li>如果总体均值、协方差未知，用样本均值、协方差估计。</li>
+<li>若总体不服从正态分布，直接从马氏距离来做判别分析，失去了概率意义，仅仅是一直观的经验判断而已，可能偏误较大。</li>
+</ul>
+</blockquote>
+</div>
+<div id="fisher判别法" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> Fisher判别法</h3>
+<p>Fisher判别法的思想就是投影，将k组p维数据投影到某一个方向，使得它们的投影组与组之间尽可能的分开。考虑只有两个(预测)变量的判别问题。假定只有两类。数据中的每个观测值是二维空间的一个点。这里只有两种已知类型的训练样本。一 类 有 38 个 点 (用“o”表示)，另一类有44个点(用“*”表示)。按原来变量(横坐标和纵坐标)，很难将这两种点分开。</p>
+<p><img src="fig/fig28.jpg" width="80%" height="40%" /></p>
+<p>但是沿着图上的虚线方向朝和这个虚线垂直的一条直线进行投影会使得这两类分得最清楚。可以看出，如果向其他方向投影，判别效果不会比这个好。有了投影之后，再用前面讲到的距离远近的方法得到判别准则。这种先投影的判别方法就是Fisher判别法。</p>
+<p>Fisher判别法</p>
+<blockquote>
+<ul>
+<li>不要求总体分布类型；</li>
+<li>工作原理就是对原数据系统进行坐标变换，寻求能够将总体尽可能分开的方向；</li>
+<li>a为<span class="math inline">\(R^p\)</span>中的任一向量，点x在以a为法方向的投影为a’x;</li>
+<li>各组数据的投影为：</li>
+</ul>
+</blockquote>
+<p><span class="math display">\[G_i:a&#39;x_1^{(i)}\cdots a&#39;x_n^{(i)},i=1,2,\cdots,k\]</span>
+&gt; * 这些数据正好组成一元方差分析的数据。</p>
+<p>将<span class="math inline">\(G_m\)</span>组中数据投影的均值记为<span class="math inline">\(a&#39;\bar x^{(m)}\)</span>,有：<span class="math inline">\(a&#39;\bar x^{(m)}=\frac{1}{n_m}\sum_{i=1}^{n_m}a&#39;\bar x_i^{(m)} ,m=1,\cdots,k\)</span>，记k组数据投影的总均值为<span class="math inline">\(a&#39;\bar x\)</span>，有：<span class="math inline">\(a&#39;\bar x=\frac{1}{n}\sum_{m=1}^{k}\sum_{i=1}^{n_m}a&#39;\bar x_i^{(m)}\)</span>。</p>
+<p>组间离差平方和为：</p>
+<p><span class="math display">\[SSG=\sum_{m=1}^{k}n_m(a&#39;\bar x^{(m)}-a&#39;\bar x)^2=a&#39;[\sum_{m=1}^{k}n_m(\bar x^{(m)}-\bar x)(\bar x^{(m)}-\bar x)&#39;]a=a&#39;Ba;\]</span></p>
+<p><span class="math display">\[B=\sum_{m=1}^{k}n_m[(\bar x^{(m)}-\bar x)(\bar x^{(m)}-\bar x)&#39;]\]</span></p>
+<p>组内离差平方和为：</p>
+<p><span class="math display">\[SSE=\sum_{m=1}^k \sum_{i=1}^{n_m}(a&#39;\bar x^{(m)}-a&#39;\bar x)^2=a&#39;[\sum_{m=1}^k \sum_{i=1}^{n_m}(\bar x^{(m)}-\bar x)(\bar x^{(m)}-\bar x)&#39;]a=a&#39;Ea\]</span></p>
+<p><span class="math display">\[E=\sum_{m=1}^k \sum_{i=1}^{n_m}(\bar x^{(m)}-\bar x)(\bar x^{(m)}-\bar x)&#39;\]</span></p>
+<p>如果K组有显著差异，则</p>
+<p><span class="math display">\[F=\frac{SSG/(k-1)}{SSE/(n-k)}=\frac{n-k}{k-1}\frac{a&#39;Ba}{a&#39;Ea}\]</span></p>
+<p>F应充分大，即希望找到a使得SSG尽可能大而SSE尽可能小。</p>
+<p><span class="math display">\[\Delta (a)=\frac{a&#39;Ba}{a&#39;Ea}\rightarrow max\]</span></p>
+<p>使<span class="math inline">\(\frac{a&#39;Ba}{a&#39;Ea}\)</span>最大的值为方程<span class="math inline">\(\left|B-\lambda E\right|=0\)</span>的最大特征根<span class="math inline">\(\lambda_1\)</span>。记方程<span class="math inline">\(\left|B-\lambda E\right|=0\)</span>的全部特征根为<span class="math inline">\(\lambda_1\ge \cdots \ge \lambda_r&gt;0\)</span>，相应的特征向量为<span class="math inline">\(v_1,\cdots,v_r\)</span>。<span class="math inline">\(\Delta (a)\)</span>的大小可以估计判别函数<span class="math inline">\(y_i (x)=v_i&#39;x(=a&#39;x)\)</span>的效果。记<span class="math inline">\(p_i\)</span>为判别能力（效率），有：</p>
+<p><span class="math display">\[p_i=\frac{\lambda_i}{\sum_{h=1}^r \lambda_h}\]</span></p>
+<p>在有些问题中，仅用一个线性判别函数不能很好区别各个总体，可取第二个、第三个，以此类推。 m个判别函数的判别能力定义为：</p>
+<p><span class="math display">\[\sum_{i=1}^mp_i=\frac{\sum_{i=1}^m\lambda_i}{\sum_{h=1}^r \lambda_h}\]</span></p>
+<p>据此来确定选择多少判别函数。</p>
+<p><strong>判别准则</strong></p>
+<p>选择i使得：<span class="math inline">\(v_1&#39;(x-\mu_i)+\cdots+v_m&#39;(x-\mu_i)\)</span>的值最小。</p>
+<p><strong>Fisher判别法实质</strong></p>
+<blockquote>
+<ul>
+<li>选几个新的综合性指标，代替原来的p个指标。</li>
+<li>构成新的综合性指标的条件：</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>（1）不同类的均值差距尽可能大；
+（2）各类中的方差尽可能小。</p>
+</blockquote>
+<p>Fisher判别法的依据不是x属于哪个总体的概率的大小，而是类别之间具有最大的可分性，也没有考虑错判带来的损失大小（错报台风登陆vs.漏报台风登陆）。</p>
+</div>
+<div id="bayes判别法" class="section level3">
+<h3><span class="header-section-number">11.2.3</span> Bayes判别法</h3>
+<blockquote>
+<ul>
+<li>不用判别式，而是比较新给样品属于各个总体的条件概率p(g|x)，<span class="math inline">\(g=1,\cdots,k\)</span>的大小，将新样品判归为来自条件概率最大的总体。</li>
+<li>先给出 k 个总体的先验概率<span class="math inline">\(q_1,\cdots,q_k\)</span>（实践中通常把频率作为先验概率）。如各总体密度为<span class="math inline">\({f_k(x)}\)</span>，则后验概率为(<span class="math inline">\(g=1,\cdots,k\)</span>):<span class="math inline">\(P(g|x)=q_gf_g(x)/\Sigma_i q_if_i(x)\)</span>。</li>
+<li>当且仅当<span class="math inline">\(P(h|x)= max_gP(g|x)\)</span>，判x来自第h总体。</li>
+<li>也可以用使错判的损失最小的准则来判别。</li>
+<li>设(<span class="math inline">\(D_1,D_2,\cdots,D_K\)</span>)是<span class="math inline">\(R_p\)</span>的一个完备的划分，当样品x属于<span class="math inline">\(D_i\)</span>,就判x来自<span class="math inline">\(G_i\)</span>。</li>
+<li>记<span class="math inline">\(p(j|i), c(j|i)\)</span>分别为来自i总体的个体被错判到第j总体的概率和损失。定义平均错判损失(ECM: expected cost of misclassification)为<span class="math inline">\(ECM(D)=\Sigma_{i=1\cdots k}q_i[\Sigma_{j=1\cdots k}p(j|i)c(j|i)]\)</span></li>
+<li>Bayes判别法就是要选择划分D使得ECM(D)最小。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+<div id="建立判别函数的方法" class="section level2">
+<h2><span class="header-section-number">11.3</span> 建立判别函数的方法</h2>
+<p>与多元回归类似，变量选择的好坏直接影响判别分析的效果。常遇问题：（1）忽略最主要的指标；（2）引入太多指标，计算量既大又干扰分析。</p>
+<blockquote>
+<ul>
+<li>全模型法(SPSS系统默认方法）</li>
+<li>前向选择法：从没有变量的模型开始 每一部逐步把对判别函数贡献最大的变量加入模型，直到模型外没有一个变量符合条件为止。当希望有较多变量进入判别函数时，选用此方法（在Syntax中实现）。选择使威尔克斯统计量最小且显著的变量加入。</li>
+<li>后向选择法：从包含用户指定的所有变量的模型开始。每一部逐步把对判别函数贡献最小的变量从模型中剔除出去，直到留在模型中的变量都符合条件为止。当希望判别函数含有较少变量时，选用此方法。选择使威尔克斯统计量最大且不显著的变量剔除。</li>
+<li>逐步选择法：前向选择和后向选择的结合。从没有变量的模型开始。每一部逐步把对判别函数贡献最大的变量加入模型，同时，对模型中的变量进行检验，把不符合条件的变量从模型中删除。是一种较好的方法。选择使威尔克斯统计量最小且显著的变量加入。选择使威尔克斯统计量最大且不显著的变量剔除。</li>
+</ul>
+</blockquote>
+</div>
+<div id="判别分析的步骤及注意事项" class="section level2">
+<h2><span class="header-section-number">11.4</span> 判别分析的步骤及注意事项</h2>
+<p><strong>判别分析的步骤</strong></p>
+<blockquote>
+<ul>
+<li>第1步：确定研究的问题与目的：判别分析适合将个体归类的问题，特别适合一个定性的被解释变量和多个定量的解释变量的情形。</li>
+<li>第2步：判别分析研究设计
+解释变量与被解释变量的选择：被解释变量的组数可以是两个或更多，但必须互斥和完备。
+样本容量：判别分析对样本量与预测变量的比率敏感。
+总样本量：建议比率为每个解释变量20个观测，最小的总样本量为每个变量5个观测。最小的组的大小必须超过解释变量的个数，建议每组至少有20个观测，还要注意组的相对大小（大的组有不相称的高的分类机会）。样本分割：需要将样本分割为两个子样本，一个用于估计判别函数，另一个用于验证。随机分组，最常见的是随机分为两半。通常各组比率相同。</li>
+<li>第3步：判别分析的假定
+多元正态性，如不满足建议使用Logistic回归。Box’s Test 检验各组协方差阵是否相等，不等的协方差矩阵可能会负面影响分类过程，观测会被“过度归类”到大的协方差阵组中。解释变量的多重共线性。</li>
+<li>第4步：估计判别模型和评估整体拟和统计显著性：
+Wilks’ Lambda， Hotelling迹和Pillai评估判别函数的判别效力的显著性。评估整体拟和：计算每个观测的判别Z得分，检验各组在判别Z得分上的差异，评估组，关系的预测精度。</li>
+<li>第5步：结果的解释
+解释判别分析中每个解释变量的相对重要性。标准化判别权重（判别系数）：如存在多重共线性时不合适，可能不稳定。判别载荷，又称结构相关系数，是每个解释变量与判别函数的简单相关系数，也可能不稳定。偏F值。能力指数：当保留多个判别函数时。</li>
+<li>第6步：结果的验证
+分隔样本或交叉验证法。</li>
+</ul>
+</blockquote>
+<p><strong>判别分析注意事项</strong></p>
+<blockquote>
+<ul>
+<li>解释变量（判别变量）必须是可测量的。</li>
+<li>每一个判别变量不能是其它判别变量的线性组合（不能提供新的信息，无法估计判别函数）。</li>
+<li>判别变量不能高度相关，否则导致估计的标准误差很大。</li>
+<li>训练样本中必须包含所有要判别的类型，分类必须清楚（在判别分析前最好应当做假设检验，确定各个类的有关变量的均值是显著不同的）。</li>
+<li>要选择好可能用于判别的预测变量。判别分析是为了正确地分类，但同时也要注意使用尽可能少的预测变量来达到这个目的。使用较少的变量意味着节省资源和易于对结果作解释。</li>
+<li>检验结果(在SPSS选项中选择Wilks’ Lambda、Rao’s V、 The Squared Mahalanobis Distance或The Sum of Unexplained Variations等检验的计算机输出)，以确定是否分类结果仅由于随机因素。</li>
+<li>对于多个判别函数，要弄清各自的重要性。</li>
+<li>注意训练样本的正确和错误分类率。研究被误分类的观测值，看是否能找出原因。</li>
+</ul>
+</blockquote>
+</div>
+<div id="r语言中判别分析实现" class="section level2">
+<h2><span class="header-section-number">11.5</span> R语言中判别分析实现</h2>
+<p>正如上文提到的，我们以一个简单的地物分类的例子来进行实践。原始的遥感影像如图所示(高分一号卫星16 m数据）。</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-70-1.png" width="100%" height="40%" /></p>
+<p>高分一号卫星有四个波段，分别显示如下：</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-71-1.png" width="100%" height="50%" /></p>
+<p>我们随机在区域内生成了55个样本点，并根据目视解译做了分类，由于所处研究区位于新城且仅作测试，用地类型仅选择了两类：建设用地/不透水面和植被。前面已经用4，3，2显示了原始影像，红色部分即为植被。植被为类型1，建设用地/不透水面为类型2。</p>
+<p><img src="fig/fig35.jpg" width="100%" height="50%" /></p>
+<p>另外我们随机在区域内还生成了10个样本点作为验证点。</p>
+<p><img src="fig/fig36.jpg" width="100%" height="50%" /></p>
+<p>接着下来我们读取数据并且利用三种不同的判别分析方法进行判别分析地物类别。判别分析可以自己通过dist函数计算距离得到。现在已经有对应的包可以直接分析。这里推荐两个包（WMDB和MASS）。WMDB可以实现加权马氏距离判别分析和Bayes判别分析，MASS可以实现Fisher判别分析。</p>
+<p>距离判别分析的函数为wmd。具体参数如下：</p>
+<pre><code>wmd(Trnx,TrnG,Tweight=NULL,Tstx=NULL,var.equal=F)</code></pre>
+<p>Trnx是训练样本数据。TrnG为分类结果，Tweight为指定权重，可以根据主成分贡献计算或者取相等（原始的判别分析法），Tstx为待测样本数据，var.equal指定协方差矩阵是否相等。</p>
+<p>Fisher判别分析的函数为lda。具体参数如下：</p>
+<pre><code>lda(formula,data,……,subset,na.action)</code></pre>
+<p>formula形如groups~x1+x2+……的形式，data为数据集，subset指定训练样本，na.action指定有缺失值处理方式。</p>
+<p>Bayes判别分析的函数为dbayes。具体参数如下：</p>
+<pre><code>dbayes(Trnx,TrnG,p=rep(1,length(levels(TrnG))),Tstx=NULL,var.equal=F)</code></pre>
+<p>Trnx是训练样本数据。TrnG为分类结果，p为指定先验概率的向量，Tstx为待测样本数据，var.equal指定协方差矩阵是否相等。</p>
+<p>接下来就是基于高分影像的四个波段进行训练和判别分析。</p>
+<p>距离判别分析结果。</p>
+<p><img src="fig/fig29.jpg" width="100%" height="20%" /></p>
+<p>Fisher判别分析结果。</p>
+<p><img src="fig/fig30.jpg" width="100%" height="30%" /></p>
+<p>列联表分析及判别准确率。</p>
+<p><img src="fig/fig31.jpg" width="40%" height="10%" /></p>
+<p><img src="fig/fig32.jpg" width="60%" height="2%" /></p>
+<p>Bayes判别分析结果。</p>
+<p><img src="fig/fig33.jpg" width="100%" height="20%" /></p>
+<p>从样本数据来看，Fisher结果是最好的。接下来即按照训练好的判别规则进行分类。这里发现WMDB包的两个函数并没有提供预测功能，这里选用了另一个包klaR来做贝叶斯分类（朴素贝叶斯）。</p>
+<p>分类结果对比：</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-79-1.png" width="100%" height="40%" /></p>
+<p>为了验证准确率，这里利用随机生成的10个验证点进行精度验证。</p>
+<p><img src="fig/fig34.jpg" width="60%" height="20%" /></p>
+<p>由于选取验证点较少，准确率都达到了100%。从实际影像对比来看，似乎Bayes方法将更多细小的植被提取出来了，但是也有一部分道路错分。Fisher方法少提取了一部分，但错分的部分几乎没有。</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cluster.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pca.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/11-discriminant.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

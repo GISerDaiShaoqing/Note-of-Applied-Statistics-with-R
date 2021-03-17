@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 6 章 Hypothesis Test | 应用统计学与R语言实现学习笔记</title>
+  <meta name="description" content="第 6 章 Hypothesis Test | 应用统计学与R语言实现学习笔记" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 6 章 Hypothesis Test | 应用统计学与R语言实现学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  
+  <meta name="github-repo" content="GISerDaiShaoqing/Note-of-Applied-Statistics-with-R-Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 6 章 Hypothesis Test | 应用统计学与R语言实现学习笔记" />
+  
+  
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="戴劭勍" />
+
+
+<meta name="date" content="2021-03-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="estimation.html"/>
+<link rel="next" href="goodness.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">中文书示例</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#从问题说起"><i class="fa fa-check"></i><b>1.1</b> 从问题说起</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#统计学及其研究过程"><i class="fa fa-check"></i><b>1.2</b> 统计学及其研究过程</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#统计方法及其应用领域"><i class="fa fa-check"></i><b>1.3</b> 统计方法及其应用领域</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#统计数据类型"><i class="fa fa-check"></i><b>1.4</b> 统计数据类型</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#统计学中的几个基本概念"><i class="fa fa-check"></i><b>1.5</b> 统计学中的几个基本概念</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="datacollec.html"><a href="datacollec.html"><i class="fa fa-check"></i><b>2</b> Data Collection</a><ul>
+<li class="chapter" data-level="2.1" data-path="datacollec.html"><a href="datacollec.html#数据来源"><i class="fa fa-check"></i><b>2.1</b> 数据来源</a></li>
+<li class="chapter" data-level="2.2" data-path="datacollec.html"><a href="datacollec.html#调查设计"><i class="fa fa-check"></i><b>2.2</b> 调查设计</a></li>
+<li class="chapter" data-level="2.3" data-path="datacollec.html"><a href="datacollec.html#数据质量"><i class="fa fa-check"></i><b>2.3</b> 数据质量</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptive.html"><a href="descriptive.html"><i class="fa fa-check"></i><b>3</b> Descriptive Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptive.html"><a href="descriptive.html#数据的预处理"><i class="fa fa-check"></i><b>3.1</b> 数据的预处理</a></li>
+<li class="chapter" data-level="3.2" data-path="descriptive.html"><a href="descriptive.html#数据的整理与展示"><i class="fa fa-check"></i><b>3.2</b> 数据的整理与展示</a></li>
+<li class="chapter" data-level="3.3" data-path="descriptive.html"><a href="descriptive.html#数据的概括性度量"><i class="fa fa-check"></i><b>3.3</b> 数据的概括性度量</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sampling.html"><a href="sampling.html"><i class="fa fa-check"></i><b>4</b> Sampling And Sample Distribution</a><ul>
+<li class="chapter" data-level="4.1" data-path="sampling.html"><a href="sampling.html#抽样方法"><i class="fa fa-check"></i><b>4.1</b> 抽样方法</a></li>
+<li class="chapter" data-level="4.2" data-path="sampling.html"><a href="sampling.html#正态分布"><i class="fa fa-check"></i><b>4.2</b> 正态分布</a></li>
+<li class="chapter" data-level="4.3" data-path="sampling.html"><a href="sampling.html#三种不同性质的分布"><i class="fa fa-check"></i><b>4.3</b> 三种不同性质的分布</a></li>
+<li class="chapter" data-level="4.4" data-path="sampling.html"><a href="sampling.html#一个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.4</b> 一个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.5" data-path="sampling.html"><a href="sampling.html#两个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.5</b> 两个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.6" data-path="sampling.html"><a href="sampling.html#附录"><i class="fa fa-check"></i><b>4.6</b> 附录</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>5</b> Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation.html"><a href="estimation.html#参数估计的一般问题"><i class="fa fa-check"></i><b>5.1</b> 参数估计的一般问题</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation.html"><a href="estimation.html#区间估计-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> 区间估计 Confidence Intervals</a></li>
+<li class="chapter" data-level="5.3" data-path="estimation.html"><a href="estimation.html#样本容量的确定"><i class="fa fa-check"></i><b>5.3</b> 样本容量的确定</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis.html"><a href="hypothesis.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Test</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis.html"><a href="hypothesis.html#基本思想"><i class="fa fa-check"></i><b>6.1</b> 基本思想</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis.html"><a href="hypothesis.html#原假设和备择假设"><i class="fa fa-check"></i><b>6.2</b> 原假设和备择假设</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis.html"><a href="hypothesis.html#第一类错误和第二类错误"><i class="fa fa-check"></i><b>6.3</b> 第一类错误和第二类错误</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis.html"><a href="hypothesis.html#统计量与拒绝域"><i class="fa fa-check"></i><b>6.4</b> 统计量与拒绝域</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis.html"><a href="hypothesis.html#利用p值进行决策"><i class="fa fa-check"></i><b>6.5</b> 利用p值进行决策</a></li>
+<li class="chapter" data-level="6.6" data-path="hypothesis.html"><a href="hypothesis.html#一个总体参数的检验"><i class="fa fa-check"></i><b>6.6</b> 一个总体参数的检验</a></li>
+<li class="chapter" data-level="6.7" data-path="hypothesis.html"><a href="hypothesis.html#两个总体参数的检验"><i class="fa fa-check"></i><b>6.7</b> 两个总体参数的检验</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="goodness.html"><a href="goodness.html"><i class="fa fa-check"></i><b>7</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="7.1" data-path="goodness.html"><a href="goodness.html#多项分布"><i class="fa fa-check"></i><b>7.1</b> 多项分布</a></li>
+<li class="chapter" data-level="7.2" data-path="goodness.html"><a href="goodness.html#独立性"><i class="fa fa-check"></i><b>7.2</b> 独立性</a></li>
+<li class="chapter" data-level="7.3" data-path="goodness.html"><a href="goodness.html#概率分布"><i class="fa fa-check"></i><b>7.3</b> 概率分布</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ANOVA.html"><a href="ANOVA.html"><i class="fa fa-check"></i><b>8</b> ANOVA</a><ul>
+<li class="chapter" data-level="8.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的引论"><i class="fa fa-check"></i><b>8.1</b> 方差分析的引论</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的部分概念"><i class="fa fa-check"></i><b>8.1.1</b> 方差分析的部分概念</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本思想和原理"><i class="fa fa-check"></i><b>8.1.2</b> 方差分析的基本思想和原理</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本假定"><i class="fa fa-check"></i><b>8.1.3</b> 方差分析的基本假定</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ANOVA.html"><a href="ANOVA.html#单因子方差分析one-way-anova"><i class="fa fa-check"></i><b>8.2</b> 单因子方差分析（One-way ANOVA)</a></li>
+<li class="chapter" data-level="8.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析中的多重比较"><i class="fa fa-check"></i><b>8.3</b> 方差分析中的多重比较</a></li>
+<li class="chapter" data-level="8.4" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析two-way-anova"><i class="fa fa-check"></i><b>8.4</b> 双因子方差分析（Two-way ANOVA）</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析的基本假定"><i class="fa fa-check"></i><b>8.4.1</b> 双因子方差分析的基本假定</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ANOVA.html"><a href="ANOVA.html#无交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.2</b> 无交互作用双因子方差分析</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ANOVA.html"><a href="ANOVA.html#有交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.3</b> 有交互作用双因子方差分析</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ANOVA.html"><a href="ANOVA.html#实验设计初步"><i class="fa fa-check"></i><b>8.5</b> 实验设计初步</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Linear Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#变量间的关系"><i class="fa fa-check"></i><b>9.1</b> 变量间的关系</a></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#回归分析和简单线性回归分析"><i class="fa fa-check"></i><b>9.2</b> 回归分析和简单线性回归分析</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#回归分析"><i class="fa fa-check"></i><b>9.2.1</b> 回归分析</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#简单线性回归分析"><i class="fa fa-check"></i><b>9.2.2</b> 简单线性回归分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#利用回归方程进行估计和预测"><i class="fa fa-check"></i><b>9.3</b> 利用回归方程进行估计和预测</a></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#残差分析"><i class="fa fa-check"></i><b>9.4</b> 残差分析</a></li>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#多元线性回归multiple-regression-model"><i class="fa fa-check"></i><b>9.5</b> 多元线性回归(multiple regression model)</a></li>
+<li class="chapter" data-level="9.6" data-path="regression.html"><a href="regression.html#定性自变量的回归"><i class="fa fa-check"></i><b>9.6</b> 定性自变量的回归</a></li>
+<li class="chapter" data-level="9.7" data-path="regression.html"><a href="regression.html#非线性回归"><i class="fa fa-check"></i><b>9.7</b> 非线性回归</a></li>
+<li class="chapter" data-level="9.8" data-path="regression.html"><a href="regression.html#建立回归模型"><i class="fa fa-check"></i><b>9.8</b> 建立回归模型</a></li>
+<li class="chapter" data-level="9.9" data-path="regression.html"><a href="regression.html#回归中的常见错误"><i class="fa fa-check"></i><b>9.9</b> 回归中的常见错误</a></li>
+<li class="chapter" data-level="9.10" data-path="regression.html"><a href="regression.html#logistic-回归"><i class="fa fa-check"></i><b>9.10</b> Logistic 回归</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="cluster.html"><a href="cluster.html"><i class="fa fa-check"></i><b>10</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="cluster.html"><a href="cluster.html#多元分布基本概念"><i class="fa fa-check"></i><b>10.1</b> 多元分布基本概念</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster.html"><a href="cluster.html#数据的变换处理"><i class="fa fa-check"></i><b>10.2</b> 数据的变换处理</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster.html"><a href="cluster.html#聚类分析"><i class="fa fa-check"></i><b>10.3</b> 聚类分析</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster.html"><a href="cluster.html#样品间亲疏程度的测度"><i class="fa fa-check"></i><b>10.4</b> 样品间亲疏程度的测度</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster.html"><a href="cluster.html#类与类之间的距离"><i class="fa fa-check"></i><b>10.5</b> 类与类之间的距离</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster.html"><a href="cluster.html#系统聚类hierarchical-clustering-method"><i class="fa fa-check"></i><b>10.6</b> 系统聚类(hierarchical clustering method)</a></li>
+<li class="chapter" data-level="10.7" data-path="cluster.html"><a href="cluster.html#快速聚类k-means-clustering-method"><i class="fa fa-check"></i><b>10.7</b> 快速聚类(k-means clustering method)</a></li>
+<li class="chapter" data-level="10.8" data-path="cluster.html"><a href="cluster.html#有序聚类"><i class="fa fa-check"></i><b>10.8</b> 有序聚类</a></li>
+<li class="chapter" data-level="10.9" data-path="cluster.html"><a href="cluster.html#聚类分析的主要步骤"><i class="fa fa-check"></i><b>10.9</b> 聚类分析的主要步骤</a></li>
+<li class="chapter" data-level="10.10" data-path="cluster.html"><a href="cluster.html#r语言中聚类分析实现"><i class="fa fa-check"></i><b>10.10</b> R语言中聚类分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="discriminant.html"><a href="discriminant.html"><i class="fa fa-check"></i><b>11</b> Discriminant Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="discriminant.html"><a href="discriminant.html#判别分析应用"><i class="fa fa-check"></i><b>11.1</b> 判别分析应用</a></li>
+<li class="chapter" data-level="11.2" data-path="discriminant.html"><a href="discriminant.html#判别分析方法"><i class="fa fa-check"></i><b>11.2</b> 判别分析方法</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="discriminant.html"><a href="discriminant.html#距离判别法"><i class="fa fa-check"></i><b>11.2.1</b> 距离判别法</a></li>
+<li class="chapter" data-level="11.2.2" data-path="discriminant.html"><a href="discriminant.html#fisher判别法"><i class="fa fa-check"></i><b>11.2.2</b> Fisher判别法</a></li>
+<li class="chapter" data-level="11.2.3" data-path="discriminant.html"><a href="discriminant.html#bayes判别法"><i class="fa fa-check"></i><b>11.2.3</b> Bayes判别法</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="discriminant.html"><a href="discriminant.html#建立判别函数的方法"><i class="fa fa-check"></i><b>11.3</b> 建立判别函数的方法</a></li>
+<li class="chapter" data-level="11.4" data-path="discriminant.html"><a href="discriminant.html#判别分析的步骤及注意事项"><i class="fa fa-check"></i><b>11.4</b> 判别分析的步骤及注意事项</a></li>
+<li class="chapter" data-level="11.5" data-path="discriminant.html"><a href="discriminant.html#r语言中判别分析实现"><i class="fa fa-check"></i><b>11.5</b> R语言中判别分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>12</b> Priciple Component Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="pca.html"><a href="pca.html#主成分分析基本思想"><i class="fa fa-check"></i><b>12.1</b> 主成分分析基本思想</a></li>
+<li class="chapter" data-level="12.2" data-path="pca.html"><a href="pca.html#几何解释与数学模型"><i class="fa fa-check"></i><b>12.2</b> 几何解释与数学模型</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="pca.html"><a href="pca.html#几何解释"><i class="fa fa-check"></i><b>12.2.1</b> 几何解释</a></li>
+<li class="chapter" data-level="12.2.2" data-path="pca.html"><a href="pca.html#数学模型"><i class="fa fa-check"></i><b>12.2.2</b> 数学模型</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="pca.html"><a href="pca.html#主成分的推导"><i class="fa fa-check"></i><b>12.3</b> 主成分的推导</a></li>
+<li class="chapter" data-level="12.4" data-path="pca.html"><a href="pca.html#主成分的性质"><i class="fa fa-check"></i><b>12.4</b> 主成分的性质</a></li>
+<li class="chapter" data-level="12.5" data-path="pca.html"><a href="pca.html#主成分分析的步骤"><i class="fa fa-check"></i><b>12.5</b> 主成分分析的步骤</a></li>
+<li class="chapter" data-level="12.6" data-path="pca.html"><a href="pca.html#主成分的应用与回归"><i class="fa fa-check"></i><b>12.6</b> 主成分的应用与回归</a></li>
+<li class="chapter" data-level="12.7" data-path="pca.html"><a href="pca.html#主成分分析的r语言实现"><i class="fa fa-check"></i><b>12.7</b> 主成分分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="fa.html"><a href="fa.html"><i class="fa fa-check"></i><b>13</b> Factor Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="fa.html"><a href="fa.html#因子分析概念"><i class="fa fa-check"></i><b>13.1</b> 因子分析概念</a></li>
+<li class="chapter" data-level="13.2" data-path="fa.html"><a href="fa.html#因子分析模型"><i class="fa fa-check"></i><b>13.2</b> 因子分析模型</a></li>
+<li class="chapter" data-level="13.3" data-path="fa.html"><a href="fa.html#因子载荷矩阵的估计方法"><i class="fa fa-check"></i><b>13.3</b> 因子载荷矩阵的估计方法</a></li>
+<li class="chapter" data-level="13.4" data-path="fa.html"><a href="fa.html#因子旋转正交变换"><i class="fa fa-check"></i><b>13.4</b> 因子旋转（正交变换）</a></li>
+<li class="chapter" data-level="13.5" data-path="fa.html"><a href="fa.html#因子得分"><i class="fa fa-check"></i><b>13.5</b> 因子得分</a></li>
+<li class="chapter" data-level="13.6" data-path="fa.html"><a href="fa.html#因子分析步骤"><i class="fa fa-check"></i><b>13.6</b> 因子分析步骤</a></li>
+<li class="chapter" data-level="13.7" data-path="fa.html"><a href="fa.html#因子分析的r语言实现"><i class="fa fa-check"></i><b>13.7</b> 因子分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="homework.html"><a href="homework.html"><i class="fa fa-check"></i><b>14</b> Case and Practice</a><ul>
+<li class="chapter" data-level="14.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布"><i class="fa fa-check"></i><b>14.1</b> 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验"><i class="fa fa-check"></i><b>14.2</b> 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析"><i class="fa fa-check"></i><b>14.3</b> 方差分析与回归分析</a></li>
+<li class="chapter" data-level="14.4" data-path="homework.html"><a href="homework.html#作业文档"><i class="fa fa-check"></i><b>14.4</b> 作业文档</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布-1"><i class="fa fa-check"></i><b>14.4.1</b> 1 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.4.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验-1"><i class="fa fa-check"></i><b>14.4.2</b> 2 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.4.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析-1"><i class="fa fa-check"></i><b>14.4.3</b> 3 方差分析与回归分析</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由 bookdown 强力驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">应用统计学与R语言实现学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="hypothesis" class="section level1">
+<h1><span class="header-section-number">第 6 章</span> Hypothesis Test</h1>
+<p>本篇是第6章，内容是假设检验。</p>
+<div id="基本思想" class="section level2">
+<h2><span class="header-section-number">6.1</span> 基本思想</h2>
+<p>我们还是从问题开始讨论。这回提个接地气的问题——雄安新区批复前后对该地区房价是否有差异？嗯，假设检验其实就是为了解决这类问题。假设检验的基本思想——我们有样本，但是无法获得总体，需要对总体的分布形式或分布参数事先作出某种假设，然后根据样本观测值，运用统计分析的方法来检验这一假设是否正确。分解开来，假设检验=假设+检验（或者假设检验）。假设(hypothesis)——对总体的参数的具体数值（或分布形式）所作的陈述（总体参数包括总体均值、比例、 方差等，分析之前必需陈述）。假设检验(hypothesis test)—先对总体的参数（ 或分布形式）提出某种假设，然后利用样本信息判断假设是否成立的过程（有参数检验和非参数检验；逻辑上运用反证法， 统计上依据小概率原理）。如图。</p>
+<p><img src="fig/fig9.jpg" width="100%" height="35%" /></p>
+<p>假设检验的思想还可以去搜索Fisher 显著性检验的思想(女士品茶试验)的故事深深体会，这里就不详述了。有兴趣的同学可以点击下文的科学网链接查看。</p>
+<blockquote>
+<ul>
+<li><a href="http://blog.sciencenet.cn/blog-624263-795715.html" class="uri">http://blog.sciencenet.cn/blog-624263-795715.html</a></li>
+</ul>
+</blockquote>
+</div>
+<div id="原假设和备择假设" class="section level2">
+<h2><span class="header-section-number">6.2</span> 原假设和备择假设</h2>
+<p>从前面的介绍我们知道，假设检验的第一步是建立假设。那么假设分为两种（原假设和备择假设）。那么这二者具体又是什么呢？</p>
+<blockquote>
+<ul>
+<li>原假设(null hypothesis)——原假设又称“ 0假设”，总是有符号=， <span class="math inline">\(\geq\)</span>或<span class="math inline">\(\leq\)</span>，表示为 <span class="math inline">\(H_0\)</span>。是研究者想收集证据予以反对的假设（生产实践中常对应正常情形，如均值与设计一致）；一般来说，原假设是一旦拒绝便要采取行动的假设。因此， 原假设总是“受到保护的假设” ，没有充分的证据是不能拒绝原假设的。例如，对一家信誉很好的工厂的产品进行检验，原假设一般是“ 产品合格”。</li>
+<li>备择假设(alternative hypothesis)——研究者想收集证据予以支持的假设， 一旦发生就要采取行动， 是与原假设对立的假设，也称“研究假设”，总是有符号<span class="math inline">\(\neq\)</span>， &gt; 或 &lt;，表示为 <span class="math inline">\(H_1\)</span>。</li>
+</ul>
+</blockquote>
+<p>总结起来就是，原假设是统计学史上最悲催角色——它从一开始诞生，就是为了被科学家们发好人卡拒绝而存在的一个假设。备择假设才是科学家们追求的白富美。</p>
+<p>搞明白了这两个假设，下一步我们做假设检验的时候，就要先提出假设了，这里给了一些提出假设的要点：
+&gt; * 原假设和备择假设是一个完备事件组， 而且相互对立（在一项假设检验中， 原假设和备择假设必有一个成立， 而且只有一个成立）。
+&gt; * 先确定备择假设， 再确定原假设。
+&gt; * 等号“ =” 总是放在原假设上。
+&gt; * 因研究目的不同， 对同一问题可能提出不同的假设（ 也可能得出不同的结论）。</p>
+<p>同时在实际应用中，我们有不同的需求，因此又有双侧检验和单侧检验的区分。
+&gt; * 双侧检验——备择假设没有特定的方向性，并含有符号“=”的假设检验，称为双侧检验或双尾检验(two-tailed test)
+&gt; * 单侧检验——备择假设具有特定的方向性，并含有符号“&gt;”或“&lt;”的假设检验，称为单侧检验或单尾检验(one-tailed test)。其中备择假设的方向为“&lt;”，称为左侧检验，备择假设的方向为“&gt;”，称为右侧检验。</p>
+<p>原假设与备择假设形式：
+&gt; * 双边检验：<span class="math inline">\(H_0: \mu=2,H_1: \mu\neq2\)</span>。
+&gt; * 单边检验：左侧检验——<span class="math inline">\(H_0: \mu\ge2,H_1: \mu&lt;2\)</span>，右侧检验——<span class="math inline">\(H_0: \mu\le2,H_1: \mu&gt;2\)</span>。</p>
+<p>所见即所得，用一张图来表示假设检验过程。</p>
+<p><img src="fig/fig10.jpg" width="100%" height="35%" /></p>
+<p>所以拒绝原假设的理由是假设检验中的小概率原理。那么什么是小概率？</p>
+<blockquote>
+<ul>
+<li>在一次试验中， 一个几乎不可能发生的事件发生的概率。</li>
+<li>在一次试验中小概率事件一旦发生， 我们就有理由拒绝原假设。</li>
+<li>小概率由研究者事先确定。</li>
+</ul>
+</blockquote>
+<p>所以拒绝<span class="math inline">\(H_0\)</span>的理由就是</p>
+<p><img src="fig/fig11.jpg" width="100%" height="35%" /></p>
+<p><img src="fig/fig12.jpg" width="100%" height="35%" /></p>
+</div>
+<div id="第一类错误和第二类错误" class="section level2">
+<h2><span class="header-section-number">6.3</span> 第一类错误和第二类错误</h2>
+<p>上文介绍了假设检验的过程，但是假设检验过程会不会出现错误呢？其实大家仔细分析拒绝原假设的理由就会发现问题了。通常情况下原假设是小概率事件，但是小概率事件≠0概率事件。小概率事件不是不发生，而是发生概率较小。就像天气预报说明天有99%的可能不下雨，结果1%的可能性成为了事实，明天下雨了。因此假设检验中会有两类错误（弃真错误和取伪错误）经常出现。</p>
+<p>（1）第一类错误(弃真错误)：</p>
+<blockquote>
+<ul>
+<li>原假设为真时拒绝原假设。</li>
+<li>第一类错误的概率为<span class="math inline">\(\alpha\)</span>（没错，就是它，我们的好朋友，小<span class="math inline">\(\alpha\)</span>。咳咳咳，就是显著性水平，一般由研究者事先指定，常用的值有0.01, 0.05, 0.10）。</li>
+</ul>
+</blockquote>
+<p>（2）第二类错误（取伪错误）：</p>
+<blockquote>
+<ul>
+<li>原假设为假时未拒绝原假设。</li>
+<li>第二类错误的概率记为<span class="math inline">\(\beta\)</span>。</li>
+</ul>
+</blockquote>
+<p><img src="fig/fig13.jpg" width="100%" height="35%" /></p>
+<p><img src="fig/fig14.jpg" width="100%" height="35%" /></p>
+<p><span class="math inline">\(\alpha\)</span>和<span class="math inline">\(\beta\)</span>的关系——<span class="math inline">\(\alpha\)</span>和<span class="math inline">\(\beta\)</span>的关系就像翘翘板，<span class="math inline">\(\alpha\)</span>小<span class="math inline">\(\beta\)</span>就大，<span class="math inline">\(\alpha\)</span>大<span class="math inline">\(\beta\)</span>就小。所以两类错误不可能同时发生（第一类只在<span class="math inline">\(H_0\)</span>为真时发生，第而类只在<span class="math inline">\(H_0\)</span>为假时发生）。</p>
+<p>影响<span class="math inline">\(\beta\)</span>的因素：
+&gt; * 总体参数的真值。
+&gt; * 显著性水平<span class="math inline">\(\alpha\)</span>（当<span class="math inline">\(\alpha\)</span>减少时增大）。
+&gt; * 总体标准差<span class="math inline">\(\sigma\)</span>（当<span class="math inline">\(\sigma\)</span>增大时增大）。
+&gt; * 样本容量n（当n减少时增大）。</p>
+</div>
+<div id="统计量与拒绝域" class="section level2">
+<h2><span class="header-section-number">6.4</span> 统计量与拒绝域</h2>
+<p>讲了这么多，但是还没有介绍假设检验的计算过程。假设检验的过程依赖于两个重要数学概念（统计量与拒绝域，前面已经有稍微提到了）。这里再做具体介绍。检验统计量(test statistic)——根据样本观测结果计算得到的，并据以对原假设和备择假设作出决策的某个样本统计量，是对样本估计量的标准化结果（原假设<span class="math inline">\(H_0\)</span>为真，点估计量的抽样分布）。标准化的检验统计量公式为：标准化的检验统计量=(点估计量-假设值)/点估计量的抽样标准差</p>
+<p>显著性水平和拒绝域的三种情况。</p>
+<ul>
+<li>双侧检验：</li>
+</ul>
+<p><img src="fig/fig15.jpg" width="100%" height="35%" /></p>
+<ul>
+<li>左侧检验：</li>
+</ul>
+<p><img src="fig/fig16.jpg" width="100%" height="35%" /></p>
+<ul>
+<li>右侧检验：</li>
+</ul>
+<p><img src="fig/fig17.jpg" width="100%" height="35%" /></p>
+<p>统计量落在拒绝域时，我们就可以拒绝原假设。具体如下：</p>
+<blockquote>
+<ul>
+<li>给定显著性水平<span class="math inline">\(\alpha\)</span>，查表得出相应的临界值<span class="math inline">\(z_{\alpha},z_{\alpha/2},t_{\alpha},t_{\alpha/2},\cdots\)</span>。</li>
+<li>将检验统计量的值与<span class="math inline">\(\alpha\)</span>水平的临界值进行比较。</li>
+<li>作出决策：双侧检验——|统计量| &gt; 临界值，拒绝<span class="math inline">\(H_0\)</span>；左侧检验——统计量 &lt; 临界值，拒绝<span class="math inline">\(H_0\)</span>；右侧检验——统计量 &gt; 临界值，拒绝<span class="math inline">\(H_0\)</span>。</li>
+</ul>
+</blockquote>
+</div>
+<div id="利用p值进行决策" class="section level2">
+<h2><span class="header-section-number">6.5</span> 利用p值进行决策</h2>
+<p>如何利用假设检验解决实际问题？很重要的一个应用是在决策上。就如标题说的，利用p值进行决策。那么什么是p值?p值(p-value)：在一个假设检验问题中，拒绝原假设的最小显著性水平。</p>
+<blockquote>
+<ul>
+<li>在原假设为真的条件下，检验统计量的观察值大于或等于其计算值的概率(双侧检验为分布中检验统计量两侧面积的总和;单侧检验为分布中检验统计量相应单侧面积）。</li>
+<li>反映实际观测到的数据与原假设<span class="math inline">\(H_0\)</span>之间的一致程度。</li>
+<li>被称为观察到的（或实测的）显著性水平。</li>
+<li>决策规则： 若p值&lt;<span class="math inline">\(\alpha\)</span>， 拒绝<span class="math inline">\(H_0\)</span>。</li>
+</ul>
+</blockquote>
+<ul>
+<li>p值法步骤（以大样本均值为例），将样本统计量转换成检验统计量z。</li>
+</ul>
+<blockquote>
+<ul>
+<li>计算p值： Z为标准正态分布随机变量（p值=<span class="math inline">\((\left|Z\right|\ge z)\)</span>(双侧),p值=<span class="math inline">\((Z\le z)\)</span>(左侧),p值=<span class="math inline">\((Z\ge z)\)</span>(右侧)）</li>
+<li>比较p值和<span class="math inline">\(\alpha\)</span>：
+如果<span class="math inline">\(\alpha \leq p\)</span>值，拒绝<span class="math inline">\(H_0\)</span>;
+如果<span class="math inline">\(\alpha&lt;\)</span>p值，不能拒绝<span class="math inline">\(H_0\)</span>。</li>
+</ul>
+</blockquote>
+<ul>
+<li>假设检验结论的表述</li>
+</ul>
+<p>假设检验的目的就在于试图找到拒绝原假设的证据， 而不在于证明什么是正确的。</p>
+<blockquote>
+<ul>
+<li>拒绝原假设时结论是清楚的。</li>
+<li>当不拒绝原假设时——并未给出明确的结论，不能说原假设是正确的， 也不能说它不是正确的。但也未说它不是10。 我们只能说样本提供的证据还不足以推翻原假设。</li>
+</ul>
+</blockquote>
+<ul>
+<li>假设检验步骤的总结</li>
+</ul>
+<blockquote>
+<ul>
+<li>陈述原假设和备择假设。</li>
+<li>从所研究的总体中抽出一个随机样本。</li>
+<li>确定一个适当的检验统计量， 并利用样本数据算出其具体数值。</li>
+<li>确定一个适当的显著性水平， 并计算出其临界值， 指定拒绝域。</li>
+<li>将统计量的值与临界值进行比较， 作出决策——统计量的值落在拒绝域，拒绝<span class="math inline">\(H_0\)</span>，否则不拒绝<span class="math inline">\(H_0\)</span>，也可以直接利用p值作出决策。</li>
+</ul>
+</blockquote>
+</div>
+<div id="一个总体参数的检验" class="section level2">
+<h2><span class="header-section-number">6.6</span> 一个总体参数的检验</h2>
+<p>前面的理论讲的差不多了，又到了典型总体参数的检验内容的介绍了。依旧是先一个总体参数的检验（总体均值、总体比例、总体方差）。</p>
+<ul>
+<li>总体均值的检验(大样本：<span class="math inline">\(n\geq30\)</span>)，使用z检验统计量：</li>
+</ul>
+<p><span class="math inline">\(\sigma^2\)</span>已知：<span class="math inline">\(z=\frac{\bar x-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1)\)</span>。</p>
+<p><span class="math inline">\(\sigma^2\)</span>未知：<span class="math inline">\(z=\frac{\bar x-\mu_0}{s/\sqrt{n}}\sim N(0,1)\)</span>。</p>
+<ul>
+<li>总体均值的检验(正态总体小样本)，检验统计量：</li>
+</ul>
+<p><span class="math inline">\(\sigma^2\)</span>已知：<span class="math inline">\(z=\frac{\bar x-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1)\)</span>。</p>
+<p><span class="math inline">\(\sigma^2\)</span>未知：<span class="math inline">\(t=\frac{\bar x-\mu_0}{s/\sqrt{n}}\sim t(n-1)\)</span>。</p>
+<ul>
+<li>总体比例的检验</li>
+</ul>
+<p>假定条件：</p>
+<blockquote>
+<ul>
+<li>总体服从二项分布；</li>
+<li>可用正态分布来近似(大样本)。</li>
+</ul>
+</blockquote>
+<p>检验的Z统计量：<span class="math inline">\(z=\frac{\bar q-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}\sim N(0,1)\)</span>，<span class="math inline">\(p_0\)</span>为假设的总体比例。</p>
+<ul>
+<li>总体方差的检验</li>
+</ul>
+<p>检验一个总体的方差或标准差，假设总体近似服从正态分布，使用<span class="math inline">\(\chi^2\)</span>分布。检验统计量：</p>
+<p><span class="math display">\[\chi^2=\frac{(n-1)s^2}{\sigma_0^2}\sim \chi^2(n-1)\]</span></p>
+<p><img src="fig/fig18.jpg" width="100%" height="35%" /></p>
+<p>这里顺带提下作为统计推断的两大分支的区间估计和假设检验的关系。</p>
+<blockquote>
+<ul>
+<li>过程相似：如果假设均值在95%的置信区间之外，双边检验将拒绝原假设（显著性水平为5%）。</li>
+<li>逻辑不同：置信区间——不知道均值多少而要估计它；假设检验: 假定一个均值要看数据是否支持这个假设。</li>
+</ul>
+</blockquote>
+<p>另外还是要谈一谈统计学与实际问题——这里谈的是统计显著性和实际显著性。一个被拒绝的原假设意味着有统计显著性，但未必有实际显著性。这种情况常发生在大样本或精确测量场合，如Kepler的行星运行第一定律：行星轨道是椭圆的，当时吻合程度很好，100年后，仪器更高级、测量更精确，该假设被拒绝，因为行星间交互作用导致摄动。因此不要盲目使用统计显著性。此外，显著性水平<span class="math inline">\(\alpha\)</span>的选择也是个很关键的问题。一般来说：</p>
+<blockquote>
+<ul>
+<li><span class="math inline">\(\alpha\)</span>不宜过小，否则第二类错误概率会较大。</li>
+<li><span class="math inline">\(\alpha\)</span>的选择与判断发生错误时要付出的代价大小有关。</li>
+<li><span class="math inline">\(\alpha\)</span>的选择是决策问题。</li>
+</ul>
+</blockquote>
+</div>
+<div id="两个总体参数的检验" class="section level2">
+<h2><span class="header-section-number">6.7</span> 两个总体参数的检验</h2>
+<p>讲完了一个总体参数，照例来讲就两个总体参数（两个总体均值之差，两个总体比例之差，两个总体方差比）。</p>
+<ul>
+<li>独立大样本两总体均值之差检验</li>
+</ul>
+<p>假定条件：</p>
+<blockquote>
+<ul>
+<li>两个样本是独立的随机样本。</li>
+<li>大样本(<span class="math inline">\(n_1\ge30\)</span>和<span class="math inline">\(n_2\ge30\)</span>)。</li>
+</ul>
+</blockquote>
+<p>检验统计量：</p>
+<p><span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>已知：</p>
+<p><span class="math display">\[z=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}\sim N(0,1)\]</span>。</p>
+<p><span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>未知：</p>
+<p><span class="math display">\[z=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\sim N(0,1)\]</span>。</p>
+<ul>
+<li>正态总体独立小样本均值之差检验（<span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>已知）</li>
+</ul>
+<p>假定条件：</p>
+<blockquote>
+<ul>
+<li>两个独立的小样本。</li>
+<li>两个总体都是正态分布。</li>
+<li><span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>已知。</li>
+</ul>
+</blockquote>
+<p>检验统计量:</p>
+<p><span class="math display">\[z=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}\sim N(0,1)\]</span>。</p>
+<ul>
+<li>正态总体独立小样本均值之差检验(<span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>未知但<span class="math inline">\(\sigma_1^2=\sigma_2^2\)</span>)</li>
+</ul>
+<p>假定条件：</p>
+<blockquote>
+<ul>
+<li>两个独立的小样本。</li>
+<li>两个总体都是正态分布。</li>
+<li><span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>未知但相等，即<span class="math inline">\(\sigma_1^2=\sigma_2^2\)</span>。</li>
+</ul>
+</blockquote>
+<p>检验统计量：</p>
+<p><span class="math display">\[t=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\]</span></p>
+<p>其中<span class="math inline">\(s_p=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}\)</span>，自由度：<span class="math inline">\(n_1+n_2-2\)</span>。</p>
+<ul>
+<li>两个总体均值之差的检验(<span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>未知且不相等<span class="math inline">\(\sigma_1^2\ne\sigma_2^2\)</span>)</li>
+</ul>
+<p>假定条件：</p>
+<blockquote>
+<ul>
+<li>两个总体都是正态分布。</li>
+<li><span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>未知且不相等，即<span class="math inline">\(\sigma_1^2\ne\sigma_2^2\)</span>。</li>
+<li>样本容量相等，<span class="math inline">\(n_1=n_2=n\)</span>。</li>
+</ul>
+</blockquote>
+<p>检验统计量：</p>
+<p><span class="math display">\[t=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{s_1^2+s_2^2}{n}}}\]</span></p>
+<p>自由度：<span class="math inline">\(n_1+n_2-2=2(n-1)\)</span>。</p>
+<ul>
+<li>两个总体均值之差的检验(<span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>未知且不相等<span class="math inline">\(\sigma_1^2\ne\sigma_2^2\)</span>)</li>
+</ul>
+<p>假定条件：</p>
+<blockquote>
+<ul>
+<li>两个总体都是正态分布。</li>
+<li><span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>未知且不相等，即<span class="math inline">\(\sigma_1^2\ne\sigma_2^2\)</span>。</li>
+<li>样本容量不相等，<span class="math inline">\(n_1\ne n_2\)</span>。</li>
+</ul>
+</blockquote>
+<p>检验统计量：</p>
+<p><span class="math display">\[t=\frac{(\bar x_1-\bar x_2)-(\mu_1-\mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\]</span></p>
+<p>自由度：最接近v的整数——<span class="math inline">\(v=\frac{(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2})^2}{\frac{(s_1^2/n_1)^2}{n_1-1}+\frac{(s_2^2/n_2)^2}{n_2-1}}\)</span>。</p>
+<ul>
+<li>两个总体均值之差的检验(匹配样本)</li>
+</ul>
+<p>假定条件:</p>
+<blockquote>
+<ul>
+<li>两个总体配对差值构成的总体服从正态分布。</li>
+<li>配对差是由差值总体中随机抽取的。</li>
+<li>数据配对或匹配(重复测量 (前/后))。</li>
+</ul>
+</blockquote>
+<p>样本差值均值</p>
+<p><span class="math display">\[\bar d=\frac{\sum_{i=1}^n d_i}{n_d}\]</span>,</p>
+<p>样本差值标准差值</p>
+<p><span class="math display">\[s_d=\sqrt{\frac{\sum_{i=1}^n(d_i-\bar d)^2}{n_d-1}}\]</span>。</p>
+<p>大样本检验统计量：</p>
+<p><span class="math display">\[z=\frac{\bar d-d_0}{s_d/\sqrt{n_d}}\sim N(0,1)\]</span>。</p>
+<p>小样本检验统计量：</p>
+<p><span class="math display">\[t=\frac{\bar d-d_0}{s_d/\sqrt{n_d}}\sim t(n-1)\]</span>。</p>
+<ul>
+<li>两个总体比例之差的检验</li>
+</ul>
+<p>假定条件：</p>
+<blockquote>
+<ul>
+<li>两个总体都服从二项分布。</li>
+<li>可以用正态分布来近似。</li>
+</ul>
+</blockquote>
+<p>检验统计量：</p>
+<p>检验<span class="math inline">\(H_0:p_1-p_2=0\)</span>，</p>
+<p><span class="math display">\[z=\frac{\bar p_1-\bar p_2}{\sqrt{\bar p(1-\bar p)(\frac{1}{n_1}+\frac{1}{n_2})}}\]</span>，</p>
+<p>其中<span class="math inline">\(\bar p=\frac{x_1+x_2}{n_1+n_2}=\frac{\bar p_1n_1+\bar p_2n_2}{n_1+n_2}\)</span>。</p>
+<p>检验<span class="math inline">\(H_0:p_1-p_2=d_0\)</span>，</p>
+<p><span class="math display">\[z=\frac{(\bar p_1-\bar p_2)-d_0}{\sqrt{\frac{\bar p_1(1-\bar p_1)}{n_1}+\frac{\bar p_2(1-\bar p_2)}{n_2}}}\]</span>。</p>
+<ul>
+<li>两个总体方差比的检验(F检验)</li>
+</ul>
+<p>假定条件：</p>
+<blockquote>
+<ul>
+<li>两个总体都服从正态分布。</li>
+<li>两个独立的随机样本。</li>
+</ul>
+</blockquote>
+<p>检验统计量：</p>
+<p><span class="math display">\[F=\frac{s_1^2}{s_2^2}\sim F(n_1-1,n_2-1)\]</span></p>
+<p>或</p>
+<p><span class="math display">\[F=\frac{s_2^2}{s_1^2}\sim F(n_2-1,n_1-1)\]</span>。</p>
+<p>最后的总结就是如下图。</p>
+<p><img src="fig/fig19.jpg" width="100%" height="35%" /></p>
+<p>最后的最后，回到开头提的问题——雄安新区。该问题其实是两个总体参数的检验问题——两个总体均值之差的问题（两个总体分别是批复前的房价和批复后的房价）。所以如果要讨论该问题，可以考虑从批复前后的房价，抽取配对大样本或小样本(楼盘房价）进行假设检验，这样我们就能在统计学上证明这件事对雄安房价的显著影响啦。本篇涉及的R语言内容较少，还是老规矩，放到后面的第14章去讨论。</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="estimation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="goodness.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/06-hypothesis.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

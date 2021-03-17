@@ -1,0 +1,44 @@
+--- 
+title: "应用统计学与R语言实现学习笔记"
+author: "戴劭勍"
+date: "`r Sys.Date()`"
+documentclass: ctexbook
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+lot: false
+lof: false
+geometry: [a4paper, tmargin=2.5cm, bmargin=2.5cm, lmargin=2.5cm, rmargin=2.5cm]
+site: bookdown::bookdown_site
+description: ""
+github-repo: GISerDaiShaoqing/Note-of-Applied-Statistics-with-R-Book
+cover-image: "images/cover.jpg"
+---
+
+# 前言 {-}
+
+当时想到写这个东西，主要是自己选了门应用统计学的公选课，个人觉得不能浪费了这门课，而且其实我们在做一些研究的时候，其实都用了很多新的、高大上的所谓的新方法，并且不断在追逐所谓的Big data，但是回过头来想想，最基础的统计学理论可能才是我们需要补课的地方（不得不说这门课挺对我胃口，去年暑假花了一部分时间在啃贾俊平的统计学，刚好是这门课的参考教材）。这个年代，用个tensorflow的包，import一下，训练个模型出来就能说自己做的是深度学习。个人意见，也对也不对。IT技术飞速发展，大大降低了程序猿的门槛，但是现在的情况更应当说是程序猿的行当易学难精了。扯得有点远，总之我认为返璞归真地去学一学高数、概率论、统计学、线性代数可能比一上来就开始各种机器学习什么的要强得多。
+
+
+这份笔记的定位，就是一份笔记，某些程度上就是课程老师给我们的ppt，我对理论部分做了整理。所以要归功于我的任课老师王老师。我不求大家从头到尾看完这份笔记，因为理论很枯燥，但是当需要用些什么内容的时候，可以想起这份笔记，供大家查找和参考。我的笔记并不像《深入浅出统计学》那样直白而又易懂的语言，尽管中间有一定的尝试，所以不可能看完我的这个系列博客就能对统计学的基本内容完全融会贯通，如果你希望在统计学上有所建树，需要大家自己去补课。另外我这部分更多针对于应用，而且基于我自己本身地学背景，我讲的例子也都跟尽量跟地学、生态相关。所以其他专业的同学会觉得一些例子苦涩难懂是比较正常的（在此向其他专业同学说声不好意思，你们的批评我虚心接受，但是你们这方面的建议我坚决不改，傲娇脸）。
+
+
+好，讲了这么多。这个系列我其实是作为我自己的一个开源项目做的，我希望大家有什么意见可以一起来帮忙修改完善这个项目。如果你觉得还不错，也不要吝啬你的star。我博客里提到的很多代码之类的也都在这个项目里面开源了。就请大家批评指正。
+
+
+[Note-of-Applied-Statistics-with-R](https://github.com/GISerDaiShaoqing/Note-of-Applied-Statistics-with-R)
+
+
+[Bookdown Online](http://gisersqdai.top/Note-of-Applied-Statistics-with-R-Book/)
+
+
+[应用统计学与R与语言实现笔记 pdf版](http://science.gisersqdai.top/NBAPR%2Fnote-of-applied-statistics-with-r-book.pdf)
+
+
+[应用统计学与R与语言实现笔记 epub版](http://science.gisersqdai.top/NBAPR%2Fnote-of-applied-statistics-with-r-book.epub)
+
+## 致谢 {-}
+
+感谢谢益辉开发的bookdown和模板。
+

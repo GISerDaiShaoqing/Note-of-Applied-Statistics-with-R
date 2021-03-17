@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 9 章 Linear Regression | 应用统计学与R语言实现学习笔记</title>
+  <meta name="description" content="第 9 章 Linear Regression | 应用统计学与R语言实现学习笔记" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 9 章 Linear Regression | 应用统计学与R语言实现学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  
+  <meta name="github-repo" content="GISerDaiShaoqing/Note-of-Applied-Statistics-with-R-Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 9 章 Linear Regression | 应用统计学与R语言实现学习笔记" />
+  
+  
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="戴劭勍" />
+
+
+<meta name="date" content="2021-03-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ANOVA.html"/>
+<link rel="next" href="cluster.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">中文书示例</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#从问题说起"><i class="fa fa-check"></i><b>1.1</b> 从问题说起</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#统计学及其研究过程"><i class="fa fa-check"></i><b>1.2</b> 统计学及其研究过程</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#统计方法及其应用领域"><i class="fa fa-check"></i><b>1.3</b> 统计方法及其应用领域</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#统计数据类型"><i class="fa fa-check"></i><b>1.4</b> 统计数据类型</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#统计学中的几个基本概念"><i class="fa fa-check"></i><b>1.5</b> 统计学中的几个基本概念</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="datacollec.html"><a href="datacollec.html"><i class="fa fa-check"></i><b>2</b> Data Collection</a><ul>
+<li class="chapter" data-level="2.1" data-path="datacollec.html"><a href="datacollec.html#数据来源"><i class="fa fa-check"></i><b>2.1</b> 数据来源</a></li>
+<li class="chapter" data-level="2.2" data-path="datacollec.html"><a href="datacollec.html#调查设计"><i class="fa fa-check"></i><b>2.2</b> 调查设计</a></li>
+<li class="chapter" data-level="2.3" data-path="datacollec.html"><a href="datacollec.html#数据质量"><i class="fa fa-check"></i><b>2.3</b> 数据质量</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptive.html"><a href="descriptive.html"><i class="fa fa-check"></i><b>3</b> Descriptive Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptive.html"><a href="descriptive.html#数据的预处理"><i class="fa fa-check"></i><b>3.1</b> 数据的预处理</a></li>
+<li class="chapter" data-level="3.2" data-path="descriptive.html"><a href="descriptive.html#数据的整理与展示"><i class="fa fa-check"></i><b>3.2</b> 数据的整理与展示</a></li>
+<li class="chapter" data-level="3.3" data-path="descriptive.html"><a href="descriptive.html#数据的概括性度量"><i class="fa fa-check"></i><b>3.3</b> 数据的概括性度量</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sampling.html"><a href="sampling.html"><i class="fa fa-check"></i><b>4</b> Sampling And Sample Distribution</a><ul>
+<li class="chapter" data-level="4.1" data-path="sampling.html"><a href="sampling.html#抽样方法"><i class="fa fa-check"></i><b>4.1</b> 抽样方法</a></li>
+<li class="chapter" data-level="4.2" data-path="sampling.html"><a href="sampling.html#正态分布"><i class="fa fa-check"></i><b>4.2</b> 正态分布</a></li>
+<li class="chapter" data-level="4.3" data-path="sampling.html"><a href="sampling.html#三种不同性质的分布"><i class="fa fa-check"></i><b>4.3</b> 三种不同性质的分布</a></li>
+<li class="chapter" data-level="4.4" data-path="sampling.html"><a href="sampling.html#一个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.4</b> 一个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.5" data-path="sampling.html"><a href="sampling.html#两个总体样本统计量的抽样分布"><i class="fa fa-check"></i><b>4.5</b> 两个总体样本统计量的抽样分布</a></li>
+<li class="chapter" data-level="4.6" data-path="sampling.html"><a href="sampling.html#附录"><i class="fa fa-check"></i><b>4.6</b> 附录</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>5</b> Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation.html"><a href="estimation.html#参数估计的一般问题"><i class="fa fa-check"></i><b>5.1</b> 参数估计的一般问题</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation.html"><a href="estimation.html#区间估计-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> 区间估计 Confidence Intervals</a></li>
+<li class="chapter" data-level="5.3" data-path="estimation.html"><a href="estimation.html#样本容量的确定"><i class="fa fa-check"></i><b>5.3</b> 样本容量的确定</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis.html"><a href="hypothesis.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Test</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis.html"><a href="hypothesis.html#基本思想"><i class="fa fa-check"></i><b>6.1</b> 基本思想</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis.html"><a href="hypothesis.html#原假设和备择假设"><i class="fa fa-check"></i><b>6.2</b> 原假设和备择假设</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis.html"><a href="hypothesis.html#第一类错误和第二类错误"><i class="fa fa-check"></i><b>6.3</b> 第一类错误和第二类错误</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis.html"><a href="hypothesis.html#统计量与拒绝域"><i class="fa fa-check"></i><b>6.4</b> 统计量与拒绝域</a></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis.html"><a href="hypothesis.html#利用p值进行决策"><i class="fa fa-check"></i><b>6.5</b> 利用p值进行决策</a></li>
+<li class="chapter" data-level="6.6" data-path="hypothesis.html"><a href="hypothesis.html#一个总体参数的检验"><i class="fa fa-check"></i><b>6.6</b> 一个总体参数的检验</a></li>
+<li class="chapter" data-level="6.7" data-path="hypothesis.html"><a href="hypothesis.html#两个总体参数的检验"><i class="fa fa-check"></i><b>6.7</b> 两个总体参数的检验</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="goodness.html"><a href="goodness.html"><i class="fa fa-check"></i><b>7</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="7.1" data-path="goodness.html"><a href="goodness.html#多项分布"><i class="fa fa-check"></i><b>7.1</b> 多项分布</a></li>
+<li class="chapter" data-level="7.2" data-path="goodness.html"><a href="goodness.html#独立性"><i class="fa fa-check"></i><b>7.2</b> 独立性</a></li>
+<li class="chapter" data-level="7.3" data-path="goodness.html"><a href="goodness.html#概率分布"><i class="fa fa-check"></i><b>7.3</b> 概率分布</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ANOVA.html"><a href="ANOVA.html"><i class="fa fa-check"></i><b>8</b> ANOVA</a><ul>
+<li class="chapter" data-level="8.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的引论"><i class="fa fa-check"></i><b>8.1</b> 方差分析的引论</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的部分概念"><i class="fa fa-check"></i><b>8.1.1</b> 方差分析的部分概念</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本思想和原理"><i class="fa fa-check"></i><b>8.1.2</b> 方差分析的基本思想和原理</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析的基本假定"><i class="fa fa-check"></i><b>8.1.3</b> 方差分析的基本假定</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ANOVA.html"><a href="ANOVA.html#单因子方差分析one-way-anova"><i class="fa fa-check"></i><b>8.2</b> 单因子方差分析（One-way ANOVA)</a></li>
+<li class="chapter" data-level="8.3" data-path="ANOVA.html"><a href="ANOVA.html#方差分析中的多重比较"><i class="fa fa-check"></i><b>8.3</b> 方差分析中的多重比较</a></li>
+<li class="chapter" data-level="8.4" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析two-way-anova"><i class="fa fa-check"></i><b>8.4</b> 双因子方差分析（Two-way ANOVA）</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="ANOVA.html"><a href="ANOVA.html#双因子方差分析的基本假定"><i class="fa fa-check"></i><b>8.4.1</b> 双因子方差分析的基本假定</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ANOVA.html"><a href="ANOVA.html#无交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.2</b> 无交互作用双因子方差分析</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ANOVA.html"><a href="ANOVA.html#有交互作用双因子方差分析"><i class="fa fa-check"></i><b>8.4.3</b> 有交互作用双因子方差分析</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ANOVA.html"><a href="ANOVA.html#实验设计初步"><i class="fa fa-check"></i><b>8.5</b> 实验设计初步</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Linear Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#变量间的关系"><i class="fa fa-check"></i><b>9.1</b> 变量间的关系</a></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#回归分析和简单线性回归分析"><i class="fa fa-check"></i><b>9.2</b> 回归分析和简单线性回归分析</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#回归分析"><i class="fa fa-check"></i><b>9.2.1</b> 回归分析</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#简单线性回归分析"><i class="fa fa-check"></i><b>9.2.2</b> 简单线性回归分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#利用回归方程进行估计和预测"><i class="fa fa-check"></i><b>9.3</b> 利用回归方程进行估计和预测</a></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#残差分析"><i class="fa fa-check"></i><b>9.4</b> 残差分析</a></li>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#多元线性回归multiple-regression-model"><i class="fa fa-check"></i><b>9.5</b> 多元线性回归(multiple regression model)</a></li>
+<li class="chapter" data-level="9.6" data-path="regression.html"><a href="regression.html#定性自变量的回归"><i class="fa fa-check"></i><b>9.6</b> 定性自变量的回归</a></li>
+<li class="chapter" data-level="9.7" data-path="regression.html"><a href="regression.html#非线性回归"><i class="fa fa-check"></i><b>9.7</b> 非线性回归</a></li>
+<li class="chapter" data-level="9.8" data-path="regression.html"><a href="regression.html#建立回归模型"><i class="fa fa-check"></i><b>9.8</b> 建立回归模型</a></li>
+<li class="chapter" data-level="9.9" data-path="regression.html"><a href="regression.html#回归中的常见错误"><i class="fa fa-check"></i><b>9.9</b> 回归中的常见错误</a></li>
+<li class="chapter" data-level="9.10" data-path="regression.html"><a href="regression.html#logistic-回归"><i class="fa fa-check"></i><b>9.10</b> Logistic 回归</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="cluster.html"><a href="cluster.html"><i class="fa fa-check"></i><b>10</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="cluster.html"><a href="cluster.html#多元分布基本概念"><i class="fa fa-check"></i><b>10.1</b> 多元分布基本概念</a></li>
+<li class="chapter" data-level="10.2" data-path="cluster.html"><a href="cluster.html#数据的变换处理"><i class="fa fa-check"></i><b>10.2</b> 数据的变换处理</a></li>
+<li class="chapter" data-level="10.3" data-path="cluster.html"><a href="cluster.html#聚类分析"><i class="fa fa-check"></i><b>10.3</b> 聚类分析</a></li>
+<li class="chapter" data-level="10.4" data-path="cluster.html"><a href="cluster.html#样品间亲疏程度的测度"><i class="fa fa-check"></i><b>10.4</b> 样品间亲疏程度的测度</a></li>
+<li class="chapter" data-level="10.5" data-path="cluster.html"><a href="cluster.html#类与类之间的距离"><i class="fa fa-check"></i><b>10.5</b> 类与类之间的距离</a></li>
+<li class="chapter" data-level="10.6" data-path="cluster.html"><a href="cluster.html#系统聚类hierarchical-clustering-method"><i class="fa fa-check"></i><b>10.6</b> 系统聚类(hierarchical clustering method)</a></li>
+<li class="chapter" data-level="10.7" data-path="cluster.html"><a href="cluster.html#快速聚类k-means-clustering-method"><i class="fa fa-check"></i><b>10.7</b> 快速聚类(k-means clustering method)</a></li>
+<li class="chapter" data-level="10.8" data-path="cluster.html"><a href="cluster.html#有序聚类"><i class="fa fa-check"></i><b>10.8</b> 有序聚类</a></li>
+<li class="chapter" data-level="10.9" data-path="cluster.html"><a href="cluster.html#聚类分析的主要步骤"><i class="fa fa-check"></i><b>10.9</b> 聚类分析的主要步骤</a></li>
+<li class="chapter" data-level="10.10" data-path="cluster.html"><a href="cluster.html#r语言中聚类分析实现"><i class="fa fa-check"></i><b>10.10</b> R语言中聚类分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="discriminant.html"><a href="discriminant.html"><i class="fa fa-check"></i><b>11</b> Discriminant Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="discriminant.html"><a href="discriminant.html#判别分析应用"><i class="fa fa-check"></i><b>11.1</b> 判别分析应用</a></li>
+<li class="chapter" data-level="11.2" data-path="discriminant.html"><a href="discriminant.html#判别分析方法"><i class="fa fa-check"></i><b>11.2</b> 判别分析方法</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="discriminant.html"><a href="discriminant.html#距离判别法"><i class="fa fa-check"></i><b>11.2.1</b> 距离判别法</a></li>
+<li class="chapter" data-level="11.2.2" data-path="discriminant.html"><a href="discriminant.html#fisher判别法"><i class="fa fa-check"></i><b>11.2.2</b> Fisher判别法</a></li>
+<li class="chapter" data-level="11.2.3" data-path="discriminant.html"><a href="discriminant.html#bayes判别法"><i class="fa fa-check"></i><b>11.2.3</b> Bayes判别法</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="discriminant.html"><a href="discriminant.html#建立判别函数的方法"><i class="fa fa-check"></i><b>11.3</b> 建立判别函数的方法</a></li>
+<li class="chapter" data-level="11.4" data-path="discriminant.html"><a href="discriminant.html#判别分析的步骤及注意事项"><i class="fa fa-check"></i><b>11.4</b> 判别分析的步骤及注意事项</a></li>
+<li class="chapter" data-level="11.5" data-path="discriminant.html"><a href="discriminant.html#r语言中判别分析实现"><i class="fa fa-check"></i><b>11.5</b> R语言中判别分析实现</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>12</b> Priciple Component Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="pca.html"><a href="pca.html#主成分分析基本思想"><i class="fa fa-check"></i><b>12.1</b> 主成分分析基本思想</a></li>
+<li class="chapter" data-level="12.2" data-path="pca.html"><a href="pca.html#几何解释与数学模型"><i class="fa fa-check"></i><b>12.2</b> 几何解释与数学模型</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="pca.html"><a href="pca.html#几何解释"><i class="fa fa-check"></i><b>12.2.1</b> 几何解释</a></li>
+<li class="chapter" data-level="12.2.2" data-path="pca.html"><a href="pca.html#数学模型"><i class="fa fa-check"></i><b>12.2.2</b> 数学模型</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="pca.html"><a href="pca.html#主成分的推导"><i class="fa fa-check"></i><b>12.3</b> 主成分的推导</a></li>
+<li class="chapter" data-level="12.4" data-path="pca.html"><a href="pca.html#主成分的性质"><i class="fa fa-check"></i><b>12.4</b> 主成分的性质</a></li>
+<li class="chapter" data-level="12.5" data-path="pca.html"><a href="pca.html#主成分分析的步骤"><i class="fa fa-check"></i><b>12.5</b> 主成分分析的步骤</a></li>
+<li class="chapter" data-level="12.6" data-path="pca.html"><a href="pca.html#主成分的应用与回归"><i class="fa fa-check"></i><b>12.6</b> 主成分的应用与回归</a></li>
+<li class="chapter" data-level="12.7" data-path="pca.html"><a href="pca.html#主成分分析的r语言实现"><i class="fa fa-check"></i><b>12.7</b> 主成分分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="fa.html"><a href="fa.html"><i class="fa fa-check"></i><b>13</b> Factor Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="fa.html"><a href="fa.html#因子分析概念"><i class="fa fa-check"></i><b>13.1</b> 因子分析概念</a></li>
+<li class="chapter" data-level="13.2" data-path="fa.html"><a href="fa.html#因子分析模型"><i class="fa fa-check"></i><b>13.2</b> 因子分析模型</a></li>
+<li class="chapter" data-level="13.3" data-path="fa.html"><a href="fa.html#因子载荷矩阵的估计方法"><i class="fa fa-check"></i><b>13.3</b> 因子载荷矩阵的估计方法</a></li>
+<li class="chapter" data-level="13.4" data-path="fa.html"><a href="fa.html#因子旋转正交变换"><i class="fa fa-check"></i><b>13.4</b> 因子旋转（正交变换）</a></li>
+<li class="chapter" data-level="13.5" data-path="fa.html"><a href="fa.html#因子得分"><i class="fa fa-check"></i><b>13.5</b> 因子得分</a></li>
+<li class="chapter" data-level="13.6" data-path="fa.html"><a href="fa.html#因子分析步骤"><i class="fa fa-check"></i><b>13.6</b> 因子分析步骤</a></li>
+<li class="chapter" data-level="13.7" data-path="fa.html"><a href="fa.html#因子分析的r语言实现"><i class="fa fa-check"></i><b>13.7</b> 因子分析的R语言实现</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="homework.html"><a href="homework.html"><i class="fa fa-check"></i><b>14</b> Case and Practice</a><ul>
+<li class="chapter" data-level="14.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布"><i class="fa fa-check"></i><b>14.1</b> 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验"><i class="fa fa-check"></i><b>14.2</b> 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析"><i class="fa fa-check"></i><b>14.3</b> 方差分析与回归分析</a></li>
+<li class="chapter" data-level="14.4" data-path="homework.html"><a href="homework.html#作业文档"><i class="fa fa-check"></i><b>14.4</b> 作业文档</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="homework.html"><a href="homework.html#描述性统计与抽样分布-1"><i class="fa fa-check"></i><b>14.4.1</b> 1 描述性统计与抽样分布</a></li>
+<li class="chapter" data-level="14.4.2" data-path="homework.html"><a href="homework.html#参数估计与假设检验-1"><i class="fa fa-check"></i><b>14.4.2</b> 2 参数估计与假设检验</a></li>
+<li class="chapter" data-level="14.4.3" data-path="homework.html"><a href="homework.html#方差分析与回归分析-1"><i class="fa fa-check"></i><b>14.4.3</b> 3 方差分析与回归分析</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由 bookdown 强力驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">应用统计学与R语言实现学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regression" class="section level1">
+<h1><span class="header-section-number">第 9 章</span> Linear Regression</h1>
+<p>本篇是第九章，内容是回归分析（主要以线性回归为主）。回归分析是数理统计、数理分析中最基础（也可以说是最重要）的一个分析，所以这一章内容相对来说也较多。</p>
+<div id="变量间的关系" class="section level2">
+<h2><span class="header-section-number">9.1</span> 变量间的关系</h2>
+<p>确定型关系vs不确定型关系。</p>
+<blockquote>
+<ul>
+<li>函数关系——一一对应的确定型关系设有两个变量x和y，变量y随变量x一起变化，并完全依赖于x，当变量x取某个数值时，y依确定的关系取相应的值，则称y是x的函数，记为y=f(x)，其中x称为自变量，y称为因变量各观测点落在一条线上。</li>
+<li>相关关系(correlation)——变量间关系不能用函数关系精确表达。一个变量的取值不能由另一个变量唯一确定。当变量x取某个值时， 变量y的取值可能有几个。各观测点分布在直线周围。相关关系包括了线性相关（正相关、负相关）、非线性相关、完全相关（正相关、负相关）、不相关。</li>
+</ul>
+</blockquote>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-38-1.png" width="100%" height="35%" /></p>
+<p>除了如上的图，可以看下面的链接——关于相同统计量不同数据的一篇外文。</p>
+<blockquote>
+<ul>
+<li><a href="https://www.autodeskresearch.com/publications/samestats" class="uri">https://www.autodeskresearch.com/publications/samestats</a></li>
+</ul>
+</blockquote>
+<p><strong>相关系数(correlation coefficient)</strong></p>
+<blockquote>
+<ul>
+<li>对变量之间关系密切程度的度量（只关心密切程度，无关因果关系）；</li>
+<li>对两个变量之间线性相关程度的度量称为简单相关系数；</li>
+<li>若相关系数是根据总体全部数据计算的，称为总体相关系数，记为ρ；</li>
+<li>若是根据样本数据计算的，则称为样本相关系数，记为 r。</li>
+</ul>
+</blockquote>
+<p><strong>总体相关系数的计算公式</strong>：</p>
+<p><span class="math display">\[\rho=\frac{\sigma_{xy}}{\sigma_x\sigma_y}=\frac{E[(X-E(X))(Y-E(Y))]}{\sqrt{E(X-E(X))^2}\sqrt{E(Y-E(Y))^2}}\]</span></p>
+<p><strong>相关系数特点</strong></p>
+<blockquote>
+<ul>
+<li>无量纲(Unitfree)；</li>
+<li><span class="math inline">\(\rho\)</span>的取值范围是 [-1,1]；</li>
+<li><span class="math inline">\(|\rho|\)</span>=1，为完全相关（<span class="math inline">\(\rho\)</span>=1为完全正相关； <span class="math inline">\(\rho\)</span>=-1为完全负相关）；</li>
+<li><span class="math inline">\(\rho\)</span>=0，不存在线性相关关系；</li>
+<li><span class="math inline">\(-1\leq \rho&lt;0\)</span>，为负相关，<span class="math inline">\(0&lt;\rho \leq 1\)</span>，为正相关；</li>
+<li><span class="math inline">\(|\rho|\)</span>越趋于1表示线性关系越密切；<span class="math inline">\(|\rho|\)</span>越趋于0表示线性关系越不密切；</li>
+<li>若X与Y相互独立，则<span class="math inline">\(\rho\)</span>=0，但<span class="math inline">\(\rho\)</span>=0，X与Y不一定相互独立；</li>
+<li>若<span class="math inline">\(\rho\)</span>= 0，且X与Y服从正态分布，则X与Y相互独立。</li>
+</ul>
+</blockquote>
+<p><strong>样本相关系数计算公式</strong>：</p>
+<p><span class="math display">\[r=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum(x_i-\bar x)^2\cdot\sum(y_i-\bar y)^2}}\]</span></p>
+<p>或</p>
+<p><span class="math display">\[r=\frac{n\sum x_iy_i-\sum x_i\sum y_i}{\sqrt{n\sum x_i^2-(\sum x_i)^2}\cdot\sqrt{n\sum x_i^2-(\sum x_i)^2}}\]</span></p>
+<p><strong>样本相关系数特点</strong></p>
+<blockquote>
+<ul>
+<li>无量纲(Unitfree)；</li>
+<li>r的取值范围是 [-1,1]；</li>
+<li>|r|=1，为完全相关（r=1为完全正相关；r=-1为完全负相关）；</li>
+<li>r=0，不存在线性相关关系；</li>
+<li><span class="math inline">\(-1\leq r&lt;0\)</span>为负相关，<span class="math inline">\(0&lt;r\leq1\)</span>为正相关；</li>
+<li>|r|越趋于1表示线性关系越密切；|r|越趋于0表示线性关系越不密切；</li>
+</ul>
+</blockquote>
+<p>对变量之间关系密切程度的度量，只关心密切程度，无关因果关系。
+比如撑伞的人数和降雨量的相关系数非常高。但是我们不能说因为撑伞的人多了，所以降雨量大。</p>
+<p><strong>r的抽样分布</strong></p>
+<p>r的抽样分布随总体相关系数和样本容量的大小而变化。当样本数据来自服从正态分布的总体时，随着n的增大，r的抽样分布趋于正态分布，尤其是在总体相关系数<span class="math inline">\(\rho\)</span>很小或接近0时，趋于正态分布的趋势非常明显。而当<span class="math inline">\(\rho\)</span>远离0时，除非n非常大，否则r的抽样分布呈现一定的偏态。当<span class="math inline">\(\rho\)</span>为较大的正值时， r呈现左偏分布；当<span class="math inline">\(\rho\)</span>为较小的负值时， r呈现右偏分布。只有当<span class="math inline">\(\rho\)</span>接近于0，而样本容量n很大时，才能认为r是接近于正态分布的随机变量。</p>
+<p><strong>相关系数的显著性检验步骤</strong></p>
+<p>检验两个变量之间是否存在线性相关关系，等价于对回归系数<span class="math inline">\(\beta_1\)</span>的检验。采用R. A. Fisher提出的t检验。检验的步骤为：</p>
+<blockquote>
+<p>（1） 提出假设：<span class="math inline">\(H_0:\rho=0;H_1:\rho \neq0\)</span></p>
+</blockquote>
+<blockquote>
+<p>（2） 计算检验的统计量： <span class="math inline">\(t=r\sqrt{\frac{n-2}{1-r^2}}\sim t(n-2)\)</span></p>
+</blockquote>
+<blockquote>
+<p>（3） 确定显著性水平<span class="math inline">\(\alpha\)</span>，并作出决策。</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>若<span class="math inline">\(|t|&gt;t_{\alpha/2}\)</span>，拒绝<span class="math inline">\(H_0\)</span>。</li>
+<li>若<span class="math inline">\(|t|&lt;t_{\alpha/2}\)</span>，不能拒绝<span class="math inline">\(H_0\)</span>。</li>
+</ul>
+</blockquote>
+</div>
+<div id="回归分析和简单线性回归分析" class="section level2">
+<h2><span class="header-section-number">9.2</span> 回归分析和简单线性回归分析</h2>
+<div id="回归分析" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> 回归分析</h3>
+<p><strong>什么是回归分析(Regression)?</strong></p>
+<blockquote>
+<p>从一组样本数据出发，确定变量之间的数学关系式。对这些关系式的可信程度进行各种统计检验，并从影响某一特定变量的诸多变量中找出哪些变量的影响显著， 哪些不显著。利用所求的关系式，根据一个或几个变量的取值来预测或控制另一个特定变量的取值，并给出这种预测或控制的精确程度。</p>
+</blockquote>
+<p><strong>回归分析与相关分析的区别</strong></p>
+<blockquote>
+<p>相关分析中，变量x变量y处于平等的地位；回归分析中，变量y称为因变量，处在被解释的地位，x称为自变量，用于预测因变量的变化；
+相关分析中所涉及的变量x和y都是随机变量；回归分析中，因变量y是随机变量，自变量x可以是随机变量，也可以是非随机的确定变量；
+相关分析主要是描述两个变量之间线性关系的密切程度；回归分析不仅可以揭示变量x对变量y的影响大小，还可以由回归方程进行预测和控制。</p>
+</blockquote>
+<p><strong>回归模型(regression model)</strong>——回答“变量之间是什么样的关系？”方程中运用1个数值型因变量(响应变量)作为被预测的变量；1个或多个数值型或分类型自变量 (解释变量)作为用于预测的变量。主要用于预测和估计。回归模型的类型包括一元回归模型（线性和非线性）和多元回归模型（线性和非线性）。</p>
+<p>接下来先从简单线性回归分析讲起。</p>
+</div>
+<div id="简单线性回归分析" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> 简单线性回归分析</h3>
+<p><strong>简单线性回归(Simple Linear Regression)</strong>——涉及一个自变量的回归，因变量y与自变量x之间为线性关系。被预测或被解释的变量称为因变量(dependent variable)，用y表示；用来预测或用来解释因变量的一个或多个变量称为自变量(independent variable)，用x表示。因变量与自变量之间的关系用一个线性方程来表示。描述因变量y如何依赖于自变量x和误差项ε的方程称为回归模型(Regression Model，定义如前)。</p>
+<p><strong>（1）简单线性回归模型的表示形式</strong></p>
+<p><span class="math display">\[y=\beta_0+\beta_1 x+\varepsilon\]</span></p>
+<p>y是x的线性函数(部分)加上误差项(residual/random error term)。线性部分反映了由于x的变化而引起的y的变化。误差项ε是随机变量。反映了除x和y之间的线性关系之外的随机因素对y的影响，是不能由x和y之间的线性关系所解释的变异性。<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>称为模型的参数(interception, slope)。</p>
+<p><strong>（2）简单线性回归模型的基本假定</strong></p>
+<p>误差项<span class="math inline">\(\epsilon\)</span>是一个期望值为0的随机变量，即E(<span class="math inline">\(\epsilon\)</span>)=0。对于一个给定的x值，y的期望值为</p>
+<p><span class="math display">\[E(y)=\beta_0+\beta_1x\]</span></p>
+<p>对于所有的x值<span class="math inline">\(\epsilon\)</span>的方差<span class="math inline">\(\sigma^2\)</span>都相同；误差项<span class="math inline">\(\epsilon\)</span>是一个服从正态分布的随机变量，且相互独立。即<span class="math inline">\(\epsilon\sim N(0,\sigma^2)\)</span>;独立性意味着对于一个特定的x值，它所对应的<span class="math inline">\(\epsilon\)</span>与其他x值所对应的<span class="math inline">\(\epsilon\)</span>不相关；对于一个特定的x值， 它所对应的y值与其他x所对应的y值也不相关。</p>
+<p><strong>（3）简单线性回归方程(regression equation)</strong></p>
+<p>描述y的平均值或期望值如何依赖于x的方程称为回归方程；简单线性回归方程的形式如下</p>
+<p><span class="math display">\[E(y)=\beta_0+\beta_1x\]</span></p>
+<p>方程的图示是一条直线，也称为直线回归方程。<span class="math inline">\(\beta_0\)</span>是回归直线在y轴上的截距(interception)，是当x=0时y的期望值。<span class="math inline">\(\beta_1\)</span>是直线的斜率(slope)，称为回归系数，表示当x每变动一个单位时，y的平均变动值。</p>
+<p><strong>（4）估计的回归方程(estimated regression equation)</strong></p>
+<p>总体回归参数<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>是未知的，必须利用样本数据去估计。用样本统计量<span class="math inline">\(b_0\)</span>和<span class="math inline">\(b_1\)</span>代替回归方程中的未知参数<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>，就得到了估计的回归方程。简单线性回归中估计的回归方程为</p>
+<p><span class="math display">\[\hat y=b_0+b_1x\]</span></p>
+<p>其中：<span class="math inline">\(b_0\)</span>是估计的回归直线在y轴上的截距，<span class="math inline">\(b_1\)</span>是直线的斜率，也表示x每变动一个单位时，y的平均变动值，<span class="math inline">\(\hat y\)</span>表示一个给定的x的值对应的y的估计值。</p>
+<p><strong>（5）最小二乘估计</strong></p>
+<p>使因变量的观察值与估计值之间的离差平方和达到最小来求得<span class="math inline">\(b_0\)</span>和<span class="math inline">\(b_1\)</span>的方法。即</p>
+<p><span class="math display">\[argmin \sum_{i=1}^n(y_i-\hat y_i)^2=\sum_{i=1}^n(y_i-b_0-b_ix_i)^2\]</span></p>
+<p>用最小二乘法拟合的直线来代表x与y之间的关系与实际数据的误差平方和比其他任何直线都小。
+根据最小二乘法的要求，可得到如下的公式：</p>
+<p><span class="math display">\[\begin{cases}b_1=\frac{n\sum_{i=1}^nx_iy_i-(\sum_{i=1}^nx_i)(\sum_{i=1}^ny_i)}{n\sum_{i=1}^nx_i^2-(\sum_{i=1}^nx_i)^2}\\b_0=\bar y-b_1\bar x\end{cases}\]</span></p>
+<p><strong>最小二乘估计的性质</strong></p>
+<blockquote>
+<ul>
+<li>所有残差的和为0。所有残差的平方和最小；</li>
+<li>回归直线经过变量X与Y的均值；</li>
+<li>是<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>的无偏估计。</li>
+</ul>
+</blockquote>
+<p>在R语言中，简单线性回归的代码如下：</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regression.html#cb8-1"></a>modele&lt;-<span class="kw">lm</span>(e<span class="op">~</span>a)</span></code></pre></div>
+<p><strong>（7）回归直线的拟合优度</strong></p>
+<p><strong>变差</strong></p>
+<p>因变量 y 的取值是不同的， y 取值的这种波动称为变差。 变差来源于两个方面：</p>
+<blockquote>
+<ul>
+<li>由于自变量 x 的取值不同造成的。</li>
+<li>除 x 以外的其他因素(如x对y的非线性影响、测量误差等)的影响。对一个具体的观测值来说， 变差的大小可以通过该实际观测值与其均值之差<span class="math inline">\(y-\bar y\)</span>来表示。</li>
+</ul>
+</blockquote>
+<p><strong>离差平方和的分解(三个平方和的关系与意义)</strong></p>
+<p><span class="math display">\[\sum_{i=1}^n(y_i-\bar y)^2=\sum_{i=1}^n(\hat y_i-\bar y)^2+\sum_{i=1}^n(y_i-\hat y)^2\]</span></p>
+<p>从左至右分别为SST，SSR，SSE。所以就有SST=SSR+SSE。</p>
+<p><strong>总平方和(SST)</strong>——反映因变量的 n 个观察值与其均值的总离差；</p>
+<p><strong>回归平方和(SSR)</strong>——反映自变量 x 的变化对因变量 y 取值变化的影响，或者说，是由于x与y之间的线性关系引起的y的取值变化，也称为可解释的平方和；</p>
+<p><strong>残差平方和(SSE)</strong>——反映除x以外的其他因素对y取值的影响，也称为不可解释的平方和或剩余平方和。</p>
+<p><strong>判定系数R²(coefficient of determination)</strong></p>
+<p>回归平方和占总离差平方和的比例。</p>
+<p><span class="math display">\[R^2=\frac{SSR}{SST}=\frac{\sum_{i=1}^n(\hat y_i-\bar y)^2}{\sum_{i=1}^n(y_i-\bar y)^2}=1-\frac{\sum_{i=1}^n(y_i-\hat y)^2}{\sum_{i=1}^n(\hat y_i-\bar y)^2}\]</span></p>
+<blockquote>
+<ul>
+<li>反映回归直线的拟合程度；</li>
+<li>取值范围在[0,1]之间；</li>
+<li><span class="math inline">\(R^2\rightarrow1\)</span>，说明回归方程拟合的越好；<span class="math inline">\(R^2\rightarrow0\)</span>，说明回归方程拟合的越差；</li>
+<li>对简单线性回归，判定系数等于相关系数的平方，<span class="math inline">\(r=(b_1\)</span>的符号)<span class="math inline">\(sqrt(R^2)\)</span>。</li>
+</ul>
+</blockquote>
+<p><strong>估计标准误差(standard error of estimate)</strong>
+&gt; * 实际观察值与回归估计值离差平方和的均方根；
+&gt; * 反映实际观察值在回归直线周围的分散状况；
+&gt; * 对误差项<span class="math inline">\(\epsilon\)</span>的标准差<span class="math inline">\(\sigma\)</span>的估计， 是在排除了x对y的线性影响后，y随机波动大小的一个估计量；
+&gt; * 反映用估计的回归方程预测y时预测误差的大小。</p>
+<p>计算公式为
+<span class="math display">\[s=\sqrt{\frac{\sum_{i=1}^n(y_i-\hat y_i)^2}{n-2}}=\sqrt{\frac{SSE}{n-2}}=\sqrt{MSE}\]</span></p>
+<p><strong>显著性检验</strong></p>
+<blockquote>
+<ul>
+<li>线性关系的显著性检验：检验自变量与因变量之间的线性关系是否显著，即检验x与y之间是否具有线性关系，或者说，检验自变量x对因变量y的影响是否显著；</li>
+<li>回归系数的显著性检验：检验回归系数是否不等于0；</li>
+<li>在简单线性回归中，线性关系的显著性检验等价于回归系数的显著性检验。</li>
+</ul>
+</blockquote>
+<p><strong>线性关系的检验</strong></p>
+<p>将回归均方(MSR)同残差均方(MSE)加以比较， 应用F检验来分析二者之间的差别是否显著。</p>
+<blockquote>
+<ul>
+<li><strong>回归均方</strong>：回归平方和SSR除以相应的自由度(自变量的个数p)；</li>
+<li><strong>残差均方</strong>：残差平方和SSE除以相应的自由度(n-p-1)。</li>
+<li>提出假设：<span class="math inline">\(H_0:\beta_1=0\)</span>线性关系不显著；</li>
+<li>计算检验统计量F：<span class="math inline">\(F=\frac{SSR/1}{SSE/(n-2)}=\frac{MSR}{MSE}\sim F(1,n-2)\)</span></li>
+<li>确定显著性水平<span class="math inline">\(\alpha\)</span>，并根据分子自由度1和分母自由度n-2找出临界值<span class="math inline">\(F_\alpha\)</span>。</li>
+<li>作出决策：若<span class="math inline">\(F&gt;F_\alpha\)</span>，拒绝<span class="math inline">\(H_0\)</span>； 若<span class="math inline">\(F&lt;F_\alpha\)</span>，不拒绝<span class="math inline">\(H_0\)</span>。</li>
+</ul>
+</blockquote>
+<p><strong>回归系数的检验(检验步骤)</strong></p>
+<blockquote>
+<ul>
+<li>提出假设:<span class="math inline">\(H_0:\beta_1=0\)</span>(没有线性关系)，<span class="math inline">\(H_1:\beta_1\neq 0\)</span>(有线性关系)</li>
+<li>计算检验的统计量：<span class="math inline">\(t=\frac{b_1}{s_{b_1}}\sim t(n-2)\)</span></li>
+<li>确定显著性水平<span class="math inline">\(\alpha\)</span>，并进行决策：<span class="math inline">\(|t|&gt; t_{\alpha/2}\)</span>,拒绝<span class="math inline">\(H_0\)</span>;<span class="math inline">\(|t|&lt; t_{\alpha/2}\)</span>，不拒绝<span class="math inline">\(H_0\)</span></li>
+</ul>
+</blockquote>
+<p><strong>显著性检验的几点注意</strong></p>
+<p>显著性关系的结论不意味着因果关系。显著性关系的结论也不能推出线性关系的结论，仅能说在x的样本观测之范围内，x和y是相关的，而且一个线性关系只揭示了y的变异的主要部分。当样本容量很大时，对于小的b1值也能得到统计上是显著的结果。</p>
+</div>
+</div>
+<div id="利用回归方程进行估计和预测" class="section level2">
+<h2><span class="header-section-number">9.3</span> 利用回归方程进行估计和预测</h2>
+<p>根据自变量x的取值估计或预测因变量y的取值。</p>
+<p><strong>估计或预测的类型</strong></p>
+<p>（1）点估计：y的平均值的点估计，y的个别值的点估计；</p>
+<p>（2）区间估计：y的平均值的置信区间估计，y的个别值的预测区间估计。</p>
+<p><strong>（1）点估计</strong></p>
+<p>对于自变量x的一个给定值<span class="math inline">\(x_0\)</span>，根据回归方程得到因变量y的一个估计值<span class="math inline">\(\hat y_0\)</span>。点估计值有<strong>y的平均值的点估计</strong>和<strong>y的个别值的点估计</strong>。在点估计条件下，平均值的点估计和个别值的的点估计是一样的，但在区间估计中则不同。</p>
+<blockquote>
+<p><strong>y的平均值的点估计</strong>：利用估计的回归方程， 对于自变量x的一个给定值<span class="math inline">\(x_0\)</span>，求出因变量y的平均值的一个估计值<span class="math inline">\(E(y_0)\)</span>，就是平均值的点估计。</p>
+</blockquote>
+<blockquote>
+<p><strong>y的个别值的点估计</strong>：利用估计的回归方程，对于自变量x的一个给定值<span class="math inline">\(x_0\)</span>，求出因变量y的一个个别值的估计值<span class="math inline">\(\hat y_0\)</span>，就是个别值的点估计。</p>
+</blockquote>
+<p><strong>（2）区间估计</strong></p>
+<p>点估计不能给出估计的精度， 点估计值与实际值之间是有误差的，因此需要进行区间估计。对于自变量x的一个给定值<span class="math inline">\(x_0\)</span>，根据回归方程得到因变量y的一个估计区间。区间估计有两种类型：<strong>置信区间估计(confidence interval estimate)</strong>和<strong>预测区间估计(prediction interval estimate)</strong>。</p>
+<p><strong>置信区间估计</strong></p>
+<p>利用估计的回归方程，对于自变量x的一个给定值<span class="math inline">\(x_0\)</span>，求出因变量y的平均值的估计区间，这一估计区间称为置信区间(confidence interval)。<span class="math inline">\(E(y_0)\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的置信区间为:</p>
+<p><span class="math display">\[\hat y_0\pm t_{\alpha/2}(n-2)s\sqrt{\frac{1}{n}+\frac{(x_0-\bar x)^2}{\sum_{i=1}^n(x_i-\bar x)^2}}\]</span></p>
+<p>式中s为估计标准误差。x=均值时能得到y的平均值的最精确估计。</p>
+<p><strong>预测区间估计</strong></p>
+<p>利用估计的回归方程,对于自变量x的一个给定值<span class="math inline">\(x_0\)</span>,求出因变量y的一个个别值的估计区间，这一区间称为预测区间(prediction interval)。<span class="math inline">\(E(y_0)\)</span>在<span class="math inline">\(1-\alpha\)</span>置信水平下的预测区间为:</p>
+<p><span class="math display">\[\hat y_0\pm t_{\alpha/2}(n-2)s\sqrt{1+\frac{1}{n}+\frac{(x_0-\bar x)^2}{\sum_{i=1}^n(x_i-\bar x)^2}}\]</span></p>
+<p><strong>影响区间宽度的因素</strong>
+&gt; * 置信水平(<span class="math inline">\(1-\alpha\)</span>)——区间宽度随置信水平的增大而增大；
+&gt; * 数据的离散程度s——区间宽度随离散程度的增大而增大；
+&gt; * 样本容量——区间宽度随样本容量的增大而减小；
+&gt; * 用于预测的<span class="math inline">\(x_p\)</span>与<span class="math inline">\(\bar x\)</span>的差异程度，区间宽度随<span class="math inline">\(x_p\)</span>与<span class="math inline">\(\bar x\)</span>的差异程度的增大而增大。</p>
+<p>其实在R语言里主要用predict.lm函数来进行区间估计。代码样例如下：</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regression.html#cb9-1"></a>con &lt;-<span class="st"> </span><span class="kw">predict.lm</span>(modele, h, <span class="dt">interval=</span><span class="st">&quot;confidence&quot;</span>,<span class="dt">level=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<p>其中interval控制是置信区间（参数填confidence）、预测区间（参数填prediction）或者是不做区间估计，level是置信水平，接着用R绘制一个简单的回归和置信区间的图，这里先给出如何绘制置信区间band的代码，完整代码还是老规矩，在这一部分笔记写完后给出。</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regression.html#cb10-1"></a><span class="kw">polygon</span>(<span class="kw">c</span>(h[,<span class="dv">1</span>], <span class="kw">rev</span>(h[,<span class="dv">1</span>])), <span class="kw">c</span>(con[,<span class="dv">3</span>], <span class="kw">rev</span>(con[,<span class="dv">2</span>])), <span class="dt">border=</span><span class="st">&quot;red&quot;</span>,<span class="dt">lwd=</span><span class="dv">1</span>,<span class="dt">lty =</span> <span class="kw">c</span>(<span class="st">&quot;dashed&quot;</span>, <span class="st">&quot;solid&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-42-1.png" width="100%" height="40%" /></p>
+</div>
+<div id="残差分析" class="section level2">
+<h2><span class="header-section-number">9.4</span> 残差分析</h2>
+<p><strong>残差(residual)</strong>——因变量的观测值与根据估计的回归方程求出的预测值之差，用e表示。</p>
+<p><span class="math display">\[e_i=y_i-\hat y_i\]</span></p>
+<p>反映了用估计的回归方程去预测而引起的误差。</p>
+<p><strong>残差检验的目的</strong></p>
+<blockquote>
+<ul>
+<li>检验线性的假设是否成立；</li>
+<li>确定有关误差项ε的假定是否成立（正态分布；方差为常数；独立性）。</li>
+<li>检测有影响的观测值。</li>
+</ul>
+</blockquote>
+<p><strong>残差图(residual plot)</strong></p>
+<blockquote>
+<ul>
+<li>表示残差的图形（关于x的残差图，关于y的残差图，标准化残差图）。</li>
+<li>用直方图或正态概率图检验正态性。</li>
+</ul>
+</blockquote>
+<p><strong>标准化残差(standardized residual)</strong></p>
+<blockquote>
+<ul>
+<li>残差除以它的标准差后得到的数值。 计算公式为<span class="math inline">\(z_{e_i}=\frac{e_i}{s_{e_i}}=\frac{y_i-\hat y_i}{s_{e_i}}\)</span></li>
+<li><span class="math inline">\(e_i\)</span>是第i个残差的标准差， 其计算公式为<span class="math inline">\(s_{e_i}=s_y\sqrt{1-h_i}=s_y\sqrt{1-(\frac{1}{n}+\frac{(x_i-\bar x)^2}{\sum(x_i-\bar x)^2})}\)</span></li>
+</ul>
+</blockquote>
+<p><strong>标准化残差图</strong></p>
+<p>用以直观地判断误差项服从正态分布这一假定是否成立。</p>
+<blockquote>
+<ul>
+<li>若假定成立， 标准化残差的分布也应服从正态分布。</li>
+<li>在标准化残差图中， 大约有95%的标准化残差在-2到+2之间。</li>
+</ul>
+</blockquote>
+<p><strong>变换</strong></p>
+<p>数据变换的问题在前面第七章拟合优度检验提过，那么什么时候做变换?如果从散点图观察发现残差是自变量的函数，通过变换可能可以解决问题。做什么变换？观察残差与因变量观测值的均值的关系：</p>
+<blockquote>
+<ul>
+<li>如果残差的标准差与因变量观测值的均值有线性关系，用log变换；</li>
+<li>如果残差的方差与因变量观测值的均值有线性关系，用square root变换；</li>
+<li>如果残差的标准差与因变量观测值的均值的平方有线性关系，用inverse变换；</li>
+<li>如果残差的标准差与因变量观测值的均值的幂有线性关系，用power变换。</li>
+</ul>
+</blockquote>
+<p><strong>序列相关（自相关）</strong></p>
+<p>当数据是按时间顺序采集的，有可能引起误差项之间的相关(Serial correlation,autocorrelation)。这里介绍一个相关的杜宾-瓦特森(Durbin-Watson)检验统计量：</p>
+<p><span class="math display">\[d=\frac{\sum_{t=2}^n(e_t-e_{t-1})^2}{\sum_{t=1}^ne_t^2}\]</span></p>
+<p>是否遗漏了重要的对因变量有时序影响的自变量，有时可通过引入度量观测次数的自变量解决该问题。这部分属于时间序列分析的范畴，这里就不进一步阐述了。</p>
+<p>在R语言中，线性回归方程残差图绘制非常简单。模型拟合过程会自动给出四个残差可视化相关的图。绘制方法如下：</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regression.html#cb11-1"></a><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="dt">nrow=</span><span class="dv">2</span>,<span class="dt">byrow=</span>T))</span>
+<span id="cb11-2"><a href="regression.html#cb11-2"></a><span class="kw">plot</span>(modele)</span></code></pre></div>
+<p>结果如图。</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-44-1.png" width="100%" height="40%" /></p>
+<p><strong>异常值(outlier)与识别</strong></p>
+<p>如果某一个点与其他点所呈现的趋势不相吻合，这个点就有可能是异常点。</p>
+<blockquote>
+<ul>
+<li>如果异常值是一个错误的数据， 比如记录错误造成的， 应该修正该数据， 以便改善回归的效果；</li>
+<li>如果是由于模型的假定不合理， 使得标准化残差偏大， 应该考虑采用其他形式的模型，比如非线性模型；</li>
+<li>如果完全是由于随机因素而造成的异常值， 则应该保留该数据。</li>
+</ul>
+</blockquote>
+<p>在处理异常值时， 若一个异常值是一个有效的观测值， 不应轻易地将其从数据集中予以剔除。</p>
+<blockquote>
+<ul>
+<li>异常值也可以通过标准化残差来识别；</li>
+<li>如果某一个观测值所对应的标准化残差较大， 就可以识别为异常值；</li>
+<li>一般情况下，当一个观测值所对应的标准化残差小于-2或大于+2时，就可以将其视为异常值。</li>
+</ul>
+</blockquote>
+<p><strong>有影响的观测值</strong></p>
+<p>如果某一个或某一些观测值对回归的结果有强烈的影响，那么该观测值或这些观测值就是有影响的观测值。一个有影响的观测值可能是：一个异常值， 即有一个值远远偏离了散点图中的趋势线；对应一个远离自变量平均值的观测值；或者是这二者组合而形成的观测值。如果有影响的观测值是一个错误的数据，比如记录错误造成的， 应该修正该数据，以便改善回归的效果。如果有影响的观测值是一个有效的数据则应该保留它， 可以帮助我们分析模型的假定是否合理。</p>
+<p><strong>杠杆率点(leverage point)</strong></p>
+<p>如果自变量存在一个极端值， 该观测值则称为高杠杆率点(high leverage point)，在简单回归中，第i个观测值的杠杆率用<span class="math inline">\(h_i\)</span>表示，其计算公式为：</p>
+<p><span class="math display">\[h_i=\frac{1}{n}+\frac{(x_i-\bar x)^2}{\sum(x_i-\bar x)^2}\]</span></p>
+<p>如果一个观测值的杠杆率<span class="math inline">\(h_i&gt;n/6\)</span>，就可以将该观测值识别为有高杠杆率的点；一个有高杠杆率的观测值未必是一个有影响的观测值， 它可能对回归直线的斜率没有什么影响。</p>
+</div>
+<div id="多元线性回归multiple-regression-model" class="section level2">
+<h2><span class="header-section-number">9.5</span> 多元线性回归(multiple regression model)</h2>
+<p><strong>多元线性回归(multiple regression model)</strong></p>
+<blockquote>
+<ul>
+<li>一个因变量与两个及两个以上自变量的回归。</li>
+<li>描述因变量y如何依赖于自变量<span class="math inline">\(x_1,x_2,\cdots,x_p\)</span>和误差项<span class="math inline">\(\varepsilon\)</span>的方程，称为多元回归模型。</li>
+<li>涉及p个自变量的多元回归模型可表示为</li>
+</ul>
+</blockquote>
+<p><span class="math display">\[y=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_px_p+\varepsilon\]</span></p>
+<blockquote>
+<ul>
+<li><span class="math inline">\(\beta_0,\beta_1,\beta_2,\cdots,\beta_p\)</span>是参数。</li>
+<li><span class="math inline">\(\varepsilon\)</span>是被称为误差项的随机变量。</li>
+<li>y是<span class="math inline">\(x_1,x_2,\cdots,x_p\)</span>的线性函数加上误差项<span class="math inline">\(\varepsilon\)</span>。</li>
+<li><span class="math inline">\(\varepsilon\)</span>包含在y里面但不能被p个自变量的线性关系所解释的变异性。</li>
+</ul>
+</blockquote>
+<p><strong>多元回归模型的基本假定</strong></p>
+<blockquote>
+<ul>
+<li>误差项<span class="math inline">\(\epsilon\)</span>是一个期望值为0的随机变量， 即<span class="math inline">\(E(\epsilon)=0\)</span>。</li>
+<li>对于自变量<span class="math inline">\(x_1,x_2,\cdots,x_p\)</span>的所有值，<span class="math inline">\(\epsilon\)</span>的方差<span class="math inline">\(\sigma^2\)</span>都相同。</li>
+<li>误差项<span class="math inline">\(\epsilon\)</span>是一个服从正态分布的随机变量，即<span class="math inline">\(\varepsilon\sim N(0,\sigma^2)\)</span>，且相互独立。</li>
+</ul>
+</blockquote>
+<p><strong>多元回归方程(multiple regression equation)</strong></p>
+<p>描述因变量y的平均值或期望值如何依赖于自变量<span class="math inline">\(x_1,x_2,\cdots,x_p\)</span>的方程。多元线性回归方程的形式为：</p>
+<p><span class="math display">\[E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_px_p+\varepsilon\]</span></p>
+<blockquote>
+<ul>
+<li><span class="math inline">\(\beta_1,\beta_2,\cdots,\beta_p\)</span>称为偏回归系数。</li>
+<li><span class="math inline">\(\beta_i\)</span>表示假定其他变量不变，当<span class="math inline">\(x_i\)</span>每变动一个单位时，y的平均变动值。</li>
+</ul>
+</blockquote>
+<p>二元回归方程的几何表达——回归面。</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-45-1.png" width="100%" height="40%" /></p>
+<p><strong>估计的多元回归的方程(estimated multiple regression equation)</strong></p>
+<p>用样本统计量<span class="math inline">\(b_0,b_1,b_2,\cdots,b_p\)</span>估计回归方程中的参数<span class="math inline">\(\beta_0,\beta_1,\beta_2,\cdots,\beta_p\)</span>时得到的方程。一般形式为</p>
+<p><span class="math display">\[\hat y=b_0+b_1x_1+b_2x_2+\cdots+b_px_p\]</span></p>
+<p><strong>参数的最小二乘法</strong></p>
+<p>使因变量的观察值与估计值之间的离差平方和达到最小来求得<span class="math inline">\(b_0,b_1,b_2,\cdots,b_p\)</span>，即：<span class="math inline">\(argmin Q(b_0,b_1,b_2,\cdots,b_p)=\sum_{i=1}^n(y_i-\hat y_i)^2=\sum_{i=1}^ne_i^2\)</span></p>
+<p>求解各回归参数的标准方程如下：</p>
+<p><span class="math display">\[\begin{cases}\left. \frac{\partial Q}{\partial \beta_0} \right| _{\beta_0=b_0}=0\\\left. \frac{\partial Q}{\partial \beta_i} \right| _{\beta_i=b_i}=0(i=1,2,\cdots,p)\end{cases}\]</span></p>
+<p><strong>多重判定系数(multiple coefficient of determination)</strong></p>
+<p>回归平方和占总平方和的比例，计算公式为</p>
+<p><span class="math display">\[R^2=\frac{\sum_{i=1}^n(\hat y_i-\bar y)^2}{\sum_{i=1}^n(y_i-\bar y)^2}=\frac{SSR}{SST}=1-\frac{SSE}{SST}\]</span></p>
+<p>因变量取值的变差中， 能被估计的多元回归方程所解释的比例。</p>
+<p><strong>修正多重判定系数(adjusted multiple coefficient of determination)</strong></p>
+<p>用样本容量n和自变量的个数p去修正<span class="math inline">\(R^2\)</span>得到。计算公式为</p>
+<p><span class="math display">\[R_a^2=1-(1-R^2)\times\frac{n-1}{n-p-1}\]</span></p>
+<p>避免增加自变量而高估<span class="math inline">\(R^2\)</span>，意义与<span class="math inline">\(R^2\)</span>类似，数值小于<span class="math inline">\(R^2\)</span>。</p>
+<p><strong>估计标准误差s</strong></p>
+<p>对误差项<span class="math inline">\(\epsilon\)</span>的标准差<span class="math inline">\(\sigma\)</span>的一个估计值。衡量多元回归方程的拟合优度。计算公式为</p>
+<p><span class="math display">\[s=\sqrt{\frac{\sum_{i=1}^n(y_i-\hat y_i)^2}{n-p-1}}=\sqrt{\frac{SSE}{n-p-1}}=\sqrt{MSE}\]</span></p>
+<p><strong>线性关系检验</strong></p>
+<p>检验因变量与所有自变量之间的线性关系是否显著，也被称为总体的显著性检验。检验方法是将回归均方和(MSR)同离差均方和(MSE)加以比较，应用F检验来分析二者之间的差别是否显著。</p>
+<blockquote>
+<ul>
+<li>如果是显著的， 因变量与自变量之间存在线性关系；</li>
+<li>如果不显著， 因变量与自变量之间不存在线性关系。</li>
+</ul>
+</blockquote>
+<p>（1）提出假设：<span class="math inline">\(H_0:\beta_1=\beta_2=\cdots=\beta_p=0\)</span> 线性关系不显著；<span class="math inline">\(H_1:\beta_1,\beta_2,\cdots,\beta_p\)</span> 至少有一个不等于0。</p>
+<p>（2）计算检验统计量F：</p>
+<p><span class="math display">\[F=\frac{SSR/p}{SSE/(n--p-1)}=\frac{MSR}{MSE}\sim F(p,n-p-1)\]</span></p>
+<p>（3）确定显著性水平<span class="math inline">\(\alpha\)</span>，并根据分子自由度p和分母自由度n-p-1找出临界值<span class="math inline">\(F_\alpha\)</span>。</p>
+<p>（4）作出决策：若<span class="math inline">\(F&gt;F_\alpha\)</span>，拒绝<span class="math inline">\(H_0\)</span>。</p>
+<p><strong>回归系数的检验(检验步骤)</strong></p>
+<blockquote>
+<ul>
+<li>线性关系检验通过后，对各个回归系数进行检验。</li>
+<li>对每一个自变量单独应用 t 检验统计量进行检验。</li>
+</ul>
+</blockquote>
+<p>（1）提出假设：<span class="math inline">\(H_0:\beta_i=0)\)</span>(自变量<span class="math inline">\(x_i\)</span>与因变量y没有线性关系，<span class="math inline">\(H_1:\beta_i\neq 0\)</span>(自变量<span class="math inline">\(x_i\)</span>与因变量y有线性关系)</p>
+<p>（2）计算检验的统计量</p>
+<p><span class="math display">\[t=\frac{b_i}{s_{b_i}}\sim t(n-p-1),s_{b_i}=\frac{s}{\sqrt{\sum(x_i-\bar x)^2}}\]</span></p>
+<p>（3）确定显著性水平<span class="math inline">\(\alpha\)</span>，并进行决策：<span class="math inline">\(|t|&gt; t_{\alpha/2}\)</span>,拒绝<span class="math inline">\(H_0\)</span>；<span class="math inline">\(|t|&lt; t_{\alpha/2}\)</span>，不拒绝<span class="math inline">\(H_0\)</span></p>
+<p><strong>回归系数的推断(置信区间)</strong></p>
+<p>回归系数在(<span class="math inline">\(1-\alpha\)</span>)%置信水平下的置信区间为</p>
+<p><span class="math display">\[b_i\pm t_{\alpha/2}(n-p-1)s_{b_i}\]</span></p>
+<p>回归系数的抽样标准差</p>
+<p><span class="math display">\[s_{b_i}=\frac{s}{\sqrt{\sum(x_i-\bar x)^2}}\]</span>
+## 多重共线性(multicollinearity)
+回归模型中两个或两个以上的自变量彼此相关。多重共线性带来的问题有：可能会使回归的结果造成混乱， 甚至会把分析引入歧途；可能对参数估计值的正负号产生影响， 特别是各回归系数的正负号有可能同我们预期的正负号相反。</p>
+<p><strong>多重共线性的识别</strong></p>
+<blockquote>
+<ul>
+<li>检测多重共线性的最简单的一种办法是计算模型中各对自变量之间的相关系数， 并对各相关系数进行显著性检验；若有一个或多个相关系数显著， 就表示模型中所用的自变量之间相关，存在着多重共线性。</li>
+<li>如果出现下列情况，暗示存在多重共线性：模型中各对自变量之间显著相关。当模型的线性关系检验(F检验)显著时，几乎所有回归系数的t检验却不显著。回归系数的正负号与预期的相反。</li>
+</ul>
+</blockquote>
+<p><strong>检测多重共线性(Variance Inflationary Factor)</strong></p>
+<p>VIF (variance inflation factor) 用以测量如果自变量相关对估计的回归系数的变异程度的影响。<span class="math inline">\(VIF_j\)</span>的定义：<span class="math inline">\(VIF_j=\frac{1}{1-R_j^2}\)</span>。<span class="math inline">\(R_2^j\)</span>是第j个自变量对其它自变量进行回归的判定系数。VIF=1表示所对应自变量与其它自变量无线性关系。VIF值越大，多重共线性越严重。如果<span class="math inline">\(VIF_j&gt;5\)</span>，<span class="math inline">\(x_j\)</span>与其它自变量高度相关。</p>
+<p><strong>多重共线性(问题的处理)</strong></p>
+<p>将一个或多个相关的自变量从模型中剔除，使保留的自变量尽可能不相关。如果要在模型中保留所有的自变量，则应避免根据t统计量对单个参数进行检验，对因变量值的推断(估计或预测)的限定在自变量样本值的范围内。</p>
+</div>
+<div id="定性自变量的回归" class="section level2">
+<h2><span class="header-section-number">9.6</span> 定性自变量的回归</h2>
+<p><strong>虚拟变量(dummy variable)</strong></p>
+<p>定性自变量————只有两个水平的定性自变量或有两个以上水平的定性自变量。虚拟变量——用数字代码表示的定性自变量。虚拟变量的取值为0，1。</p>
+<p><strong>虚拟变量的个数</strong></p>
+<p>当定性自变量只有两个水平时，可在回归中引入一个虚拟变量。一般而言，如果定性自变量有k个水平，需要在回归中模型中引进k-1个虚拟变量。当定性自变量只有两个水平并引进虚拟变量时，回归方程可写<span class="math inline">\(E(y)=\beta_0+\beta_1x\)</span>。当指定虚拟变量0，1时,<span class="math inline">\(\beta_0\)</span>总是代表与虚拟变量值0所对应的那个分类变量水平的平均值；<span class="math inline">\(\beta_1\)</span>总是代表与虚拟变量值1所对应的那个分类变量水平的平均响应与虚拟变量值0所对应的那个分类变量水平的平均值的差值，即平均值的差值=<span class="math inline">\((\beta_0+\beta_1)-\beta_0=\beta_1\)</span>。当定性自变量超过两个水平（假定三个水平）并引进虚拟变量时，回归方程可写<span class="math inline">\(E(y)=\beta_0+ \beta_1x_1+\beta_2x_2\)</span>。
+方差分析同样可以通过引入虚拟变量做回归分析。</p>
+</div>
+<div id="非线性回归" class="section level2">
+<h2><span class="header-section-number">9.7</span> 非线性回归</h2>
+<p><strong>（1）二阶回归模型(Quadratic Regression Model)</strong>——当散点图如下所示，可考虑二次回归模型。</p>
+<p><span class="math display">\[y_i=\beta_0+\beta_1x_i+\beta_2x_i^2+\varepsilon\]</span></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-46-1.png" width="100%" height="40%" /></p>
+<p><strong>二阶回归模型的显著性检验</strong></p>
+<blockquote>
+<ul>
+<li>总体显著性检验，<span class="math inline">\(F test statistic=\frac{MSR}{MSE}\)</span></li>
+<li>二阶检验：比较二阶模型，<span class="math inline">\(y=\beta_0+\beta_1x_1+\beta_2x^2+\varepsilon\)</span>；线性模型，<span class="math inline">\(y=\beta_0+\beta_1x_1+\varepsilon\)</span>。假设：<span class="math inline">\(H_0:\beta_2=0\)</span>(没有二阶项)，<span class="math inline">\(H_1:\beta_2\neq 0\)</span>(需要二阶项)。</li>
+</ul>
+</blockquote>
+<p><strong>（2）交互作用</strong></p>
+<p>交互作用——两个自变量共同作用对因变量产生的潜在影响。
+&gt; * 假设：<span class="math inline">\(y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\varepsilon\)</span>没有交互项，<span class="math inline">\(x_1\)</span>对y的影响用<span class="math inline">\(\beta_1\)</span>测量；有交互项,<span class="math inline">\(x_1\)</span>对y的影响用<span class="math inline">\(\beta_1+\beta_3x_2\)</span>测量。影响随<span class="math inline">\(x_2\)</span>的改变而改变。</p>
+<p><strong>交互作用显著性检验</strong></p>
+<blockquote>
+<ul>
+<li>交互作用模型：<span class="math inline">\(y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\varepsilon\)</span></li>
+<li>假设：<span class="math inline">\(H_0:\beta_3=0\)</span>（<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_2\)</span>无交互作用），<span class="math inline">\(H_1:\beta_3\neq 0\)</span>（<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_2\)</span>有交互作用）</li>
+</ul>
+</blockquote>
+<p><strong>（3）其他非线性回归</strong></p>
+<p>因变量y与x之间不是线性关系，可通过变量代换转换成线性关系，用最小二乘法求出参数的估计值。但是并非所有的非线性模型都可以化为线性模型。</p>
+<ul>
+<li>双曲线</li>
+</ul>
+<p>基本形式：</p>
+<p><span class="math display">\[y=\frac{x}{\alpha x+\beta}\]</span>
+线性化方法：令<span class="math inline">\(y&#39;=\frac{1}{y},x&#39;=\frac{1}{x}\)</span>，则有<span class="math inline">\(y&#39;=\alpha+\beta x&#39;\)</span></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-47-1.png" width="100%" height="40%" /></p>
+<ul>
+<li>幂函数曲线</li>
+</ul>
+<p>基本形式：</p>
+<p><span class="math display">\[y=\alpha x^\beta\]</span></p>
+<p>线性化方法：两端取对数得<span class="math inline">\(lgy=lg\alpha+\beta lgx,y&#39;=lgy,x&#39;=lgx\)</span>，则有<span class="math inline">\(y&#39;=lg\alpha+\beta x&#39;\)</span></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-48-1.png" width="100%" height="40%" /></p>
+<ul>
+<li>对数曲线</li>
+</ul>
+<p>基本形式：</p>
+<p><span class="math display">\[y=\alpha+\beta lnx\]</span></p>
+<p>线性化方法：<span class="math inline">\(x&#39;=lnx\)</span>，则有<span class="math inline">\(y&#39;=\alpha+\beta x&#39;\)</span></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-49-1.png" width="100%" height="40%" /></p>
+<ul>
+<li>指数曲线</li>
+</ul>
+<p>基本形式：</p>
+<p><span class="math display">\[y=\alpha^{\beta x}\]</span></p>
+<p>线性化方法：两端取对数得：<span class="math inline">\(lny=ln\alpha+\beta x,y&#39;=lny\)</span>，则有<span class="math inline">\(y&#39;=ln\alpha+\beta x\)</span></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-50-1.png" width="100%" height="40%" /></p>
+<ul>
+<li>S型曲线</li>
+</ul>
+<p>基本形式：</p>
+<p><span class="math display">\[y=\frac{1}{\alpha+\beta e^{-x}}\]</span></p>
+<p>线性化方法：令<span class="math inline">\(y&#39;=1/y,x&#39;=e^{-x}\)</span>，则有<span class="math inline">\(y&#39;=\alpha+\beta x&#39;\)</span></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-51-1.png" width="100%" height="40%" /></p>
+</div>
+<div id="建立回归模型" class="section level2">
+<h2><span class="header-section-number">9.8</span> 建立回归模型</h2>
+<p>得到描述因变量与一个或一个以上自变量之间关系的估计的回归方程。目的是建立一个基于最好自变量集合的模型。找到一个适合的描述变量关系之间关系的函数。选择模型应包含的变量。</p>
+<blockquote>
+<ul>
+<li>俭约的模型–用尽可能少的变量来提供足够精度的预测。</li>
+<li>将不重要的变量除去更容易对模型进行解释。</li>
+<li>发生多重共线性的可能变小。</li>
+</ul>
+</blockquote>
+<p><strong>变量选择Variable Selection</strong></p>
+<blockquote>
+<p>有些变量的作用不是很大，SSE 不会随着变量个数的增加而增加，但MSE=SSE/(n-k-1)有可能会随着变量个数的增加而增加。最小的MSE可作为最优变量选择的一个准则，但需考虑所有子集 (<span class="math inline">\(2^p\)</span>个)。</p>
+</blockquote>
+<p><strong>检验增加变量是否适宜的F统计</strong></p>
+<p><span class="math display">\[F=\frac{SSE(x_1,x_2,\cdots,x_p)-SSE(x_1,x_2,\cdots,x_q,x_{q+1},\cdots,x_p)}{\frac{SSE(x_1,x_2,\cdots,x_q,x_{q+1},\cdots,x_p)}{n-p-1}}\]</span></p>
+<p><span class="math display">\[F\sim F(p-q,n-p-1)\]</span></p>
+<p>F越大，说明增加变量减少预测误差的效果越显著。</p>
+<p><strong>变量选择过程</strong></p>
+<blockquote>
+<ul>
+<li>向前选择(Forward Selection)</li>
+</ul>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li><p>从没有自变量的模型开始。</p></li>
+<li><p>如果所有的F统计量的p-值大于预先设定的终止值，说明增加任一变量效果不显著，停止。</p></li>
+<li><p>否则，加入具有最大F统计量值的变量。</p></li>
+<li><p>重新回归， Go to Step 2。</p></li>
+</ol>
+<blockquote>
+<ul>
+<li>后向消元(Backward Elimination)</li>
+</ul>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li><p>从包含所有自变量的模型开始。</p></li>
+<li><p>如果所有的F统计量的p-值小于预先设定的终止值，说明减少任一变量效果显著，停止。</p></li>
+<li><p>否则，删除具有最小F统计量值的变量。</p></li>
+<li><p>重新回归， Go to Step 2。</p></li>
+</ol>
+<blockquote>
+<ul>
+<li>逐步回归(Stepwise regression procedure)：向前选择和后向消元的结合。</li>
+</ul>
+</blockquote>
+<p>1.先检查是否有变量需从模型中删除。</p>
+<p>2.再检查增加一个变量是否能改善模型。</p>
+<p>3.重复以上过程。</p>
+<p>注意： <span class="math inline">\(\alpha\)</span>进<span class="math inline">\(\leq \alpha\)</span>出，否则F进&lt;F&lt;F出，会导致无限循环。</p>
+<blockquote>
+<ul>
+<li>最佳子集回归(Best-subset approach)：对所有可能的自变量组合进行估计。找出具有最大的修正判定系数<span class="math inline">\(adj.R^2\)</span>和最小的估计误差标准差<span class="math inline">\(s_{\epsilon}\)</span>。</li>
+</ul>
+</blockquote>
+</div>
+<div id="回归中的常见错误" class="section level2">
+<h2><span class="header-section-number">9.9</span> 回归中的常见错误</h2>
+<p>（1）没有检验线性关系假设</p>
+<blockquote>
+<ul>
+<li>画散点图。</li>
+<li>如果不是线性的，检验其它非线性。</li>
+<li>用线性关系描述非线性关系会引起误导。</li>
+</ul>
+</blockquote>
+<p>（2）只看结果不看图表</p>
+<blockquote>
+<ul>
+<li>要将画散点图作为回归分析的一部分。</li>
+<li>检验回归直线与实际观测值间的关系。</li>
+<li>对自动回归来说这一步更为重要。</li>
+</ul>
+</blockquote>
+<p>（3）用回归系数判定变量的重要性</p>
+<blockquote>
+<ul>
+<li>回归系数依赖于自变量的量纲，因此系数的大小与变量的重要性无关。</li>
+<li>例如，将秒变为微秒没有改变任何事实，但是变量的系数却有所改变。</li>
+</ul>
+</blockquote>
+<p>（4）没有确定置信区间</p>
+<blockquote>
+<ul>
+<li>观察值是随机样本，所以回归结果有一定随机性。</li>
+<li>不确定置信区间，不可能理解参数的真正含义。</li>
+</ul>
+</blockquote>
+<p>（5）没有计算判定系数</p>
+<blockquote>
+<ul>
+<li>没有<span class="math inline">\(R^2\)</span>，很难确定多少变异是由回归解释的。</li>
+<li>即使<span class="math inline">\(R^2\)</span>看起来很好，安全起见还应做F-test。</li>
+</ul>
+</blockquote>
+<p>（6）错误解释相关系数</p>
+<blockquote>
+<ul>
+<li>判定系数是<span class="math inline">\(R^2\)</span>。</li>
+<li>相关系数是R。</li>
+<li><span class="math inline">\(R^2\)</span>给出变异由回归解释的百分比，不是R。</li>
+<li>如：R =0.5,<span class="math inline">\(R^2\)</span>=0.25——回归解释了25%的变异，不是50%。</li>
+</ul>
+</blockquote>
+<p>（7）使用强相关的自变量</p>
+<blockquote>
+<ul>
+<li>模型同时包括两强相关的自变量会降低回归模型的显著性。</li>
+<li>要尽可能的了解自变量间的关系。</li>
+</ul>
+</blockquote>
+<p>（8）用回归模型预测观测值范围之外的区域</p>
+<blockquote>
+<ul>
+<li>回归是基于某一特定观测样本的。</li>
+<li>在样本观测值范围内能提供较为精确的估计。</li>
+</ul>
+</blockquote>
+<p>（9）观测值取值范围太小</p>
+<blockquote>
+<ul>
+<li>回归只有在观测值取值范围附近预测的结果比较好。</li>
+<li>如果不在常用的范围内取值，回归模型用处不大。</li>
+</ul>
+</blockquote>
+<p>(10)包括太多的自变量</p>
+<blockquote>
+<ul>
+<li>变量越多的模型不一定越好。</li>
+<li>有可能出现多重共线性。</li>
+</ul>
+</blockquote>
+<p>（11）认为好的预测变量是好的控制变量，相关关系不一定因果关系：A与B相关，并不意味着可以通过改变A来控制B。</p>
+<p>（12）线性回归结果会给人以误导</p>
+<blockquote>
+<ul>
+<li>为了提供一个简练的总结，回归过程中舍弃了一些信息。</li>
+<li>有时一些重要的特征也舍弃了——看图形表示可以告诉我们是否有问题。</li>
+</ul>
+</blockquote>
+</div>
+<div id="logistic-回归" class="section level2">
+<h2><span class="header-section-number">9.10</span> Logistic 回归</h2>
+<p>Logistic回归提出的目的是为了解决二值化数据的回归问题。那么为什么简单线性回归模型不适合二值化数据的回归呢？详细原因可见如下图。</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-52-1.png" width="100%" height="40%" /></p>
+<p>二值化变量是“yes”或者“no”的数据。可以被编码为1和0，也就是说不会有其他的变异数值。所以对于这种情况模型的要求是：模型的边界为0和1，模型可以输出的是一个在这类或者另一类的概率。我们想要的是一个实际值落入这类或者另一类的概率大小。而理想的模型是很好的估计0和1，或者换句话说，结果是0或1。所以解决方案就是Logistic回归。</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-53-1.png" width="100%" height="40%" /></p>
+<p>Logistic的基本形式为</p>
+<p><span class="math display">\[\pi_i&#39;=ln(\frac{\pi_i}{1-\pi_i})=\beta_0+\beta_1x_i\]</span></p>
+<p>通过观测值估计<span class="math inline">\(n_i\)</span>的概率<span class="math inline">\(p_i\)</span>，并且用<span class="math inline">\(ln(\frac{p_i}{1-p_i})\)</span>估计。</p>
+<p>典型案例：城市增长问题，城市化预测模拟，</p>
+<p><strong>常见的问题</strong></p>
+<blockquote>
+<ul>
+<li>都有一个二值化（或分类）变量：</li>
+<li>都涉及到预测的思想机会，概率，比例或百分比。</li>
+<li>不像其他的预测情况，y值是有界的。</li>
+</ul>
+</blockquote>
+<p><strong>Logistic 回归与简单线性回归</strong></p>
+<blockquote>
+<p>logistic回归是一种统计技术，可以用二值化变量问题中。回归虽有相似之处，但它不同于普通最小二乘法。识别重要和相似之处是两种技术的区别。</p>
+</blockquote>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ANOVA.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cluster.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/09-regression.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
