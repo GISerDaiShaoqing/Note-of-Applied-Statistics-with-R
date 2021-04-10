@@ -4,9 +4,9 @@
 |---|---|
 |E-mail|dsq1993qingge@163.com|
 
-This is some note of Applied Statistics with R which comes from my course "Applied Statistics" at this term.
+This is some notebooks of Applied Statistics with R which comes from my course "Applied Statistics" this term during UCAS.
 
-The Note includes 14 Chapters. The note is in Chinese.
+The Note includes 14 Chapters. The note is in Chinese. All the code used in these notebooks could download in the Appendix.
 
 [Bookdown online](http://gisersqdai.top/Note-of-Applied-Statistics-with-R-Book/)
 
@@ -67,7 +67,7 @@ The Note includes 14 Chapters. The note is in Chinese.
 
 这是应用统计学与R语言实现的学习笔记，来自于我这学期的课程《应用统计学》。
 
-笔记包括了14章的内容，中文版。
+笔记包括了14章的内容，中文版。该学习笔记里所有使用的代码可以在Appendix文件夹下找到。
 
 [Bookdown在线电子书](http://gisersqdai.top/Note-of-Applied-Statistics-with-R-Book/)
 
