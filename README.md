@@ -6,7 +6,7 @@
 
 This is some notebooks of Applied Statistics with R which comes from my course "Applied Statistics" this term during UCAS.
 
-The Note includes 14 Chapters. The note is in Chinese. All the code used in these notebooks could download in the Appendix.
+The Note includes 14 Chapters. The note is in Chinese. All the code used in the note could download in the Appendix.
 
 [Bookdown online](http://gisersqdai.top/Note-of-Applied-Statistics-with-R-Book/)
 
