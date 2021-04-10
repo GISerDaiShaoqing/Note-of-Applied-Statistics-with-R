@@ -4,7 +4,7 @@
 |---|---|
 |E-mail|dsq1993qingge@163.com|
 
-This is some notebooks of Applied Statistics with R which comes from my course "Applied Statistics" this term during UCAS.
+There are some notebooks of Applied Statistics using R which comes from my course "Applied Statistics" this term during UCAS.
 
 The Note includes 14 Chapters. The note is in Chinese. All the code used in the note could download in the Appendix.
 
